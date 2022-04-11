@@ -155,7 +155,7 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
     --c-buttonBg: var(--c-grey2);
 
     /* font-sizes */
-    --baseTextSize: 1rem;
+    --baseTextSize: 1.6rem;
     --textSizeIncrement: 1.31;
     --text-xs: calc(var(--baseTextSize) / var(--textSizeIncrement));
     --text-s: var(--baseTextSize);
@@ -188,11 +188,12 @@ html {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-variant-ligatures: normal;
-    font-size: 62.5%;
-    /* 10px fontbase */
+    font-size: 62.5%; /* 10px fontbase */
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: inherit;
     outline: none;
 }
@@ -202,12 +203,13 @@ body {
     color: var(--raw-color_text);
     font-family: var(--raw-font_main);
     font-size: 1.8rem;
-    font-weight: 350;
-    height: 100vh;
-    width: 100vw;
+    font-weight: 400;
+    /* height: 100vh;
+    width: 100vw; */
 }
 
-a, a:visited {
+a,
+a:visited {
     color: var(--raw-color_text-alt);
     text-decoration: underline;
     text-decoration-color: currentColor;
@@ -262,7 +264,7 @@ input[type="submit"] {
     border-width: var(--raw-button_border-width);
     border-color: var(--raw-color_primary);
     border-radius: var(--raw-border-radius);
-    color: var(--raw-color_primary);
+    color: var(--raw-color_white);
     font-family: var(--raw-font_main);
     font-size: var(--raw-font_size-m);
     font-weight: 600;
@@ -352,8 +354,7 @@ button.accept:focus {
 
 label {
     font-size: var(--raw-font_size-s);
-    font-variant: small-caps;
-    color: var(--raw-color_grey-medium0) ;
+    color: var(--raw-color_grey-medium1) ;
 }
 
 textarea,
@@ -379,7 +380,8 @@ input[type="password"]:focus {
 }
 
 input[type="checkbox"] {
-    margin-inline: 5px; }
+    margin-inline: 5px;
+}
 
 .add-snippet-window textarea {
     resize: auto;
@@ -585,14 +587,18 @@ var, template, .hidden {
 .snippets,
 .tag-list,
 .groups,
-body {
+body,
+code[class*="language-"],
+pre[class*="language-"] {
     scrollbar-width: thin;
-    scrollbar-color: var(--raw-color_grey-medium2) var(--raw-color_grey-medium0);
+    scrollbar-color: var(--raw-color_grey-darker) var(--raw-color_grey-medium1);
 }
 
 .snippets::-webkit-scrollbar,
 .tag-list::-webkit-scrollbar,
 .groups::-webkit-scrollbar,
+code[class*="language-"]::-webkit-scrollbar,
+pre[class*="language-"]::-webkit-scrollbar,
 body::-webkit-scrollbar {
     width: 5px;
 }
@@ -600,12 +606,16 @@ body::-webkit-scrollbar {
 .snippets::-webkit-scrollbar-track,
 .tag-list::-webkit-scrollbar-track,
 .groups::-webkit-scrollbar-track,
+code[class*="language-"]::-webkit-scrollbar-track,
+pre[class*="language-"]::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track {
     background: var(--raw-color_grey-light);
 }
 
 .snippets::-webkit-scrollbar-thumb,
 .tag-list::-webkit-scrollbar-thumb,
+code[class*="language-"]::-webkit-scrollbar-thumb,
+pre[class*="language-"]::-webkit-scrollbar-thumb,
 .groups::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb {
     background-color: var(--raw-color_grey-medium2);
@@ -1513,28 +1523,29 @@ aside.sidebar {
 
 /* #region - CODE WINDOW ---------------------------------------- */
 
-.window {
+/* .window {
     background-color: var(--raw-color_code-bg);
     font-size: var(--raw-font_size-m);
     width: 100%;
     height: 100%;
+} */
+
+pre.pre-code {
+	position: fixed;
+	height: 100%;
+	width: 100%;
 }
 
 #code-block {
     display: block;
-    user-select: all;
+    /* user-select: all; */ /* select all text on click */
+    height: calc(100% - 150px ); /* 100% - top bar height */
+    overflow: auto;
 }
 
 /* #endregion */
 
 /* #region - stuff to sort ----- */
-
-#date-label {
-    font-family: var(--raw-font_main);
-    font-size: 70%;
-    padding: 5px 15px;
-    color: var(--raw-color_grey-medium1);
-}
 
 .draftWrap table {
     border: var(--raw-border);
@@ -1740,6 +1751,13 @@ ul.tagit.ui-widget.ui-widget-content {
 p.detail-desc {
     display: block;
     width: 80%;
+}
+
+#date-label {
+    font-family: var(--raw-font_main);
+    font-size: .75em;
+    padding: 5px 15px;
+    color: var(--raw-color_grey-medium1);
 }
 
 #detail-tags {
