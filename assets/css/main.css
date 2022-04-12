@@ -69,7 +69,7 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
     --raw-color_secondary : var(--raw-color_red-dark);
     --raw-color_success : var(--raw-color_green);
     --raw-color_error : var(--raw-color_red);
-    --raw-color_text : var(--raw-color_white-dark+);
+    --raw-color_text : var(--raw-color_white-dark);
     --raw-color_text-alt : var(--raw-color_grey-light);
     --raw-color_text-bg : var(--raw-color_grey-dark);
     --raw-color_code-bg : var(--raw-color_black-medium);
@@ -670,7 +670,8 @@ main {
     padding: 10px 20px;
 }
 
-.title-area a, .title-area a:hover {
+.title-area a,
+.title-area a:hover {
     text-decoration: none;
     outline-color: transparent;
 }
@@ -717,53 +718,53 @@ main {
     font-size: var(--raw-font_size-m);
     font-weight: 400;
     transform: translate(-100%, -50%);
-    border-color: var(--raw-color_grey-light);
+    border: var(--raw-border-width) solid var(--raw-color_grey-light);
     padding: 0;
     margin: auto;
     overflow: visible;
     outline: 0;
     border-radius: 50%;
     background: none;
-    transition: width 400ms ease-in-out 400ms, border-radius 700ms ease-in-out, padding 220ms ease;
+    transition: width var(--raw-transition_time) ease-in-out var(--raw-transition_time), border-radius 700ms ease-in-out, padding 220ms ease;
 }
 
 .search-bar:hover {
     color: var(--raw-color_grey-darkest);
-    border-color: var(--raw-color_grey-medium0);
+    /* border-color: var(--raw-color_grey-medium0); */
 }
 
 .search-bar::before {
     content: " ";
     display: inline-block;
-    background: var(--raw-color_white-dark);
+    background: var(--raw-color_grey-light);
     height: 3px;
     width: 30px;
     margin-inline-end: -20px;
-	border: var(--raw-border-width) solid var(--raw-color_white-dark);
+	border: var(--raw-border-width) solid var(--raw-color_grey-light);
     transform: rotate(-45deg);
-    color: var(--raw-color_white-dark);
+    color: var(--raw-color_grey-light);
     position: absolute;
     top: 40px;
     right: -40px;
 }
 
 .search-bar:hover {
-    background-color: var(--raw-color_grey-medium2);
-    border-color: var(--raw-color_grey-medium1);
+    /* background-color: var(--raw-color_grey-medium2); */
+    border-color: var(--raw-color_grey-light);
     color: var(--raw-color_grey-darkest);
 }
 
-.search-bar:focus {
+/* .search-bar:focus {
     width: 222px;
     height: 50px;
     background-color: var(--raw-color_grey-darkest);
     padding: 7px 15px;
     border-color: var(--raw-color_grey-medium0);
     color: var(--raw-color_grey-light);
-}
+} */
 
 /* reset button / lupe-griff */
-.search {
+.search-button {
     position: absolute;
     top: 0;
     left: 0;
@@ -775,15 +776,12 @@ main {
     background: none;
     padding: 0;
     border-radius: 100%;
+    border: var(--raw-border-width) solid var(--raw-color_grey-light);
     outline: 0;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
     transition: all 222ms ease-in-out 0s;
 }
 
-.search::before {
+.search-button::before {
     content: "";
     position: absolute;
     width: 20px;
@@ -792,23 +790,20 @@ main {
     transform: rotate(45deg);
     margin-top: 17px;
     margin-left: 10px;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
     transition: all 222ms ease-in-out 0s;
 }
 
 .close {
 	transition: var(--raw-transition_time) ease-in-out;
 	transition-delay: var(--raw-transition_time);
+    border-color: transparent;
 }
 
 .close:before {
 	content: "";
 	position: absolute;
-	width: 27px;
-	height: 4px;
+	width: 26px;
+	height: var(--raw-border-width);
 	margin-top: -1px;
 	margin-left: -13px;
 	background-color: var(--raw-color_white);
@@ -819,8 +814,8 @@ main {
 .close:after {
 	content: "";
 	position: absolute;
-	width: 27px;
-	height: 4px;
+	width: 26px;
+	height: var(--raw-border-width);
 	background-color: var(--raw-color_white);
 	margin-top: -1px;
 	margin-left: -13px;
@@ -833,7 +828,7 @@ main {
 	padding: 0 40px 0 10px;
 	width: 300px;
 	height: 50px;
-	border: 4px solid var(--raw-color_white);
+	border: var(--raw-border-width) solid var(--raw-color_white);
 	border-radius: 0;
 	background: none;
 	color: var(--raw-color_white);

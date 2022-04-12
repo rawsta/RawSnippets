@@ -99,11 +99,13 @@
     <div id="blur" class="blur full modal-exit"></div>
     <!-- HEADER BAR -->
     <header class="title-area">
-        <h1 class="appTitle"><i class="lar la-file-code"></i> <?=$lang['pageTitle']; ?></h1>
+        <a href="<?=$pageRoot?>" id="sitePath-holder">
+            <h1 class="appTitle"><i class="lar la-file-code"></i> <?=$lang['pageTitle']; ?></h1>
+        </a>
 
         <div class="header-options">
             <input type="search" class="search-bar" placeholder="<?=$lang['search']; ?>" id="search-input">
-            <button type="reset" class="search" id="search-button"></button>
+            <button type="reset" class="search-button" id="search-button"></button>
         </div>
 
         <nav class="header-actions">

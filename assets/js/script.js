@@ -11,15 +11,13 @@ $( document ).ready( () => {
 	const logTitlePrimary = 'color: #ff8300; font-size: 13px; font-weight: bold; padding: 10px 5px 0; border-left:3px solid #ff8300; ';
 	const logTitleWhite = 'color: #fff; font-size: 13px; font-weight: bold; padding: 10px 5px 0; border-left:3px solid #ff8300; ';
 	const logContent = 'color: #ff8300; font-size: 13px; padding: 5px; border-left:4px solid #ff8300;';
-	const logEnd = 'color: #ff8300; font-size: 13px; padding: 5px; border-left:4px solid #ff8300;';
 	const logPrimaryBG = 'color: #fff; background-color: rgba(234, 131, 0, .42); font-size: 14px; padding: 6px 16px; border-left:6px solid #ff8300;';
 	const logSecondaryBG = 'color: #fff; background-color: rgba(131, 0, 0, .42); font-size: 14px; padding: 6px 16px; border-left:6px solid #830000;';
 	const clearStyles = '';
 
 	// --- set stupid console message
-	console.log( '%c 📋 -> 🗃 Welcome to RawSnippets 🐌 ----------------------------------------- 🎇', logTitlePrimary );
+	console.log( '%c 📋 -> 🗃%c%c Welcome to RawSnippets %c%c🐌 ----------------------------------------- 🎇', logTitlePrimary, clearStyles, logTitleWhite, clearStyles, logTitlePrimary );
 	console.log( '%c 🎉 the horribly outdated, weird snippet management system ✨',  logContent );
-	console.log( '%c ..."sort of" maintained by 👨‍💻rawsta...',  logEnd );
 	console.log( '%c Expect bugs👾 and surprise✨features!', logPrimaryBG );
 	console.log( '%c ...and weird behaviour!🐱‍💻', logSecondaryBG );
 	// setTimeout( function() {
@@ -35,24 +33,10 @@ $( document ).ready( () => {
 
 	const snippetError = $( "#snippet-error" );
 
-	// const lineNumbersSpan = $( ".line-numbers span" ); //settings
-
-	// const fontChooser = $( ".font-chooser" );
-	// const fontChooserUl = $( ".font-chooser ul" );
-	// const fontChooserSpan = $( ".font-chooser span" );
-
-	// const settingOk = $( ".setting-ok" );
-	// const sNotification = $( "#s-notification" );
-	// const sNotificationPass = $( "#s-notification-pass" );
-
 	const snippetOptions = document.querySelector( ".snippet-options" );
 	const fancySwitch = document.querySelector( ".fancy" );
 	const shareLabel = $( "#share-label" );
 	const shareLink = $( "#share-link" );
-
-	// const headerActions = document.querySelector( '.header-actions' );
-	// const menuIcon = document.querySelector( '.menu-icon' );
-	// const userNav = document.querySelector( '.user-nav' );
 
 	const codeBlock = document.getElementById( 'code-block' );
 
@@ -73,7 +57,7 @@ $( document ).ready( () => {
         mainSettings    : document.querySelector( '.main-settings' ),
         mailSettings    : document.querySelector( '.mail-settings' ),
         passSettings    : document.querySelector( '.password-settings' ),
-        lineNumbersSpan : document.querySelector( '.header-options' ),
+        lineNumbersSpan : document.getElementById( 'line-num-span' ),
         fontChooser     : document.querySelector( '.font-chooser' ),
         fontChooserUl   : document.querySelector( '.font-chooser ul' ),
         fontChooserSpan : document.querySelector( '.font-chooser span' ),
@@ -85,7 +69,6 @@ $( document ).ready( () => {
 	// #endregion
 
 	// #region - HIDE THINGS ---------------------------------------- //
-	/* Hide various things on load. TODO: find a better way */
 
 	snippetError.hide();
 
@@ -95,7 +78,6 @@ $( document ).ready( () => {
 	// #endregion
 
 	// #region - HELPER ---------------------------------------- //
-	/* Lazy shortcuts for lazy coder. */
 
 	const toggleMenu = () => {
 		header.actions.classList.toggle( 'menu-open' );
@@ -163,7 +145,7 @@ $( document ).ready( () => {
 		header.searchInput.classList.toggle("square");
 	};
 
-	header.searchButton.addEventListener( "click", expand );
+	header.searchInput.addEventListener( "click", expand );
 
 
 
@@ -174,14 +156,12 @@ $( document ).ready( () => {
 
 	// Select Group in Add Snippet
 	groupSelect.on( 'click', function() {
-			console.info('selecting associated groups...' );
 		$( this ).css( "border-radius",  "5px 5px 0 0" );
 		$( ".groupDropDown" ).fadeIn( FADETIME );
 	});
 
 	// --- SELECT GROUP FOR SNIPPET
 	$( ".groupDropDown li" ).on( 'click', function() {
-			console.info('group for snippet selected...' );
 		const t = $( this );
 		groupSelect.attr( "data-id", t.attr( "id" ));
 		groupSelect.text( t.text());
@@ -280,17 +260,17 @@ $( document ).ready( () => {
 			settings.mainSettings.style.display = 'block';
 			$( ".mail-settings" ).hide();
 			$( ".password-settings" ).hide();
-			settings.settingOk.data( "current", "main" );
+			settings.settingOk.setAttribute( "data-current", "main" );
 		} else if( $( this ).text() == lang.email) {
 			settings.mainSettings.style.display = 'none';
 			$( ".mail-settings" ).show();
 			$( ".password-settings" ).hide();
-			settings.settingOk.data( "current", "mail" );
+			settings.settingOk.setAttribute( "data-current", "mail" );
 		} else if( $( this ).text() == lang.password ) {
 			settings.mainSettings.style.display = 'none';
 			$( ".mail-settings" ).hide();
 			$( ".password-settings" ).show();
-			settings.settingOk.data( "current", "password" );
+			settings.settingOk.setAttribute( "data-current", "password" );
 		}
 	});
 
@@ -308,22 +288,20 @@ $( document ).ready( () => {
 
 	// dropdown font chooser
 	settings.fontChooser.addEventListener( 'click', () => {
-			console.info('font-selection activated.' );
 		settings.fontChooserUl.fadeIn( FADETIME );
-		settings.fontChooser.css( "background-color", "var(--raw-color_primary )" );
+		settings.fontChooser.setAttribute( "style", "background-color: var(--raw-color_primary )" );
 	});
 
 	// font selected
 	$( ".font-chooser ul li" ).on( 'click', function( e )  {
 		e.stopPropagation();
-			console.log('new font selected.' );
 		settings.settingOk.textContent =  lang.apply;
 		settings.sNotification.textContent = "" ;
 		settings.sNotificationPass.textContent = "" ;
 		settings.fontChooserSpan.textContent = $( this ).text();
-		settings.fontChooserSpan.css( "font-family", $( this ).text());
+		settings.fontChooserSpan.setAttribute( "style", "font-family: " + $( this ).text() );
 		$( ".current-font" ).data( "font", $( this ).text());
-		settings.fontChooser.css( "background-color", "var(--raw-color_primary )" );
+		settings.fontChooser.setAttribute( "style", "background-color: var(--raw-color_primary )" );
 		settings.fontChooserUl.fadeOut( FADETIME );
 	});
 
@@ -332,20 +310,19 @@ $( document ).ready( () => {
 		settings.settingOk.textContent = lang.apply;
 		settings.sNotification.textContent = "";
 		settings.sNotificationPass.textContent = "";
-		if( settings.lineNumbersSpan.css( "background-color" ) == "var(--raw-color_success )" ) {
+		if( settings.lineNumbersSpan.getAttribute( 'background-color') == "var(--raw-color_success )" ) {
 			settings.lineNumbersSpan.textContent = lang.disabled;
-			settings.lineNumbersSpan.css( "background-color", "var(--raw-color_error)" );
-			settings.lineNumbersSpan.data( "value", 0);
+			settings.lineNumbersSpan.setAttribute( 'style', 'background-color: var(--raw-color_error)' );
+			settings.lineNumbersSpan.setAttribute( 'data-value', 0);
 		} else {
 			settings.lineNumbersSpan.textContent = lang.enabled;
-			settings.lineNumbersSpan.css( "background-color", "var(--raw-color_success )" );
-			settings.lineNumbersSpan.data( "value", 1);
+			settings.lineNumbersSpan.setAttribute( 'style', 'background-color: var(--raw-color_success )' );
+			settings.lineNumbersSpan.setAttribute( 'data-value', 1);
 		}
 	});
 
 	// Save the settings // TODO: Strings in lang.php
 	settings.settingOk.addEventListener( 'click', function() {
-			console.info('processing set data-values...' );
 		if( $( this ).data( "current" ) == 'main' ) {
 
 			$.post( "settings.php", {
@@ -354,19 +331,21 @@ $( document ).ready( () => {
 				'size' : $( ".font-size" ).data( 'size' ),
 				'set' : '1'
 			}, ( data ) => {
-				if( data == 'ok' ) { // lang.settingsNotSaved
+				if( data == 'ok' ) {
 					check = 1;
-						console.log('new system settings accepted.' );
+
 					settings.settingOk.textContent = lang.applied;
 					Toast.fire( {
 						icon: 'success',
-						title: 'Einstellungen gespeichert!'
+						title: lang.settingsSaved
+						// title: 'Einstellungen gespeichert!'
 					} );
 				} else {
-					// fail / lang.settingsSaved
+					// fail
 					Toast.fire( {
 						icon: 'error',
-						title: 'Fehler! Daten nicht gespeichert.'
+						title: lang.settingsNotSaved
+						// title: 'Fehler! Daten nicht gespeichert.'
 					} );
 					settings.settingOk.textContent = lang.error;
 				}
@@ -385,7 +364,7 @@ $( document ).ready( () => {
 						title: 'Passwort ge&auml;ndert!'
 					} );
 					settings.settingOk.textContent = lang.applied;
-					settings.sNotification.css( "color", "var(--raw-color_success )" );
+					settings.sNotification.setAttribute( "style", "color: var(--raw-color_success )" );
 					settings.sNotification.textContent = lang.checkEmailDetails;
 				} else {
 					// fail
@@ -394,7 +373,7 @@ $( document ).ready( () => {
 						title: 'Fehler! Konnte nicht gespeichert werden.'
 					} );
 					settings.settingOk.textContent = lang.error;
-					settings.sNotification.css( "color", "var(--raw-color_error )" );
+					settings.sNotification.setAttribute( "style", "color: var(--raw-color_error )" );
 					settings.sNotification.textContent = data;
 				}
 			});
@@ -409,7 +388,7 @@ $( document ).ready( () => {
 			}, ( data ) => {
 				if( data == 'ok' ) {
 					settings.settingOk.textContent = lang.applied;
-					settings.sNotificationPass.css( "color", "var(--raw-color_success )" );
+					settings.sNotificationPass.setAttribute( "style", "color: var(--raw-color_success )" );
 					settings.sNotificationPass.textContent = lang.passwordChanged;
 				} else {
 					// fail
@@ -417,7 +396,7 @@ $( document ).ready( () => {
 						icon: 'error',
 						title: 'Fehler! Konnte nicht gespeichert werden.'
 					} );
-					settings.sNotificationPass.css( "color", "var(--raw-color_error)" );
+					settings.sNotificationPass.setAttribute( "style", "color: var(--raw-color_error)" );
 					settings.sNotificationPass.textContent = data;
 				}
 			});
@@ -452,17 +431,15 @@ $( document ).ready( () => {
 		trigger.addEventListener( 'click', ( e ) => {
 			e.preventDefault();
 			const modal = document.getElementById( trigger.dataset.modal );
-			// blur.classList.add( 'open' );
-			modal.classList.add( 'open' );
 			toggleBlur();
+			modal.classList.add( 'open' );
 
 			const exits = modal.querySelectorAll( '.modal-exit' );
 			exits.forEach( ( exit ) => {
 				exit.addEventListener( 'click', ( e ) => {
 					e.preventDefault();
-					// blur.classList.remove( 'open' );
-					modal.classList.remove( 'open' );
 					toggleBlur();
+					modal.classList.remove( 'open' );
 				});
 			});
 		});
@@ -549,15 +526,11 @@ $( document ).ready( () => {
 	const snippets = $( ".snippets" );
 	const search_bar = $( ".search-bar" );
 
-	// $( ".code" ).css( "z-index", "-1" );
-	// $( ".snippet-icons" ).css( "z-index", "0" );
-
 	//TODO: nur auf keys achten wenn kein popup offen ist
 	$( document ).on( "keydown", ( e ) => {
 		// focus search on [F3] = 114 and [ctrl] + [f] = 70
 		// [/] = 55 - numpad[/] = 111 - e.shiftKey
 		if( e.keyCode === 114 || e.keyCode === 111 || ( e.ctrlKey && e.keyCode === 70 ) || ( e.shiftKey && e.keyCode === 55 ) ) {
-			console.info('🤖 activating snippetfinder...' );
 			$( ".search-bar" ).focus();
 			e.preventDefault();
 		}
@@ -578,13 +551,13 @@ $( document ).ready( () => {
 
 					if( positionCheck == "tags" ) {
 
-						$( ".tag-list" ).hide( "slide", { direction: "right" }, 300);
-						snippets.show( "slide", { direction: "left" }, 300);
+						$( ".tag-list" ).hide( "slide", { direction: "right" }, 420);
+						snippets.show( "slide", { direction: "left" }, 420);
 
 					} else if( positionCheck == "groups" ) {
 
-						$( ".groups" ).hide( "slide", { direction: "right" }, 300);
-						snippets.show( "slide", { direction: "left" }, 300);
+						$( ".groups" ).hide( "slide", { direction: "right" }, 420);
+						snippets.show( "slide", { direction: "left" }, 420);
 
 					}
 					snippets.html( data );
@@ -592,13 +565,13 @@ $( document ).ready( () => {
 				if( search_bar.val() == "" ) {
 					if( positionCheck == "tags" ) {
 
-						snippets.hide( "slide", { direction: "left" }, 300);
-						$( ".tag-list" ).show( "slide", { direction: "right" }, 300);
+						snippets.hide( "slide", { direction: "left" }, 420);
+						$( ".tag-list" ).show( "slide", { direction: "right" }, 420);
 
 					} else if( positionCheck == "groups" ) {
 
-						snippets.hide( "slide", { direction: "left" }, 300);
-						$( ".groups" ).show( "slide", { direction: "right" }, 300);
+						snippets.hide( "slide", { direction: "left" }, 420);
+						$( ".groups" ).show( "slide", { direction: "right" }, 420);
 
 					}
 				} else if( data.trim() == "" ) {
@@ -623,7 +596,6 @@ $( document ).ready( () => {
 		$( "#description" ).val( "" );
 		$( "#snippetArea" ).val( "" );
 		$( "#myTags" ).tagit( "removeAll" );
-		// blur.classList.add( 'open' );
 		toggleBlur();
 	});
 
@@ -632,8 +604,6 @@ $( document ).ready( () => {
 			icon: 'info',
 			title: 'Abgebrochen! Es wurde nichts gespeichert.'
 		} );
-		// $( ".full" ).fadeOut( FADETIME );
-		// blur.classList.remove( 'open' );
 		toggleBlur();
 	});
 
@@ -660,8 +630,6 @@ $( document ).ready( () => {
 							window.location.reload();
 							return;
 						}, 3000 );
-						// location.reload();
-						// return;
 					}
 					Toast.fire( {
 						icon: 'error',
@@ -691,8 +659,6 @@ $( document ).ready( () => {
 							window.location.reload();
 							return;
 						}, 3000 );
-						// window.location.reload();
-						// return;
 					}
 					Toast.fire( {
 						icon: 'error',
@@ -724,13 +690,11 @@ $( document ).ready( () => {
 		e.preventDefault();
 
 		if ( $( this ).hasClass( "isDown" ) ) {
-				console.info('...hiding additional data...' );
 			$( ".details-window-under" ).animate({"top": `-${top_height}`, "opacity" : 0}, FADETIME);
 			$( this ).removeClass( "isDown" );
 			id_details_button.removeClass( "box_rotate" );
 			id_details_button.prop( "title", lang.showMoreDetails );
 		} else {
-				console.info('...showing additional data...' );
 			$( ".details-window-under" ).animate({"top" : top_height, "opacity" : 1}, FADETIME);
 			$( this ).addClass( "isDown" );
 			id_details_button.addClass( "box_rotate" );
@@ -922,7 +886,6 @@ function getSnippet( id ) {
 	getDetails( id );
 	$( "#details-button" ).show();
 	$( ".details-window-top" ).show();
-	// $( ".snippet-option-wrap" ).css( "z-index", "1" );
 
 	$.post( "get-snippet.php", {'id' : id, 'flag' : true}, ( data ) => {
 		$( "#code-block" ).html( data );
@@ -956,7 +919,6 @@ function getDetails( id ) {
 	let tempSnippet;
 
 	$( "#copy-label" ).text( lang.copy );
-	// $( "#copy-label" ).css( "right", "65px" );
 	$.post( "get-details.php", {'id' : id}, ( data ) => {
 		$( ".detail-title" ).html(data.title);
 		$( "#detail-desc" ).html(data.description);
@@ -965,7 +927,6 @@ function getDetails( id ) {
 
 		tempSnippet = data.idSnippet;
 
-		// shareLink.val(`${$( "#sitePath-holder" ).text()}/public.php?id=${data.idSnippet}`);
 		shareLink.val(`${$( "#sitePath-holder" ).text()}/public.php?id=${data.idSnippet}`);
 
 		// set sharing dynamically / if not public -disable
@@ -1076,12 +1037,7 @@ function removeSnippet ( id ) {
 		} else if( result.isDenied ) {
 			Swal.fire('Save!', 'Snippet doch nicht gel&ouml;scht', 'info' );
 		}
-	})
-	// $.post( "remove-snippet.php", {id}, ( message ) => {
-	// 	if( message == 'ok' ) {
-	// 		location.reload();
-	// 	}
-	// });
+	} )
 }
 
 // #endregion
