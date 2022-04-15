@@ -17,9 +17,9 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
 
 :root {
     /* --- FONTS --- */
-    /* font-weight-range: 400 -> 600 -> 800 */
-    --raw-font_main: 'Inter', sans-serif;
-    --raw-font_mono: 'JetBrains Mono', monospace;
+
+    --raw-font_main: 'Inter', sans-serif; /* range: 400 -> 600 -> 800 */
+    --raw-font_mono: 'Fira Code', monospace; /* range: 300 -> 400 -> 500 -> 600 -> 700 */
 
     /* css clamp() => clamp(minimum, preferred, maximum) */
     --raw-font_size-base : 2rem;
@@ -30,8 +30,10 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
     --raw-font_size-m : calc( var(--raw-font_size-base) * .95 );
     --raw-font_size-s : calc( var(--raw-font_size-base) * .77 );
     --raw-font_size-xs : calc( var(--raw-font_size-base) * .55 );
+
     --raw-line_height : 1.625;
     --raw-line_height-title : 1.25;
+
 
     /* --- COLORS --- */
     --raw-color_white : #fee;
@@ -54,6 +56,7 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
     --raw-color_red-dark : #830000;
     --raw-color_red-darker : #420000;
     --raw-color_green : #128843;
+
 
     /* --- COLORS TRANSPARENT --- */
     --raw-color_white_25: rgba(255, 235, 235, .25);
@@ -172,10 +175,21 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
 @supports ( font-variation-settings: normal ) {
     :root {
         --raw-font_main: 'Inter var', sans-serif;
+        --raw-font_mono: 'Fira Code VF', monospace;
     }
 
     html {
         font-variation-settings: normal;
+    }
+
+    code[class*="language-"],
+    pre[class*="language-"] {
+        font-feature-settings: "calt" 1;  /* Enable ligatures for IE 10+, Edge */
+        text-rendering: optimizeLegibility; /* Force ligatures for Webkit, Blink, Gecko */
+
+        /* not sure about this */
+        white-space: pre-wrap;
+        word-break: break-all;
     }
 }
 
@@ -227,7 +241,7 @@ em {
 }
 
 strong {
-    font-weight: 800;
+    font-weight: 700;
 }
 
 ul li, ol li {
@@ -497,7 +511,9 @@ input[type="checkbox"] {
 }
 
 /* generally hide stuff */
-var, template, .hidden {
+var,
+template,
+.hidden {
     display: none;
 }
 
