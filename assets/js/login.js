@@ -4,7 +4,7 @@ $( document ).ready( function() {
     const loginNotice = $( ".login-notice" );
     const resetNotice = $( ".reset-notice" );
 
-	console.log( 'FADETIME' , FADETIME);
+	console.log( '420' , 420);
 
 	loginNotice.hide();
 	error.hide();
@@ -25,7 +25,7 @@ $( document ).ready( function() {
 				window.location.href = "main.php";
 			} else {
 				loginNotice.html( data );
-				loginNotice.fadeIn( FADETIME );
+				loginNotice.fadeIn( 420 );
 			}
 		});
 	});
@@ -33,14 +33,14 @@ $( document ).ready( function() {
 	$( "#login-button" ).on( 'click', () => {
 		// $( ".index-wrap" ).hide();
 		// TODO: switch to first tab
-		$( ".login-wrap" ).fadeIn( FADETIME );
+		$( ".login-wrap" ).fadeIn( 420 );
 	});
 
 	$( "#forgot-pass-link" ).on( 'click', () => {
 		// $( ".index-wrap" ).hide();
 		// TODO: switch to second tab
 		$( ".login-wrap" ).hide();
-		$( ".reset-wrap" ).fadeIn( FADETIME );
+		$( ".reset-wrap" ).fadeIn( 420 );
 	});
 
 
@@ -52,7 +52,7 @@ $( document ).ready( function() {
             'email' : $( "#reset-email" ).val(),
             'flag'  : 'user'
 		},( data ) => {
-			resetNotice.fadeIn( FADETIME );
+			resetNotice.fadeIn( 420 );
 			resetNotice.html(`<p>${data}</p>`);
 		});
 	});
@@ -67,7 +67,7 @@ $( document ).ready( function() {
             'password'  : $( "#password-register" ).val(),
             'rpassword' : $( "#rpassword-register" ).val()
 		}, ( data ) => {
-			error.fadeIn( FADETIME );
+			error.fadeIn( 420 );
 			error.html( "" );
 			for( const i in data ) {
 				error.append( `${data[i]}<br>` );

@@ -23,7 +23,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title><?=$lang['pageTitle']?></title>
+	<title>Identification required ]|[ <?=$lang['pageTitle']?></title>
 
 	<meta name="author" content="Sebastian 'rawsta' Fiele">
 	<meta name="description" content="Another Snippet Manager! Under constant construction.">
@@ -61,10 +61,6 @@
 	</header>
 
 	<main class="index-wrap">
-		<!-- TODO: redirect all notification calls to unified notification header // maybe sweetalert? -->
-			<!-- <a id="login-button" class="large button" href="#"><i class="las la-sign-in-alt"></i> < ?php echo $lang['login']; ? ></a>
-			<a id="register-button" class="large button secondary" href="#">< ?php echo $lang['register']; ? ></a> -->
-			<!-- <a id="register-button" class="buttons" href="register.php">< ?php echo $lang['register']; ? ></a> -->
 
 		<article class="tabcordion">
 			<!-- TODO: split in seperate forms -->
@@ -145,7 +141,7 @@
 		</article>
 	</main>
 	<footer class="info">
-			<p class="copyright"><span class="copyright"><a href="//www.rawsta.de/" class="link-to-rawsta" >&copy;2022 | RawSnippets&trade;</a></span> ]|&brvbar;|[ blame rawsta for this.</p>
+			<p class="copyright"><a href="//www.rawsta.de/" class="link-to-rawsta" >&copy;2022 | RawSnippets&trade;</a> ]|&brvbar;|[ <a href="https://github.com/rawsta/RawSnippets" class="link-to-github" >blame rawsta for this.</a></p>
 	</footer>
 </body>
 </html>

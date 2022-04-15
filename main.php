@@ -85,7 +85,7 @@
         $(function(){
             $('#myTags').tagit({
                 availableTags: [<?php echo implode(", ", $availableTags); ?>],
-                placeholderText : "<?=$lang['snippetTags']; ?>"
+                placeholderText : "<?=$lang['snippetTags']?>"
             });
         });
     </script>
@@ -100,11 +100,11 @@
     <!-- HEADER BAR -->
     <header class="title-area">
         <a href="<?=$pageRoot?>" id="sitePath-holder">
-            <h1 class="appTitle"><i class="lar la-file-code"></i> <?=$lang['pageTitle']; ?></h1>
+            <h1 class="appTitle"><i class="lar la-file-code"></i> <?=$lang['pageTitle']?></h1>
         </a>
 
         <div class="header-options">
-            <input type="search" class="search-bar" id="search-input" placeholder="<?=$lang['search']; ?>" aria-label="<?=$lang['search']; ?>">
+            <input type="search" class="search-bar" id="search-input" placeholder="<?=$lang['search']?>" aria-label="<?=$lang['search']?>">
             <button type="reset" class="search-button" id="search-button" aria-label="Submit Search"></button>
         </div>
 
@@ -115,16 +115,16 @@
             </span>
             <a class="menu-icon"><span></span></a>
             <ul class="user-nav">
-                <li id="export-label" class="option-labels has-sub "><i class="las la-file-export la-lg la-fw"></i><a href="#"> <?=$lang['exportAll']; ?></a>
+                <li id="export-label" class="option-labels has-sub "><i class="las la-file-export la-lg la-fw"></i><a href="#"> <?=$lang['exportAll']?></a>
                     <ul class="export-options">
-                        <li id="export-all-sublime" title="<?=$lang['exportAllSublime']; ?>"><a href="export-sublime.php">Sublime text</a></li>
-                        <li id="export-all-json" title="<?=$lang['exportAllJson']; ?>"><a href="export-json.php">JSON</a></li>
-                        <li id="export-all-plain" title="<?=$lang['exportPlain']; ?>"><a href="export-plain.php"><?=$lang['plainText']; ?></a></li>
+                        <li id="export-all-sublime" title="<?=$lang['exportAllSublime']?>"><a href="export-sublime.php">Sublime text</a></li>
+                        <li id="export-all-json" title="<?=$lang['exportAllJson']?>"><a href="export-json.php">JSON</a></li>
+                        <li id="export-all-plain" title="<?=$lang['exportPlain']?>"><a href="export-plain.php"><?=$lang['plainText']?></a></li>
                     </ul>
                 </li>
-                <li id="import-label" class="option-labels"><i class="las la-file-import la-lg la-fw"></i><a href="#"> <?=$lang['import']; ?></a></li>
-                <li class="option-labels" data-modal="settings"><a href="#" data-modal="settings"><i class="las la-cog la-lg la-fw"></i> <?=$lang['settings']; ?></a></li>
-                <li class="option-labels"><a class="signout" href="logout.php"><i class="las la-sign-out-alt la-lg la-fw"></i> <?=$lang['signOut']; ?></a></li>
+                <li id="import-label" class="option-labels"><i class="las la-file-import la-lg la-fw"></i><a href="#"> <?=$lang['import']?></a></li>
+                <li class="option-labels" data-modal="settings"><a href="#" data-modal="settings"><i class="las la-cog la-lg la-fw"></i> <?=$lang['settings']?></a></li>
+                <li class="option-labels"><a class="signout" href="logout.php"><i class="las la-sign-out-alt la-lg la-fw"></i> <?=$lang['signOut']?></a></li>
             </ul>
         </nav>
     </header>

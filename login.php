@@ -7,18 +7,18 @@
 
 	<title>RawSnippets - 404</title>
 
-    <link href="css/fonts.css" rel="stylesheet" type="text/css">
-    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="css/fonts.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
 
-	<script src="js/jquery-3.6.0.min.js" type="text/javascript"></script>
-    <script src="js/script.js" type="text/javascript"></script>
+	<script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/script.js"></script>
 </head>
 <body>
 
 <div class="login-wrap">
 	<a href="index.php"><h1 class="main-label">WRONG! -> GO TO INDEX</h1></a>
 	<a href="index.php"><label class="main-label">RawSnippets</label></a>
-	<form action="login-data.php" method="post" class="login-form">
+	<form action="login-data.php" method="post" class="login-form" disabled>
 		<input type="text" name="username" placeholder="Username" id="input-username"><br>
 		<input type="password" name="password" placeholder="Password" id="input-password"><br>
 		<input type="checkbox" name="remember-me" value="1"><label>Remember me</label>

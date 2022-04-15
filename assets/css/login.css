@@ -150,6 +150,7 @@ html {
     box-sizing: border-box;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
+    height: -webkit-fill-available;
     text-rendering: optimizeLegibility;
     font-variant-ligatures: normal;
     font-size: 62.5%; /* 10px fontbase */
@@ -168,12 +169,16 @@ body {
     font-family: var(--raw-font_main);
     font-size: 1.8rem;
     font-weight: 400;
+    min-height: 100vh;
+    /* mobile viewport bug fix */
+    min-height: -webkit-fill-available;
+    line-height: 1.5;
 }
 
 a,
 a:visited {
     color: var(--raw-color_text-alt);
-    text-decoration: underline;
+    text-decoration: dashed;
     text-decoration-color: currentColor;
     transition: var(--raw-transition);
 }
@@ -193,7 +198,8 @@ strong {
     font-weight: 800;
 }
 
-ul li, ol li {
+ul li,
+ol li {
     list-style: none;
 }
 
@@ -319,6 +325,11 @@ label {
     color: var(--raw-color_grey-medium1) ;
 }
 
+label + input {
+    font-size: var(--raw-font_size-xs);
+    color: var(--raw-color_grey-medium0) ;
+}
+
 textarea,
 input[type="text"],
 input[type="email"],
@@ -362,7 +373,8 @@ input[type="checkbox"] {
 }
 
 .language-wrap button + button {
-    margin-inline-start: var(--raw-space_05x); }
+    margin-inline-start: var(--raw-space_05x);
+}
 
 .language-wrap button:not(.active) {
     opacity: var(--raw-opacity_hover);
@@ -460,7 +472,9 @@ input[type="checkbox"] {
 }
 
 /* generally hide stuff */
-var, template, .hidden {
+var,
+template,
+.hidden {
     display: none;
 }
 
@@ -603,6 +617,7 @@ body.login {
     background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
     height: 100vh;
 }
+
 body.login a,
 body.login a:visited {
     text-decoration-color: transparent;
@@ -637,22 +652,6 @@ header.thing-at-athe-top {
     padding: var(--raw-space_2x);
 }
 
-/* title */
-/* ist jetzt appTitle */
-/* .main-title {
-    font-family: var(--raw-font_main);
-    font-size: var(--raw-font_size-xxl);
-    display: block;
-    position: relative;
-    line-height: var(--raw-line_height-title);
-    color: var(--raw-color_white);
-}
-
-.main-title:hover {
-    text-decoration: none;
-    text-shadow: 0 0 var(--raw-space_1x) var(--raw-color_secondary);
-} */
-
 /* #endregion */
 
 /* #region -> TABCORDION TABS */
@@ -660,7 +659,8 @@ header.thing-at-athe-top {
 .tabcordion {
     background: var(--raw-color_grey-dark);
     box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.23);
-    max-width: 680px;
+    max-width: 69vw;
+    /* max-width: 680px; */
     padding: 1rem;
     margin: 1rem auto 4rem auto;
     border-radius: var(--raw-border-radius);
@@ -941,6 +941,16 @@ header.thing-at-athe-top {
 
 #reset-form-input input[type="submit"] {
     margin-left: 0 !important;
+}
+
+/* #endregion */
+
+/* #region - FOOTER ---------------------------------------- */
+
+footer.info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 /* #endregion */
