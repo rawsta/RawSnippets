@@ -17,15 +17,16 @@
 
 ?>
 <!DOCTYPE html>
-<html lang="<?php if(isset($_SESSION['lang'])) echo $_SESSION['lang']; else echo "en";?>">
+<html lang="<?php if(isset($_SESSION['lang'])) echo $_SESSION['lang']; else echo 'en';?>">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title><?=$lang['pageTitle']; ?></title>
+	<title><?=$lang['pageTitle']?></title>
+
 	<meta name="author" content="Sebastian 'rawsta' Fiele">
-	<meta name="description" content="Another snippet library! Still trying to polish this turd.">
+	<meta name="description" content="Another Snippet Manager! Under constant construction.">
 
 	<link rel="icon" href="favicon.ico" sizes="any">
 	<link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -34,19 +35,20 @@
 	<link rel="stylesheet" href="lib/sweetalert2/borderless.css">
 
 	<link rel="stylesheet" href="assets/css/fonts.css">
-	<link rel="stylesheet" href="assets/css/main.css">
+	<!-- <link rel="stylesheet" href="assets/css/main.css"> -->
+	<link rel="stylesheet" href="assets/css/login.css">
 
 	<script src="lib/jquery/jquery-3.6.0.min.js"></script>
 	<script src="lib/sweetalert2/sweetalert2.min.js"></script>
 
-    <script src="assets/js/script.js"></script>
-    <script src="assets/js/index.js"></script>
+    <!-- <script src="assets/js/script.js"></script> -->
+    <script src="assets/js/login.js"></script>
 
 	<meta name="theme-color" content="#830000">
 
 </head>
 
-<body class="this-is-still-in-development expect-bugs aka surprise-features _o0o_ but_first__lets login to_the_awesome_tool">
+<body class="this-is-still-in-development expect-bugs _and_ surprise-features but_first__lets login">
 
 	<header class="thing-at-athe-top">
 		<a href="index.php"><h1 class="appTitle"><i class="las la-file-code"></i> <?=$lang['pageTitle']?></h1></a>
@@ -58,7 +60,7 @@
 
 	</header>
 
-	<main class="main-wrap">
+	<main class="index-wrap">
 		<!-- TODO: redirect all notification calls to unified notification header // maybe sweetalert? -->
 			<!-- <a id="login-button" class="large button" href="#"><i class="las la-sign-in-alt"></i> < ?php echo $lang['login']; ? ></a>
 			<a id="register-button" class="large button secondary" href="#">< ?php echo $lang['register']; ? ></a> -->
@@ -143,9 +145,7 @@
 		</article>
 	</main>
 	<footer class="info">
-		<p class="infos">Dies ist wohl das &auml;lteste Tool welches noch aktiv im Einsatz ist.<br>
-		Erste Einrichtung war ca. 2014 und mittlerweile versuche ich, dass halbwegs auf einen aktuellen Stand zu bringen und allgemein die Funktionalit&auml;t zu erweitern.</p>
-			<p class="copyright">&ang;&prop;&perp;&copy;2022&times;&infin; &empty;&isin;&ni;&Xi;&equiv;&exist;&curren;&sub;]|&brvbar;|[&sup;&loz;&Sigma; rawsta&sup1;&trade;&sup2;&sup3; &there4;&radic;&Delta;&forall;&Lambda;&nabla;&nu;&and;&or;</p>
+			<p class="copyright"><span class="copyright"><a href="//www.rawsta.de/" class="link-to-rawsta" >&copy;2022 | RawSnippets&trade;</a></span> ]|&brvbar;|[ blame rawsta for this.</p>
 	</footer>
 </body>
 </html>

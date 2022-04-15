@@ -48,13 +48,13 @@
 
 ?>
 <!DOCTYPE html>
-<html lang="<?php if(isset($_SESSION['lang'])) { echo $_SESSION['lang']; } else { echo "en"; }?>">
+<html lang="<?php if(isset($_SESSION['lang'])) { echo $_SESSION['lang']; } else { echo 'en'; }?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title><?=$lang['pageTitle']; ?></title>
+    <title><?=$lang['pageTitle']?></title>
 
 	<link rel="icon" href="favicon.ico">
 	<link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -104,8 +104,8 @@
         </a>
 
         <div class="header-options">
-            <input type="search" class="search-bar" placeholder="<?=$lang['search']; ?>" id="search-input">
-            <button type="reset" class="search-button" id="search-button"></button>
+            <input type="search" class="search-bar" id="search-input" placeholder="<?=$lang['search']; ?>" aria-label="<?=$lang['search']; ?>">
+            <button type="reset" class="search-button" id="search-button" aria-label="Submit Search"></button>
         </div>
 
         <nav class="header-actions">
@@ -212,7 +212,7 @@
 
     </aside>
 
-    <!-- MAIN WINDOW / CODE STUFF -->
+    <!-- MAIN WINDOW / CODE STUFF && FOOTER-->
     <main class="window">
 
         <!-- Snippet details -->
@@ -236,9 +236,10 @@
         </pre>
         <pre hidden class="raw-code"></pre>
 
+        <!-- FOOTER -->
         <footer class="code-footer">
             <div class="footer-options">
-                <span class="copyright">&copy;2022 | RawSnippets&trade;</span>
+                <span class="copyright"><a href="//www.rawsta.de/" class="link-to-rawsta" >&copy;2022 | RawSnippets&trade;</a></span>
                 <!-- SNIPPET OPTIONS lower right on snippet view -->
                 <nav class="snippet-options">
                     <!-- TODO: change to svg  -->
