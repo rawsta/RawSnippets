@@ -78,6 +78,11 @@
 
     <script src="assets/js/script.js"></script>
 
+    <!-- set as meta and :root / TODO: add light mode - maybe -->
+    <!-- <meta name="color-scheme" content="dark light"> -->
+    <meta name="color-scheme" content="dark">
+
+    <!-- TODO: add manifest -->
     <meta name="theme-color" content="#830000">
 
     <!-- TODO: replace TagIt? -->
@@ -108,7 +113,7 @@
             <button type="reset" class="search-button" id="search-button" aria-label="Submit Search"></button>
         </div>
 
-        <nav class="header-actions">
+        <nav class="header-actions" aria-label="Mainmenu">
             <span class="user-options">
                 <a class="username" href="#"><i class="lar la-user la-lg la-fw"></i> <?=$lang['welcome'] .', '. $_SESSION['user']; ?></a>
                 <a class="signout" href="logout.php"><i class="las la-sign-out-alt la-lg la-fw"></i> <?=$lang['signOut']; ?></a>
@@ -130,7 +135,7 @@
     </header>
 
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" aria-label="SnippetSelection">
         <div class="upperOptions">
             <span id="groupsTrigger" onclick="showGroups();" class="upperOptionsActive"><i class="lar la-file-code la-lg"></i> <?=$lang['groups']; ?></span>
             <span id="tagsTrigger" onclick="showTags();"><i class="las la-tags la-lg"></i> <?=$lang["tags"]; ?></span>
@@ -241,7 +246,7 @@
             <div class="footer-options">
                 <span class="copyright"><a href="//www.rawsta.de/" class="link-to-rawsta" >&copy;2022 | RawSnippets&trade;</a></span>
                 <!-- SNIPPET OPTIONS lower right on snippet view -->
-                <nav class="snippet-options">
+                <nav class="snippet-options" aria-label="Options">
                     <!-- TODO: change to svg  -->
                     <div class="fancy" tabindex="-1">
                         <div class="balken"></div>
@@ -262,11 +267,13 @@
 <!-- ---//--- MODALS AND STUFF ---//--- -->
 
 <!-- ADD NEW SNIPPET -->
-    <div id="addsnip" class="add-snippet-window">
+    <section id="addsnip" class="add-snippet-window">
         <!-- TODO: Strings in lang.php auslagern! -->
-        <h4 class="modal-title"><?=$lang['addNewSnippet']?></h4>
+        <h3 class="modal-title"><?=$lang['addNewSnippet']?></h3>
+
         <label for="name">Titel des neuen Snippets</label>
         <input type="text" placeholder="<?=$lang['name']?>" name="name" id="name">
+
         <!-- TODO: Fix this dropdown -->
         <label data-id="" id="groupSelect"><?=$lang['selectGroup']?></label>
         <ul class="groupDropDown">
@@ -274,21 +281,24 @@
                 <li id="<?=$gIds[$i]?>"><?=$gNames[$i]?></li>
             <?php } ?>
         </ul>
+
         <!-- TODO: Links erkennen und verlinken -->
         <label for="description">Kurze Beschreibung des Snippets <span class="small">(Optional)</span></label>
         <textarea placeholder="<?=$lang['description']?>" name="description" id="description" spellcheck="false"></textarea>
+
         <label for="snippetArea">Snippet einf&uml;gen</label>
         <textarea placeholder="<?=$lang['snippet']?>" name="snippet" id="snippetArea" spellcheck="false"></textarea>
+
         <label for="myTags">Tags <span class="small">(mit autocomplete)</span></label>
         <input type="text" name="tags" id="myTags">
         <label for="myTags"><span class="small">(erleichtern die Suche und helfen bei der &Uuml;bersicht)</span></label>
 
         <button class="accept" id="save-snippet"><?=$lang['save']?></button>
         <button class="cancel" id="snippet-cancel"><?=$lang['cancel']?></button>
-        <span id="snippet-error"></span>
-        <span hidden data-type="save" class="check-label"></span>
-        <span hidden class="id-holder"></span>
-    </div>
+            <span id="snippet-error"></span>
+            <span hidden data-type="save" class="check-label"></span>
+            <span hidden class="id-holder"></span>
+    </section>
 
 <!-- SUBLIME SNIPPET EXPORT -->
     <form class="sublime-snippet-window" method="post" action="sublime-snippet.php" style="display:none;">
@@ -418,7 +428,7 @@
     </article>
 
 </div><!-- /div container -->
-<!-- TODO: Is this still needed?  -->
+<!-- TODO: Is this still needed? only used in sharing? -->
 <var id="sitePath-holder" hidden><?=$pageRoot?></var>
 </body>
 </html>

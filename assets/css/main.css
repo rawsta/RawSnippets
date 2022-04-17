@@ -17,7 +17,6 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
 
 :root {
     /* --- FONTS --- */
-
     --raw-font_main: 'Inter', sans-serif; /* range: 400 -> 600 -> 800 */
     --raw-font_mono: 'Fira Code', monospace; /* range: 300 -> 400 -> 500 -> 600 -> 700 */
 
@@ -55,6 +54,7 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
     --raw-color_red : #be1a1a;
     --raw-color_red-dark : #830000;
     --raw-color_red-darker : #420000;
+    --raw-color_blue-darker : #00091b;
     --raw-color_green : #128843;
 
 
@@ -78,6 +78,16 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
     --raw-color_text-bg : var(--raw-color_grey-dark);
     --raw-color_code-bg : var(--raw-color_black-medium);
     --raw-color_bg : var(--raw-color_white-dark);
+    --raw-color_accent : var(--raw-color_orange);
+
+
+    /* we prefer dark TODO: add light mode -maybe */
+    /* color-scheme: dark light; */
+    color-scheme: dark;
+    /* add accent-color */
+    accent-color: var(--raw-color_accent);
+
+
 
     /* --- BUTTONS --- */
     --raw-button_border-width: 4px;
@@ -89,6 +99,8 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
     --raw-border-width: 3px;
     --raw-border-radius: 5px;
     --raw-border: var(--raw-border-width) solid var(--raw-color_black-light);
+    /* for input focus */
+    --raw-outline: 2px dotted var(--raw-color_white_75);
 
     /* --- SIZES --- */
     --raw-space_base: 20px;
@@ -123,40 +135,6 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
     --textFrameRatio: 2.37;
     --textFrameY: 0.8em;
     --textFrameX: calc(var(--textFrameY) * var(--textFrameRatio));
-
-    /* colors - HSL */
-    /* --accentH: 31;
-    --accentS: 100%;
-    --accentL: 50%;
-    --c-accent: hsl(var(--accentH), var(--accentS), var(--accentL));
-    --c-accentContrasted: hsl(var(--accentH), var(--accentS), 15%);
-    --greyH: var(--accentH);
-    --greyS: 10%;
-    --initialGreyLightness: 93%;
-    --greyscaleLightnessIncrement: 11.3%;
-    --grey1L: var(--initialGreyLightness);
-    --grey2L: calc(var(--initialGreyLightness) - var(--greyscaleLightnessIncrement) * 1);
-    --grey3L: calc(var(--initialGreyLightness) - var(--greyscaleLightnessIncrement) * 2);
-    --grey4L: calc(var(--initialGreyLightness) - var(--greyscaleLightnessIncrement) * 3);
-    --grey5L: calc(var(--initialGreyLightness) - var(--greyscaleLightnessIncrement) * 4);
-    --grey6L: calc(var(--initialGreyLightness) - var(--greyscaleLightnessIncrement) * 5);
-    --grey7L: calc(var(--initialGreyLightness) - var(--greyscaleLightnessIncrement) * 6);
-    --grey8L: calc(var(--initialGreyLightness) - var(--greyscaleLightnessIncrement) * 7);
-    --c-grey1: hsl(var(--greyH), var(--greyS), var(--grey1L));
-    --c-grey2: hsl(var(--greyH), var(--greyS), var(--grey2L));
-    --c-grey3: hsl(var(--greyH), var(--greyS), var(--grey3L));
-    --c-grey4: hsl(var(--greyH), var(--greyS), var(--grey4L));
-    --c-grey5: hsl(var(--greyH), var(--greyS), var(--grey5L));
-    --c-grey6: hsl(var(--greyH), var(--greyS), var(--grey6L));
-    --c-grey7: hsl(var(--greyH), var(--greyS), var(--grey7L));
-    --c-grey8: hsl(var(--greyH), var(--greyS), var(--grey8L));
-    --c-border: hsla(var(--greyH), var(--greyS), var(--grey8L), 0.1);
-    --c-overlay: hsla(var(--greyH), var(--greyS), var(--grey8L), 0.07);
-    --c-background: #fff;
-    --c-body: var(--c-grey8);
-    --c-bodyDimmed: hsla(var(--greyH), var(--greyS), var(--grey8L), 0.5);
-    --c-fieldBorder: var(--c-grey2);
-    --c-buttonBg: var(--c-grey2); */
 
     /* font-sizes */
     --baseTextSize: 1.6rem;
@@ -195,6 +173,62 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
 
 /* #endregion */
 
+/* special ligatures from inter font. not sure if useful.
+  mostly here as a remionder to test it someday */
+    /*
+    .inter-dlig {
+        --inter-dlig: "dlig" on;
+    }
+
+    @supports (font-variant-ligatures: discretionary-ligatures) {
+        .inter-dlig {
+            --inter-dlig: "____";
+            font-variant-ligatures: discretionary-ligatures;
+        }
+    }
+
+    .inter-dnom {
+        --inter-dnom: "dnom" on;
+    }
+
+    .inter-frac {
+        --inter-frac: "frac" on;
+    }
+
+    @supports (font-variant-numeric: diagonal-fractions) {
+        .inter-frac {
+            --inter-frac: "____";
+            font-variant-numeric: diagonal-fractions;
+        }
+    }
+
+    .inter-numr {
+        --inter-numr: "numr" on;
+    }
+
+    .inter-ordn {
+        --inter-ordn: "ordn" on;
+    }
+
+    @supports (font-variant-numeric: ordinal) {
+        .inter-ordn {
+            --inter-ordn: "____";
+            font-variant-numeric: ordinal;
+        }
+    }
+
+    .inter-pnum {
+        --inter-pnum: "pnum" on;
+    }
+
+    @supports (font-variant-numeric: proportional-nums) {
+        .inter-pnum {
+            --inter-pnum: "____";
+            font-variant-numeric: proportional-nums;
+        }
+    } */
+
+
 /* #region - BASICS ---------------------------------------- */
 
 html {
@@ -202,7 +236,6 @@ html {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    font-variant-ligatures: normal;
     font-size: 62.5%; /* 10px fontbase */
 }
 
@@ -225,6 +258,7 @@ a,
 a:visited {
     color: var(--raw-color_text-alt);
     text-decoration: underline;
+    text-decoration-style: dashed;
     text-decoration-color: currentColor;
     transition: var(--raw-transition);
 }
@@ -232,8 +266,17 @@ a:visited {
 a:hover {
     color: var(--raw-color_primary);
     text-decoration: underline;
+    text-decoration-style: solid;
     text-decoration-color: currentColor;
     transition: var(--raw-transition);
+}
+
+/* style general links without class */
+a[href]:not([class]) {
+    color: var(--raw-color_text-alt);
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-color: currentColor;
 }
 
 em {
@@ -244,8 +287,13 @@ strong {
     font-weight: 700;
 }
 
+
 ul li, ol li {
     list-style: none;
+}
+
+ul:empty::after { /* show text if list is empty */
+    content: 'List empty';
 }
 
 ::placeholder {
@@ -261,6 +309,67 @@ p {
 /* Do not show the outline on the skip link target. */
 [tabindex="-1"]:focus {
     outline: 0;
+}
+
+/* set color-scheme - for safety */
+[color-scheme="light"] {
+    color-scheme: light;
+}
+
+[color-scheme="dark"] {
+    color-scheme: dark;
+}
+
+/* style keyboard shortcuts a bit keyboard like */
+kbd {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: var(--raw-border-radius);
+    color: rgba(0, 0, 0, 0.7);
+    box-shadow: rgba(0, 0, 0, 0.3) 0 -2px 0 inset, rgba(0, 0, 0, 0.4) 0 1px 1px;
+    padding: 8px;
+}
+
+/* #endregion */
+
+/* #region - SCROLLBARS ---------------------------------------- */
+
+.snippets,
+.tag-list,
+.groups,
+body,
+code[class*="language-"],
+pre[class*="language-"] {
+    scrollbar-width: thin;
+    scrollbar-color: var(--raw-color_grey-darker) var(--raw-color_grey-medium1);
+}
+
+.snippets::-webkit-scrollbar,
+.tag-list::-webkit-scrollbar,
+.groups::-webkit-scrollbar,
+code[class*="language-"]::-webkit-scrollbar,
+pre[class*="language-"]::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    width: 5px;
+}
+
+.snippets::-webkit-scrollbar-track,
+.tag-list::-webkit-scrollbar-track,
+.groups::-webkit-scrollbar-track,
+code[class*="language-"]::-webkit-scrollbar-track,
+pre[class*="language-"]::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+    background: var(--raw-color_grey-light);
+}
+
+.snippets::-webkit-scrollbar-thumb,
+.tag-list::-webkit-scrollbar-thumb,
+code[class*="language-"]::-webkit-scrollbar-thumb,
+pre[class*="language-"]::-webkit-scrollbar-thumb,
+.groups::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+    background-color: var(--raw-color_grey-medium2);
+    border-radius: var(--raw-border-radius);
+    border: 1px solid var(--raw-color_grey-medium2);
 }
 
 /* #endregion */
@@ -365,6 +474,10 @@ button.accept:focus {
 
 /* #region - INPUT/FORM ELEMENTS ---------------------------------------- */
 
+/* Currently, only four elements will tint via
+the accent-color property: checkbox, radio, range and progress.
+more: https://web.dev/accent-color/ */
+
 label {
     font-size: var(--raw-font_size-s);
     color: var(--raw-color_grey-medium1) ;
@@ -388,16 +501,50 @@ input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
     background-color: var(--raw-color_grey-darkest);
+    outline: var(--raw-outline);
+    outline-offset: .05em;
     border-color: var(--raw-color_secondary);
     color: var(--raw-color_grey-light);
 }
 
 input[type="checkbox"] {
     margin-inline: 5px;
+    accent-color: var(--raw-color_accent);
+}
+
+input[type="radio"],
+input[type="progress"],
+input[type="range"] {
+    accent-color: var(--raw-color_accent);
 }
 
 .add-snippet-window textarea {
     resize: auto;
+}
+
+:focus-visible {
+    outline-color: var(----raw-color_accent);
+}
+
+::selection {
+    background-color: var(----raw-color_accent);
+}
+
+::marker {
+    color: var(----raw-color_accent);
+}
+
+::-webkit-calendar-picker-indicator {
+    color: var(----raw-color_accent);
+}
+
+::-webkit-clear-button {
+    color: var(----raw-color_accent);
+}
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+    color: var(----raw-color_accent);
 }
 
 /* #endregion */
@@ -460,25 +607,25 @@ input[type="checkbox"] {
     padding: 3px;
 }
 
-.chevron.right {
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-}
+    .chevron.right {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+    }
 
-.chevron.left {
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
-}
+    .chevron.left {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+    }
 
-.chevron.up {
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-}
+    .chevron.up {
+        transform: rotate(-135deg);
+        -webkit-transform: rotate(-135deg);
+    }
 
-.chevron.down {
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-}
+    .chevron.down {
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+    }
 
 /* Badges */
 .badge {
@@ -489,26 +636,26 @@ input[type="checkbox"] {
     border-radius: 3px;
 }
 
-.badge.success {
-    background-color: var(--raw-color_success);
-}
+    .badge.success {
+        background-color: var(--raw-color_success);
+    }
 
-.badge.info {
-    background-color: var(--raw-color_old-orange);
-}
+    .badge.info {
+        background-color: var(--raw-color_old-orange);
+    }
 
-.badge.warning {
-    background-color: var(--raw-color_orange);
-}
+    .badge.warning {
+        background-color: var(--raw-color_orange);
+    }
 
-.badge.danger {
-    background-color: var(--raw-color_error);
-}
+    .badge.danger {
+        background-color: var(--raw-color_error);
+    }
 
-.badge.other {
-    background-color: var(--raw-color_grey-medium1);
-    color: var(--raw-color_text);
-}
+    .badge.other {
+        background-color: var(--raw-color_grey-medium1);
+        color: var(--raw-color_text);
+    }
 
 /* generally hide stuff */
 var,
@@ -597,48 +744,6 @@ template,
 
 /* #endregion */
 
-/* #region - SCROLLBARS ---------------------------------------- */
-
-.snippets,
-.tag-list,
-.groups,
-body,
-code[class*="language-"],
-pre[class*="language-"] {
-    scrollbar-width: thin;
-    scrollbar-color: var(--raw-color_grey-darker) var(--raw-color_grey-medium1);
-}
-
-.snippets::-webkit-scrollbar,
-.tag-list::-webkit-scrollbar,
-.groups::-webkit-scrollbar,
-code[class*="language-"]::-webkit-scrollbar,
-pre[class*="language-"]::-webkit-scrollbar,
-body::-webkit-scrollbar {
-    width: 5px;
-}
-
-.snippets::-webkit-scrollbar-track,
-.tag-list::-webkit-scrollbar-track,
-.groups::-webkit-scrollbar-track,
-code[class*="language-"]::-webkit-scrollbar-track,
-pre[class*="language-"]::-webkit-scrollbar-track,
-body::-webkit-scrollbar-track {
-    background: var(--raw-color_grey-light);
-}
-
-.snippets::-webkit-scrollbar-thumb,
-.tag-list::-webkit-scrollbar-thumb,
-code[class*="language-"]::-webkit-scrollbar-thumb,
-pre[class*="language-"]::-webkit-scrollbar-thumb,
-.groups::-webkit-scrollbar-thumb,
-body::-webkit-scrollbar-thumb {
-    background-color: var(--raw-color_grey-medium2);
-    border-radius: var(--raw-border-radius);
-    border: 1px solid var(--raw-color_grey-medium2);
-}
-
-/* #endregion */
 
 /* #region - MAIN GRID ---------------------------------------- */
 
@@ -1372,10 +1477,10 @@ aside.sidebar {
     font-size: var(--raw-font_size-s);
     text-align: right;
     font-weight: bold;
+    /* mmonospace variant */
     font-feature-settings: "tnum";
     /* mmonospace variant */
     font-variant-numeric: tabular-nums;
-    /* mmonospace variant */
     margin-inline-end: 5px; align-self: center;
     background-color: var(--raw-color_grey-medium1);
     /* background-image: linear-gradient( to bottom, var(--raw-color_primary), var(--raw-color_secondary) );
