@@ -1,5 +1,6 @@
 <?php
 
+	/* TODO: Use config.php */
 	$host = 'localhost';
 	$username = 'DBUSER';
 	$password = 'DBPASS';
@@ -13,8 +14,8 @@
 	$con = new mysqli($host, $username, $password, $database);
 
 	if (mysqli_connect_errno()) {
-	    printf("Connect failed: %s\n", "Server error");
-	    exit();
+		printf("Connect failed: %s\n", "Server error");
+		exit();
 	}
 
 ?>
