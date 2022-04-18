@@ -61,8 +61,9 @@
 	if( $check === 0 ) {
 		$password = encrypt($password);
 		$date = date('Y-m-d');
-		// ***send mail for validation***
 
+		/* TODO: add text to lang.php */
+		// ***send mail for validation***
 		$code = uniqid();
 		$to = $email; // email will be sent to this address
 		$subject = "Activate your account"; //email subject

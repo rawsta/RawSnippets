@@ -8,7 +8,7 @@
 
 	protect();
 
-	$query = $con->prepare("select user_id from users where username = ?");
+	$query = $con->prepare("SELECT user_id FROM users WHERE username = ?");
 	$query->bind_param("s", $_SESSION['user']);
 	$query->execute();
 	$query->bind_result($user_id);
@@ -19,7 +19,7 @@
 	$text = "%".$t."%";
 	$data = array();
 
-	$query = $con->prepare("select id, title from snippets where title like ? and user_id = ?");
+	$query = $con->prepare("SELECT id, title FROM snippets WHERE title LIKE ? AND user_id = ?");
 	$query->bind_param("ss", $text, $user_id);
 	$query->execute();
 	$query->bind_result($snippetId, $title);

@@ -10,6 +10,7 @@
 	$title = $_POST['name'];
 	$desc = $_POST['description'];
 	$snippet = $_POST['snippet'];
+	$syntax = $_POST['syntax'];
 	$tagsArray = $_POST['tags'];
 	$tagsArray = json_decode($tagsArray);
 	$flag = $_POST['flag'];
@@ -30,8 +31,12 @@
 	}
 
 	if( empty($group_id) ) {
-		echo "Select group";
+		echo $lang['emptyGroup'];
 		exit();
+	}
+
+	if( empty($syntax) ) {
+		$syntax = 'none';
 	}
 
 	$query = $con->prepare("SELECT user_id FROM users WHERE username = ?");
@@ -43,8 +48,8 @@
 
 	if( $flag === 'false') {
 		$date = date("Y-m-d");
-		$stmt = $con->prepare("INSERT INTO snippets VALUES('',?, ?, ?, ?, ?, '', ?)");
-		$stmt->bind_param("ssssss", $title, $desc, $snippet, $user_id, $date, $group_id);
+		$stmt = $con->prepare("INSERT INTO snippets VALUES('',?, ?, ?, ?, ?, ?, '', ?)");
+		$stmt->bind_param("sssssss", $title, $desc, $syntax, $snippet, $user_id, $date, $group_id);
 		$stmt->execute();
 		$id = $con->insert_id;
 		$stmt->close();

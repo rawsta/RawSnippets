@@ -98,6 +98,7 @@ $lang = array(
     "emptyTitle"             => "Ein Titel muss angegeben werden.",
     "emptySnippet"           => "Ein Snippet muss angegeben werden.",
     "emptyTag"               => "Mindestens ein Tag muss zugeordnet werden",
+    "emptyGroup"             => "Eine Gruppe muss angegeben werden.",
     "cancel"                 => "Vorgang abbrechen",
     "snippetTags"            => "Snippet Tags",
     "smallInstructions"      => "Sublime Text starten, zu [Einstellungen] -> [Pakete durchsuchen] navigieren und Snippets in den Benutzerordner kopieren.",

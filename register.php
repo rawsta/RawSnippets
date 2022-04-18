@@ -9,13 +9,13 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title><?php echo $lang['pageTitle']; ?> - <?php echo $lang['registerPage']; ?></title>
+	<title><?php echo $lang['pageTitle']; ?> &mdash; <?php echo $lang['registerPage']; ?></title>
 
-	<link href="css/fonts.css" rel="stylesheet" type="text/css">
-    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/fonts.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
 
-	<script src="js/jquery-3.6.0.min.js" type="text/javascript"></script>
-    <script src="js/script.js" type="text/javascript"></script>
+	<script src="lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/script.js"></script>
 </head>
 <body>
 
@@ -30,8 +30,6 @@
 		<input type="submit" value="<?php echo $lang['registerSubmit']; ?>" id="submit-button">
 	</form><br>
 
-	<div class="error">
-
-	</div>
+	<div class="error"></div>
 </div>
 </body>

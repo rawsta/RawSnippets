@@ -9,6 +9,7 @@
     protect();
     user_counter();
 
+    // get user
     $query = $con->prepare("SELECT user_id FROM users WHERE username = ?");
     $query->bind_param("s", $_SESSION['user']);
     $query->execute();
@@ -16,8 +17,16 @@
     $query->fetch();
     $query->close();
 
-    $availableTags = array();
+    // get user settings
+    $query = $con->prepare("SELECT line_nums, font, size FROM users WHERE user_id = ?");
+    $query->bind_param("s", $user_id);
+    $query->execute();
+    $query->bind_result($value, $font, $size);
+    $query->fetch();
+    $query->close();
 
+    // Get current tags
+    $availableTags = array();
     $query = $con->prepare("SELECT DISTINCT tags FROM tags_snippets WHERE user_id = ?");
     $query->bind_param("s", $user_id);
     $query->execute();
@@ -27,6 +36,7 @@
     }
     $query->close();
 
+    // get Groups
     $gNames = array();
     $gIds = array();
     $query = $con->prepare("SELECT id, name FROM groups WHERE user_id = ?");
@@ -39,6 +49,7 @@
     }
     $query->close();
 
+    // if lang cookie is set / TODO: if nothing set, compare browser lang and set if possible
 	if( isset( $_COOKIE['lang'] ) ) {
 		$_SESSION['lang'] = $_COOKIE['lang'];
 	}
@@ -57,7 +68,7 @@
     <title><?=$lang['pageTitle']?></title>
 
 	<link rel="icon" href="favicon.ico">
-	<link rel="icon" href="favicon.svg" type="image/svg+xml">
+	<link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
 
     <link rel="stylesheet" href="lib/jquery/jquery-ui.rawsta.min.css">
     <link rel="stylesheet" href="lib/jquery/jquery.tagit.css">
@@ -78,8 +89,7 @@
 
     <script src="assets/js/script.js"></script>
 
-    <!-- set as meta and :root / TODO: add light mode - maybe -->
-    <!-- <meta name="color-scheme" content="dark light"> -->
+    <!-- set as meta and :root / TODO: add light mode - content="dark light" -->
     <meta name="color-scheme" content="dark">
 
     <!-- TODO: add manifest -->
@@ -104,7 +114,7 @@
     <div id="blur" class="blur full modal-exit"></div>
     <!-- HEADER BAR -->
     <header class="title-area">
-        <a href="<?=$pageRoot?>" id="sitePath-holder">
+        <a href="<?=$pageRoot?>" id="sitePath-holder" class="home-link">
             <h1 class="appTitle"><i class="lar la-file-code"></i> <?=$lang['pageTitle']?></h1>
         </a>
 
@@ -225,7 +235,7 @@
         <!-- TODO: position reltive? has to push content down -->
             <h3 class="detail-title"></h3>
             <span id="date-label"></span>
-            <span id="details-button" title="<?=$lang['showMoreDetails']; ?>"><i class="chevron down"></i></span>
+            <span id="details-button" class="chevron down" title="<?=$lang['showMoreDetails']; ?>"></span>
         </section>
         <section class="details-window-under">
             <h4><?=$lang['description']; ?></h4>
@@ -233,13 +243,14 @@
             <span id="detail-tags"></span>
         </section>
 
-
-
         <!-- Code/Snippets -->
-        <pre class="pre-code <?php if( $value === 1 ) { echo 'line-numbers'; } else { echo 'no-line-numbers'; }?> language-php" style="font-family: <?php echo $font; ?>; font-size: 0.<?php echo $size; ?>em;">
-            <code id="code-block" class="language-php"></code>
+        <?php $linenumbers = 'update-when-loaded'; if( $value === 1 ) { $linenumbers = 'line-numbers'; } else { $linenumbers = 'no-line-numbers'; }?>
+        <!-- <pre class="pre-code < ?php if( $value === 1 ) { echo 'line-numbers'; } else { echo 'no-line-numbers'; }? > language-php rainbow-braces" style="font-family: < ?=$font?>; font-size: 0.< ?=$size? >em;"> -->
+        <pre class="pre-code <?=$linenumbers?> language-none rainbow-braces" style="font-family: <?=$font?>; font-size: 0.<?=$size?>em;">
+            <code id="code-block" class="language-none"></code>
         </pre>
         <pre hidden class="raw-code"></pre>
+
 
         <!-- FOOTER -->
         <footer class="code-footer">
@@ -268,36 +279,166 @@
 
 <!-- ADD NEW SNIPPET -->
     <section id="addsnip" class="add-snippet-window">
-        <!-- TODO: Strings in lang.php auslagern! -->
-        <h3 class="modal-title"><?=$lang['addNewSnippet']?></h3>
+        <form action="#" class="addsnipform" autocomplete="off">
+            <!-- TODO: Strings in lang.php auslagern! -->
+            <h3 class="modal-title"><?=$lang['addNewSnippet']?></h3>
 
-        <label for="name">Titel des neuen Snippets</label>
-        <input type="text" placeholder="<?=$lang['name']?>" name="name" id="name">
+            <div class="input-group-wrap">
+                <div class="wrap-half">
+                    <label for="name">Titel des neuen Snippets <abbr title="required" aria-label="required">*</abbr></label>
+                    <input type="text" placeholder="<?=$lang['name']?>" name="name" id="name" required>
+                </div>
+                <div class="wrap-half">
+                    <!-- TODO: Fix this dropdown -->
+                    <label data-id="" id="groupSelect"><?=$lang['selectGroup']?></label>
+                    <ul class="groupDropDown">
+                        <?php for( $i=0; $i<sizeof( $gNames ); $i++ ) { ?>
+                        <li id="<?=$gIds[$i]?>"><?=$gNames[$i]?></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
 
-        <!-- TODO: Fix this dropdown -->
-        <label data-id="" id="groupSelect"><?=$lang['selectGroup']?></label>
-        <ul class="groupDropDown">
-            <?php for( $i=0; $i<sizeof( $gNames ); $i++ ) { ?>
-                <li id="<?=$gIds[$i]?>"><?=$gNames[$i]?></li>
-            <?php } ?>
-        </ul>
+            <div class="input-wrap">
+                <label for="syntax-choice">Syntax for Snippet:</label>
+                <input list="available-syntax" id="syntax-choice" name="syntax" type="text" placeholder="Snippet language"/>
+                <!-- DataList for kind of autocomplete for input -->
+                <datalist id="available-syntax">
+                    <option value = "none">
+                    <option value = "plain">
+                    <option value = "plaintext">
+                    <option value = "text">
+                    <option value = "html">
+                    <option value = "xml">
+                    <option value = "svg">
+                    <option value = "txt">
+                    <option value = "js">
+                    <option value = "g4">
+                    <option value = "ino">
+                    <option value = "arm-asm">
+                    <option value = "art">
+                    <option value = "avs">
+                    <option value = "avdl">
+                    <option value = "gawk">
+                    <option value = "shell">
+                    <option value = "shortcode">
+                    <option value = "rbnf">
+                    <option value = "oscript">
+                    <option value = "clike">
+                    <option value = "css">
+                    <option value = "cpp">
+                    <option value = "csp">
+                    <option value = "csv">
+                    <option value = "coffee">
+                    <option value = "csharp">
+                    <option value = "dotnet">
+                    <option value = "django">
+                    <option value = "javascript">
+                    <option value = "jinja2">
+                    <option value = "dns-zone">
+                    <option value = "dockerfile">
+                    <option value = "less">
+                    <option value = "xlsx">
+                    <option value = "xls">
+                    <option value = "php">
+                    <option value = "po">
+                    <option value = "graphql">
+                    <option value = "latex">
+                    <option value = "go">
+                    <option value = "gcode">
+                    <option value = "hbs">
+                    <option value = "mustache">
+                    <option value = "hs">
+                    <option value = "idr">
+                    <option value = "gitignore">
+                    <option value = "lolcode">
+                    <option value = "npmignore">
+                    <option value = "webmanifest">
+                    <option value = "kt">
+                    <option value = "kts">
+                    <option value = "markdown">
+                    <option value = "md">
+                    <option value = "tex">
+                    <option value = "scala">
+                    <option value = "emacs">
+                    <option value = "elisp">
+                    <option value = "markup">
+                    <option value = "vim">
+                    <option value = "twig">
+                    <option value = "dotnet">
+                    <option value = "log">
+                    <option value = "objc">
+                    <option value = "qasm">
+                    <option value = "objectpascal">
+                    <option value = "px">
+                    <option value = "pcode">
+                    <option value = "json">
+                    <option value = "pq">
+                    <option value = "gettext">
+                    <option value = "powershell">
+                    <option value = "java">
+                    <option value = "python">
+                    <option value = "py">
+                    <option value = "smarty">
+                    <option value = "http">
+                    <option value = "mongodb">
+                    <option value = "rpy">
+                    <option value = "res">
+                    <option value = "po">
+                    <option value = "rb">
+                    <option value = "ruby">
+                    <option value = "sql">
+                    <option value = "nginx">
+                    <option value = "yaml">
+                    <option value = "sass">
+                    <option value = "scss">
+                    <option value = "qml">
+                    <option value = "t4">
+                    <option value = "jsx">
+                    <option value = "trig">
+                    <option value = "ts">
+                    <option value = "tsx">
+                    <option value = "tsconfig">
+                    <option value = "typescript">
+                    <option value = "uscript">
+                    <option value = "uc">
+                    <option value = "url">
+                    <option value = "vb">
+                    <option value = "vba">
+                    <option value = "wiki">
+                    <option value = "matlab">
+                    <option value = "pug">
+                    <option value = "wl">
+                    <option value = "apacheconf">
+                    <option value = "yml">
+                </datalist>
+            </div>
 
-        <!-- TODO: Links erkennen und verlinken -->
-        <label for="description">Kurze Beschreibung des Snippets <span class="small">(Optional)</span></label>
-        <textarea placeholder="<?=$lang['description']?>" name="description" id="description" spellcheck="false"></textarea>
+            <!-- TODO: Links erkennen und verlinken -->
+            <div class="input-wrap">
+                <label for="description">Kurze Beschreibung des Snippets <small>(Optional)</small></label>
+                <textarea placeholder="<?=$lang['description']?>" name="description" id="description" spellcheck="false"></textarea>
+            </div>
 
-        <label for="snippetArea">Snippet einf&uml;gen</label>
-        <textarea placeholder="<?=$lang['snippet']?>" name="snippet" id="snippetArea" spellcheck="false"></textarea>
+            <div class="input-wrap">
+                <label for="snippetArea">Snippet einf&uuml;gen <abbr title="required" aria-label="required">*</abbr></label>
+                <textarea placeholder="<?=$lang['snippet']?>" name="snippet" id="snippetArea" spellcheck="false" rows="13" required></textarea>
+            </div>
 
-        <label for="myTags">Tags <span class="small">(mit autocomplete)</span></label>
-        <input type="text" name="tags" id="myTags">
-        <label for="myTags"><span class="small">(erleichtern die Suche und helfen bei der &Uuml;bersicht)</span></label>
+            <div class="input-wrap">
+                <label for="myTags">Tags <abbr title="mindestens 1 Tag angeben" aria-label="required">*</abbr><small>(mit autocomplete)</small></label>
+                <input type="text" name="tags" id="myTags">
+                <label for="myTags"><small>(erleichtern die Suche und helfen bei der &Uuml;bersicht)</small></label>
+            </div>
 
-        <button class="accept" id="save-snippet"><?=$lang['save']?></button>
-        <button class="cancel" id="snippet-cancel"><?=$lang['cancel']?></button>
-            <span id="snippet-error"></span>
-            <span hidden data-type="save" class="check-label"></span>
-            <span hidden class="id-holder"></span>
+            <div class="button-wrap">
+                <button class="accept" id="save-snippet"><?=$lang['save']?></button>
+                <button class="cancel" id="snippet-cancel"><?=$lang['cancel']?></button>
+            </div>
+                <span hidden data-type="save" class="check-label"></span>
+                <span hidden class="id-holder"></span>
+                <span id="snippet-error"></span>
+        </form>
     </section>
 
 <!-- SUBLIME SNIPPET EXPORT -->
@@ -328,17 +469,18 @@
 <!-- ADD NEW GROUP -->
     <div id="addgroup" class="add-group">
         <form id="addGroupForm" action="add-group.php" method="post">
-            <input type="text" name="name" placeholder="<?=$lang['groupName']; ?>">
+            <label for="group-name"></label>
+            <input type="text" id="group-name" name="name" placeholder="<?=$lang['groupName']; ?>">
             <input id="addGroupSubmit" type="submit" value="<?=$lang['save']; ?>">
             <span id="addGroupCancel">X</span>
         </form>
+        <span id="addGroupError"></span>
     </div>
-    <span id="addGroupError"></span>
 
 <!-- SETTINGS FORM -->
     <article id="settings" class="settings-form">
 
-        <aside class="settings-sidebar">
+        <aside class="settings-sidebar" aria-label="setting-areas">
             <ul>
                 <li class="setting-active"><?=$lang['mainSettings']?></li>
                 <li><?=$lang['email']?></li>
@@ -346,14 +488,7 @@
             </ul>
         </aside>
 
-        <?php
-            $query = $con->prepare("SELECT line_nums, font, size FROM users WHERE user_id = ?");
-            $query->bind_param("s", $user_id);
-            $query->execute();
-            $query->bind_result($value, $font, $size);
-            $query->fetch();
-            $query->close();
-        ?>
+
 
         <section class="main-settings">
             <h3><?=$lang['settings']?></h3>
@@ -402,21 +537,31 @@
 
         <section class="mail-settings" style="display: none;">
             <h3><?=$lang['changeEmail']?></h3>
-            <label for="s-new-email"><?=$lang['newEmail']?></label>
-            <input type="email" name="new-email" id="s-new-email" placeholder="<?=$lang['newEmail']?>" >
-            <label for="s-rep-email"><?=$lang['repeatEmail']?></label>
-            <input type="email" name="rep-email" id="s-rep-email" placeholder="<?=$lang['repeatEmail']?>" >
+            <div class="input-wrap">
+                <label for="s-new-email"><?=$lang['newEmail']?></label>
+                <input type="email" name="new-email" id="s-new-email" placeholder="<?=$lang['newEmail']?>" autocomplete="off">
+            </div>
+            <div class="input-wrap">
+                <label for="s-rep-email"><?=$lang['repeatEmail']?></label>
+                <input type="email" name="rep-email" id="s-rep-email" placeholder="<?=$lang['repeatEmail']?>" autocomplete="off">
+            </div>
             <span id="s-notification"></span>
         </section>
 
         <section class="password-settings" style="display: none;">
             <h3><?=$lang['changePassword']?></h3>
-            <label for="s-old-pass"><?=$lang['oldPassword']?></label>
-            <input type="password" name="old-pass" id="s-old-pass" placeholder="<?=$lang['oldPassword']?>" autocomplete="current-password">
-            <label for="s-new-pass"><?=$lang['newPassword']?></label>
-            <input type="password" name="new-pass" id="s-new-pass" placeholder="<?=$lang['newPassword']?>" autocomplete="new-password">
-            <label for="s-rep-pass"><?=$lang['repeatPassword']?></label>
-            <input type="password" name="rep-pass" id="s-rep-pass" placeholder="<?=$lang['repeatPassword']?>" autocomplete="new-password">
+            <div class="input-wrap">
+                <label for="s-old-pass"><?=$lang['oldPassword']?></label>
+                <input type="password" name="old-pass" id="s-old-pass" placeholder="<?=$lang['oldPassword']?>" autocomplete="current-password">
+            </div>
+            <div class="input-wrap">
+                <label for="s-new-pass"><?=$lang['newPassword']?></label>
+                <input type="password" name="new-pass" id="s-new-pass" placeholder="<?=$lang['newPassword']?>" autocomplete="new-password">
+            </div>
+            <div class="input-wrap">
+                <label for="s-rep-pass"><?=$lang['repeatPassword']?></label>
+                <input type="password" name="rep-pass" id="s-rep-pass" placeholder="<?=$lang['repeatPassword']?>" autocomplete="new-password">
+            </div>
             <span id="s-notification-pass"></span>
         </section>
 

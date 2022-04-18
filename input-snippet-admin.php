@@ -8,6 +8,7 @@
 	protectAdmin();
 
 	$title = $_POST['name'];
+	$syntax = $_POST['syntax'];
 	$desc = $_POST['description'];
 	$snippet = $_POST['snippet'];
 	$tagsArray = $_POST['tags'];
@@ -27,8 +28,8 @@
 		exit();
 	}
 
-	$stmt = $con->prepare("UPDATE snippets SET title = ?, description = ?, snippet = ? WHERE id = ?");
-	$stmt->bind_param("ssss", $title, $desc, $snippet, $snippetId);
+	$stmt = $con->prepare("UPDATE snippets SET title = ?, syntax = ?, description = ?, snippet = ? WHERE id = ?");
+	$stmt->bind_param("ssss", $title, $syntax, $desc, $snippet, $snippetId);
 	$stmt->execute();
 	$stmt->close();
 

@@ -40,39 +40,47 @@
 
 	<title><?php echo $lang['pageTitle']; ?></title>
 
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,400;0,600;0,800;1,400;1,600;1,800&family=JetBrains+Mono:ital,wght@0,400;0,600;0,800;1,400;1,600;1,800&family=Open+Sans:ital,wght@0,400;0,600;0,800;1,400;1,600;1,800&display=swap" rel="stylesheet">
+	<link rel="icon" href="favicon.ico" sizes="any">
+	<link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-    <link href="css/main.css" rel="stylesheet" type="text/css">
-	<script src="js/jquery-3.6.0.min.js" type="text/javascript"></script>
-    <script src="js/script.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="lib/line-awesome/line-awesome.min.css">
+	<link rel="stylesheet" href="lib/sweetalert2/borderless.css">
+
+	<link rel="stylesheet" href="assets/css/fonts.css">
+	<link rel="stylesheet" href="assets/css/login.css">
+
+	<script src="lib/jquery/jquery-3.6.0.min.js"></script>
+	<script src="lib/sweetalert2/sweetalert2.min.js"></script>
+
+    <script src="assets/js/login.js"></script>
+
+	<meta name="theme-color" content="#830000">
 </head>
 <body>
 
-<div class="wrap">
-	<label id="display-status"><?php echo $var; ?></label>
-	<a href="index.php"><label class="main-label"><?php echo $lang['pageTitle']; ?></label></a>
-	<div></div>
-	<div></div>
-	<div></div>
+	<div class="wrap">
+		<p id="display-status"><?php echo $var; ?></p>
+		<a href="index.php"><h2 class="main-label"><?php echo $lang['pageTitle']; ?></h2></a>
+		<div></div>
+		<div></div>
+		<div></div>
 
-	<br><br>
+		<br><br>
 
-	<a id="login-button" class="buttons" href="#"><?php echo $lang['login']; ?></a>
-	<a id="register-button" class="buttons" href="register.php"><?php echo $lang['register']; ?></a>
-</div>
+		<a id="login-button" class="buttons" href="#"><?php echo $lang['login']; ?></a>
+		<a id="register-button" class="buttons" href="register.php"><?php echo $lang['register']; ?></a>
+	</div>
 
-<div class="login-wrap" style="display: none;">
-	<a href="index.php"><h1 class="main-label"><?php echo $lang['pageTitle']; ?></h1></a>
-	<form action="login-data.php" method="post" class="login-form">
-		<input type="text" name="username" placeholder="<?php echo $lang['username']; ?>" id="input-username"><br>
-		<input type="password" name="password" placeholder="<?php echo $lang['password']; ?>" id="input-password"><br>
-		<input type="checkbox" name="remember-me" value="1"><label><?php echo $lang['rememberMe']; ?></label>
-		<a href="#"><?php echo $lang['forgotPassword']; ?></a>
-		<input type="submit" value="<?php echo $lang['login']; ?>" id="submit-buttom">
-	</form>
-</div>
+	<div class="login-wrap" style="display: none;">
+		<a href="index.php"><h1 class="main-label"><?php echo $lang['pageTitle']; ?></h1></a>
+		<form action="login-data.php" method="post" class="login-form">
+			<input type="text" name="username" placeholder="<?php echo $lang['username']; ?>" id="input-username"><br>
+			<input type="password" name="password" placeholder="<?php echo $lang['password']; ?>" id="input-password"><br>
+			<input type="checkbox" name="remember-me" value="1"><label><?php echo $lang['rememberMe']; ?></label>
+			<a href="#"><?php echo $lang['forgotPassword']; ?></a>
+			<input type="submit" value="<?php echo $lang['login']; ?>" id="submit-buttom">
+		</form>
+	</div>
 
 </body>
 </html>

@@ -98,6 +98,7 @@ $lang = array(
     "emptyTitle"             => "Title can't be empty",
     "emptySnippet"           => "Snippet can't be empty",
     "emptyTag"               => "Assign at least one tag",
+    "emptyGroup"             => "Groupassignment is needed",
     "cancel"                 => "Cancel",
     "snippetTags"            => "Snippet Tags",
     "smallInstructions"      => "Open Sublime Text, go to Preferences -> Browse Packages and paste snippet inside User folder.",

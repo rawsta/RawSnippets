@@ -12,12 +12,12 @@
 
 	$data = array();
 
-	$query = $con->prepare("SELECT id, user_id, title, description, public FROM snippets LIMIT ?,?");
+	$query = $con->prepare("SELECT id, user_id, title, syntax, description, public FROM snippets LIMIT ?,?");
 
 	$query->bind_param("ii", $position, $numSnip);
 	$query->execute();
 	$query->store_result();
-	$query->bind_result($snippet_id, $user_id, $title, $description, $public);
+	$query->bind_result($snippet_id, $user_id, $title, $syntax, $description, $public);
 
 	$q = $con->prepare("SELECT username FROM users WHERE user_id = ?");
 	while($query->fetch()){
@@ -30,6 +30,7 @@
 		$data['snippet_id'][] = $snippet_id;
 		$data['username'][] = $username;
 		$data['title'][] = $title;
+		$data['syntax'][] = $syntax;
 		$data['description'][] = $description;
 		$data['public'][] = $active;
 	}

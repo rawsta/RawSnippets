@@ -35,13 +35,11 @@
 	<link rel="stylesheet" href="lib/sweetalert2/borderless.css">
 
 	<link rel="stylesheet" href="assets/css/fonts.css">
-	<!-- <link rel="stylesheet" href="assets/css/main.css"> -->
 	<link rel="stylesheet" href="assets/css/login.css">
 
 	<script src="lib/jquery/jquery-3.6.0.min.js"></script>
 	<script src="lib/sweetalert2/sweetalert2.min.js"></script>
 
-    <!-- <script src="assets/js/script.js"></script> -->
     <script src="assets/js/login.js"></script>
 
 	<meta name="theme-color" content="#830000">

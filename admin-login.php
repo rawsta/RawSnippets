@@ -23,31 +23,20 @@
 
 	<title><?=$lang['pageTitle']; ?> - <?=$lang['adminPanel']; ?></title>
 
-	<link rel="icon" href="/favicon.ico"  sizes="any">
-	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+	<link rel="icon" href="favicon.ico" sizes="any">
+	<link rel="icon" href="favicon.svg" type="image/svg+xml">
 
 	<meta name="theme-color" content="#830000">
 
-    <!-- <link href="lib/jquery/jquery-ui.rawsta.min.css" rel="stylesheet" type="text/css"> -->
-    <!-- <link href="lib/jquery/jquery.tagit.css" rel="stylesheet" type="text/css"> -->
-    <link href="lib/line-awesome/line-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- <link href="lib/prism/prism.css" rel="stylesheet" type="text/css"> -->
+    <link href="lib/line-awesome/line-awesome.min.css" rel="stylesheet">
 
-    <link href="assets/css/fonts.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/admin-main.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/fonts.css" rel="stylesheet">
+    <link href="assets/css/admin-main.css" rel="stylesheet">
 
-	<script src="lib/jquery/jquery-3.6.0.min.js" type="text/javascript"></script>
-	<!-- <script src="lib/jquery/jquery.form.min.js" type="text/javascript"></script> -->
-	<!-- <script src="lib/jquery/jquery-ui.min.js" type="text/javascript"></script> -->
-	<!-- <script src="lib/jquery/tag-it.js" type="text/javascript"></script>
-    <script src="lib/prism/prism.js" type="text/javascript"></script> -->
-	<!-- <script src="lib/clipboard.min.js" type="text/javascript"></script> -->
-
-    <script src="assets/js/admin-script.js" type="text/javascript"></script>
+	<script src="lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/admin-script.js"></script>
 
 <body class="login">
-
-<label hidden id="langHolder"><?php if(isset($_SESSION['lang'])) echo $_SESSION['lang']; else echo "en";?></label>
 
 	<header class="top">
 

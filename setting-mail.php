@@ -23,8 +23,8 @@
 		echo $lang['emailNotMatch'];
 		exit();
 	}
-	
-	$query = $con->prepare("update admin set email = ? where username = 'admin'");
+	/* TODO: fix the need for hardcoded user */
+	$query = $con->prepare("UPDATE admin SET email = ? WHERE username = 'rawsta'");
 	$query->bind_param("s", $mail);
 	$query->execute();
 	$query->close();

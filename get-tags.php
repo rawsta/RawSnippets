@@ -5,11 +5,11 @@
 	include 'functions.php';
 
 	protect();
-	
+
 	$id = $_POST['id'];
 	$array = array();
 
-	$query = $con->prepare("select tags from tags_snippets where snippets_id = ?");
+	$query = $con->prepare("SELECT tags FROM tags_snippets WHERE snippets_id = ?");
 	$query->bind_param("s", $id);
 	$query->execute();
 	$query->bind_result($tags);

@@ -50,6 +50,7 @@
 			}
 
 			$code = uniqid();
+			/* TODO: add text to lang.php */
 			$to = $mail;
 			$subject = "Confirm your email"; //email subject
 			$headers = "From: $yourEmail";

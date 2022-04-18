@@ -72,11 +72,11 @@
 
 	if(!empty($password)){
 		$password = encrypt($password);
-		$query = $con->prepare("update users set username = ?, email = ?, password = ?, active = ? where user_id = ?");
+		$query = $con->prepare("UPDATE users SET username = ?, email = ?, password = ?, active = ? WHERE user_id = ?");
 		$query->bind_param("sssss", $username, $email, $password, $activate, $id);
 	}
 	if(empty($password)){
-		$query = $con->prepare("update users set username = ?, email = ?, active = ? where user_id = ?");
+		$query = $con->prepare("UPDATE users SET username = ?, email = ?, active = ? WHERE user_id = ?");
 		$query->bind_param("ssss", $username, $email, $activate, $id);
 	}
 

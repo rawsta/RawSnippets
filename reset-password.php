@@ -30,9 +30,10 @@
 		if($nm == 0){
 			echo $lang['userWithMailNotExists'];
 			exit();
-		}
 
-		else{
+		} else {
+
+			/* TODO: add text to lang.php */
 			$code = uniqid();
 			$to = $email;
 			$subject = "Password reset"; //email subject
@@ -76,27 +77,27 @@ Thank you";
 		$nm = $query->num_rows;
 		$query->close();
 
-		if($nm == 0){
+		if( $nm == 0 ) {
 			echo $lang['adminWithMailNotExists'];
 			exit();
-		}
 
-		else{
+		} else {
+
+			/* TODO: add text to lang.php */
 			$code = uniqid();
 			$to = $email;
 			$subject = "Password reset"; //email subject
 			$headers = "From: $yourEmail"; //this is your mail
-			$body = "Hello\n\nYou requested password reset!\n\n
+			$body = "Hello Admin\n\nYou forgot your password again!\n\n
 Your new password is:\n\n
 $code\n\n
 Make sure to change password as soon as you login.\n
 Thank you";
 
-			if(!mail($to, $subject, $body, $headers)){
+			if( !mail($to, $subject, $body, $headers) ) {
 				echo $lang['mailError'];
 				exit();
-			}
-			else{
+			} else {
 				$pass = encrypt($code);
 				if($std = $con->prepare("UPDATE admin SET password = ? WHERE email = ?")){
 					$std->bind_param("ss", $pass, $email);

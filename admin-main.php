@@ -53,7 +53,6 @@
 </head>
 <body>
 	<!-- TODO: Fix this horrible structure! -->
-<label hidden id="langHolder"><?php if(isset($_SESSION['lang'])) echo $_SESSION['lang']; else echo "en";?></label>
 <label hidden id="siteHolder"><?=$pageRoot?></label>
 
 <div class="admin-wrap">
@@ -156,11 +155,11 @@
 						<th scope="col"><?=$lang['select']; ?></th>
 					</tr>
 					<?php
-						$query = $con->prepare("SELECT id, user_id, title, description, public FROM snippets LIMIT ?");
+						$query = $con->prepare("SELECT id, user_id, title, syntax, description, public FROM snippets LIMIT ?");
 						$query->bind_param("s", $numSnip);
 						$query->execute();
 						$query->store_result();
-						$query->bind_result($snippet_id, $user_id, $title, $description, $public);
+						$query->bind_result($snippet_id, $user_id, $title, $syntax, $description, $public);
 						$q = $con->prepare("SELECT username FROM users WHERE user_id = ?");
 
 						while($query->fetch()){
@@ -169,14 +168,14 @@
 							$q->bind_result($username);
 							$q->fetch();
 						?>
-					<tr class="snippet-row">
+						<tr class="snippet-row">
 
-						<td class="owner-holder" onclick="previewSnippet('<?php echo $snippet_id; ?>');" data-username="<?php echo $username; ?>"><?php echo $username; ?></td>
-						<td class="title-holder" onclick="previewSnippet('<?php echo $snippet_id; ?>');"><?php echo $title; ?></td>
-						<td><?php echo $description; ?></td>
-						<td class='publicStatus' data-publicStatus="1"><?php if($public == 0) echo 'No'; else echo 'Yes';?></td>
-						<td><input type="checkbox" class="snippet-checker"><label hidden data-snippet-id = "<?php echo $snippet_id; ?>" class="snippet-id-holder"><?php echo $snippet_id; ?></label></td>
-					</tr>
+							<td class="owner-holder" onclick="previewSnippet('<?=$snippet_id; ?>');" data-username="<?=$username; ?>"><?=$username; ?></td>
+							<td class="title-holder" onclick="previewSnippet('<?=$snippet_id; ?>');"><?=$title; ?></td>
+							<td><?=$description; ?></td>
+							<td class='publicStatus' data-publicStatus="1"><?php if($public == 0) echo 'No'; else echo 'Yes';?></td>
+							<td><input type="checkbox" class="snippet-checker"><label hidden data-snippet-id = "<?=$snippet_id; ?>" class="snippet-id-holder"><?=$snippet_id; ?></label></td>
+						</tr>
 					<?php } $q->close(); ?>
 				</table>
 
@@ -191,7 +190,7 @@
 					if( $pages > 1 ) { ?>
 					<div class="snippet-pagination">
 					<?php for($i = 1; $i <= $pages; $i++){ ?>
-					<label <?php if($i == 1) echo "class='activePage'";?>><?php echo $i; ?></label>
+					<label <?php if($i == 1) echo "class='activePage'";?>><?=$i; ?></label>
 					<?php } ?>
 				</div>
 				<?php } ?>
@@ -209,41 +208,41 @@
 				$query->close();
 			?>
 				<div id="setting-wrap">
-					<p id="admin-email"><?=$lang['currentAdminEmail']; ?>: <?php echo $adminEmail; ?></p>
+					<p id="admin-email"><?=$lang['currentAdminEmail']; ?>: <?=$adminEmail; ?></p>
 
-					<label id="setting-pass-button"><?=$lang['changePassword']; ?></label>
-					<label id="setting-mail-button"><?=$lang['changeEmail']; ?></label>
+					<button id="setting-pass-button"><?=$lang['changePassword']; ?></button>
+					<button id="setting-mail-button"><?=$lang['changeEmail']; ?></button>
 
 					<div class="setting-pass-form">
 						<input type="password" name="oldpass" id="setting-oldpass" placeholder="<?=$lang['oldPassword']; ?>"><br>
 						<input type="password" name="newpass" id="setting-newpass" placeholder="<?=$lang['newPassword']; ?>"><br>
 						<input type="password" name="reppas" id="setting-reppass" placeholder="<?=$lang['repeatPassword']; ?>">
-						<label id="setting-submit"><?=$lang['change']; ?></label>
-						<label id="setting-close"><?=$lang['close']; ?></label>
+						<button id="setting-submit"><?=$lang['change']; ?></button>
+						<button id="setting-close"><?=$lang['close']; ?></button>
 					</div>
-					<label id="setting-error"></label>
+					<span id="setting-error"></span>
 
 					<div class="setting-mail-form">
 						<input type="text" name="newmail" id="setting-newmail" placeholder="<?=$lang['newEmail']; ?>"><br>
 						<input type="text" name="repmail" id="setting-repmail" placeholder="<?=$lang['repeatEmail']; ?>"><br>
-						<label id="setting-submit-mail"><?=$lang['change']; ?></label>
-						<label id="setting-close-mail"><?=$lang['close']; ?></label>
+						<button id="setting-submit-mail"><?=$lang['change']; ?></button>
+						<button id="setting-close-mail"><?=$lang['close']; ?></button>
 					</div>
-					<label id="setting-error-mail"></label>
+					<span id="setting-error-mail"></span>
 				</div>
 			</div>
 		</div>
 
 		<div class="users page" style="display: none;">
-			<label class="page-title"><?=$lang['users']; ?></label><br>
+			<h3 class="page-title"><?=$lang['users']; ?></h3><br>
 			<input type="text" id="searchBox" placeholder="<?=$lang['search']; ?>">
 
 			<div class="user-options">
-				<label class="visible" id="add-user" title="<?=$lang['manualAddNewUser']; ?>"><?=$lang['add']; ?></label>
-				<label id="edit-user" title="<?=$lang['editUser']; ?>"><?=$lang['edit']; ?></label>
-				<label id="delete-user" title="<?=$lang['deleteSelectedUser']; ?>"><?=$lang['delete']; ?></label>
-				<label id="ban" title="<?=$lang['banUsers'] ?>"><?=$lang['ban']; ?></label>
-				<label class="visible" id="select-all" title="<?=$lang['selectAllUsers']; ?>"><?=$lang['selectAll']; ?></label>
+				<button class="visible" id="add-user" title="<?=$lang['manualAddNewUser']; ?>"><?=$lang['add']; ?></button>
+				<button id="edit-user" title="<?=$lang['editUser']; ?>"><?=$lang['edit']; ?></button>
+				<button id="delete-user" title="<?=$lang['deleteSelectedUser']; ?>"><?=$lang['delete']; ?></button>
+				<button id="ban" title="<?=$lang['banUsers'] ?>"><?=$lang['ban']; ?></button>
+				<button class="visible" id="select-all" title="<?=$lang['selectAllUsers']; ?>"><?=$lang['selectAll']; ?></button>
 			</div>
 			<div class="table-wrap">
 				<table>
@@ -264,11 +263,11 @@
 						$query->bind_result($user_id, $username, $email, $joined, $active);
 						while($query->fetch()){ ?>
 						<tr class="user-row">
-							<td data-id="<?php echo $user_id; ?>" class="userId"><?php echo $user_id; ?></td>
-							<td class="username-holder" data-username="<?php echo $username; ?>"><?php echo $username; ?></td>
-							<td class="email-holder"><?php echo $email; ?></td>
-							<td><?php echo $joined; ?></td>
-							<td class='activeStatus' data-activeStatus="<?php echo $active; ?>"><?php if($active == 1) echo $lang['yes']; else echo $lang['no']; ?></td>
+							<td data-id="<?=$user_id; ?>" class="userId"><?=$user_id; ?></td>
+							<td class="username-holder" data-username="<?=$username; ?>"><?=$username; ?></td>
+							<td class="email-holder"><?=$email; ?></td>
+							<td><?=$joined; ?></td>
+							<td class='activeStatus' data-activeStatus="<?=$active; ?>"><?php if($active == 1) echo $lang['yes']; else echo $lang['no']; ?></td>
 							<td><input type="checkbox" class="checker"></td>
 						</tr>
 					<?php } ?>
@@ -285,7 +284,7 @@
 					if($pages > 1){ ?>
 					<div class="pagination">
 					<?php for($i = 1; $i <= $pages; $i++){ ?>
-					<label <?php if($i == 1) echo "class='activePage'";?>><?php echo $i; ?></label>
+					<span <?php if($i == 1) echo "class='activePage'";?>><?=$i; ?></span>
 					<?php } ?>
 				</div>
 				<?php } ?>
@@ -297,7 +296,7 @@
 			<input type="password" name="password" placeholder="<?=$lang['password']; ?>" id="manual-password"><br>
 			<input type="text" name="email" placeholder="<?=$lang['email']; ?>" id="manual-email">
 			<div class="manual-buttons-wrap">
-				<label id="manual-error">e</label>
+				<span id="manual-error">e</span>
 				<label id="manual-save"><?=$lang['save']; ?></label>
 				<label id="manual-close"><?=$lang['close']; ?></label>
 			</div>
@@ -307,23 +306,23 @@
 			<input type="text" name="username" placeholder="<?=$lang['username']; ?>" id="edit-username">
 			<input type="password" name="password" placeholder="<?=$lang['password']; ?>" id="edit-password"><br>
 			<input type="text" name="email" placeholder="<?=$lang['email']; ?>" id="edit-email">
-			<label id="edit-activate"></label>
-			<label hidden id="edit-id-holder"></label>
-			<label hidden id="edit-activate-holder"></label>
+			<span id="edit-activate"></span>
+			<var hidden id="edit-id-holder"></var>
+			<var hidden id="edit-activate-holder"></var>
 			<div class="edit-buttons-wrap">
-				<label id="edit-error">e</label>
-				<label id="edit-save"><?=$lang['save']; ?></label>
-				<label id="edit-close"><?=$lang['close']; ?></label>
+				<span id="edit-error">e</span>
+				<button id="edit-save"><?=$lang['save']; ?></button>
+				<button id="edit-close"><?=$lang['close']; ?></button>
 			</div>
 		</div>
 
 		<div class="banned-users page" style="display: none;">
-			<label class="page-title"><?=$lang['bannedUsers']; ?></label><br>
+			<h3 class="page-title"><?=$lang['bannedUsers']; ?></h3><br>
 			<input type="text" id="banned-searchBox" placeholder="<?=$lang['search']; ?>">
 
 			<div class="banned-user-options">
-				<label id="unban" title="<?=$lang['removeBan']; ?>"><?=$lang['unban']; ?></label>
-				<label class="visible" id="banned-select-all" title="Select all users"><?=$lang['selectAll']; ?></label>
+				<button id="unban" title="<?=$lang['removeBan']; ?>"><?=$lang['unban']; ?></button>
+				<button class="visible" id="banned-select-all" title="Select all users"><?=$lang['selectAll']; ?></button>
 			</div>
 			<div class="banned-table-wrap">
 				<table>
@@ -345,10 +344,10 @@
 						while($query->fetch()) {
 					?>
 						<tr class="banned-user-row">
-							<td data-id="<?php echo $user_id; ?>" class="userId"><?php echo $user_id; ?></td>
-							<td data-busername="<?php echo $username; ?>"><?php echo $username; ?></td>
-							<td><?php echo $email; ?></td>
-							<td><?php echo $joined; ?></td>
+							<td data-id="<?=$user_id; ?>" class="userId"><?=$user_id; ?></td>
+							<td data-busername="<?=$username; ?>"><?=$username; ?></td>
+							<td><?=$email; ?></td>
+							<td><?=$joined; ?></td>
 							<td><?php if($active == 1) echo $lang['yes']; else echo $lang['no']; ?></td>
 							<td><input type="checkbox" class="banned-checker"></td>
 						</tr>
@@ -366,7 +365,7 @@
 					if($pages > 1){ ?>
 					<div class="banned-pagination">
 					<?php for($i = 1; $i <= $pages; $i++){ ?>
-					<label <?php if($i === 1) echo "class='activePage'";?>><?php echo $i; ?></label>
+					<span <?php if($i === 1) echo "class='activePage'";?>><?=$i; ?></span>
 					<?php } ?>
 				</div>
 				<?php } ?>
