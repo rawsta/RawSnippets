@@ -17,9 +17,9 @@ $( document ).ready( () => {
 
 	// --- set stupid console message
 	console.log( '%c 📋 -> 🗃%c%c Welcome to RawSnippets %c%c🐌 ----------------------------------------- 🎇', logTitlePrimary, clearStyles, logTitleWhite, clearStyles, logTitlePrimary );
-	console.log( '%c 🎉 the horribly outdated, weird snippet management system ✨',  logContent );
-	console.log( '%c Expect bugs👾 and surprise✨features!', logPrimaryBG );
-	console.log( '%c ...and weird behaviour!🐱‍💻', logSecondaryBG );
+	// console.log( '%c 🎉 the horribly outdated, weird snippet management system ✨',  logContent );
+	// console.log( '%c Expect bugs👾 and surprise✨features!', logPrimaryBG );
+	// console.log( '%c ...and weird behaviour!🐱‍💻', logSecondaryBG );
 	// setTimeout( function() {
 	// 	console.clear();
 	// }, 6666);
@@ -100,6 +100,7 @@ $( document ).ready( () => {
 	});
 
 
+
 	// Hide modal on click outside.
 		// document.addEventListener( 'click', function( event ) {
 		// 	var modal = document.getElementsByClassName( 'modal' )[0];
@@ -138,7 +139,7 @@ $( document ).ready( () => {
 		toggleMenu();
 	});
 
-	// --- fancy search
+	// --- expand search
 
 	const expand = () => {
 		header.searchButton.classList.toggle("close");
@@ -154,6 +155,8 @@ $( document ).ready( () => {
 		snippetOptions.classList.toggle( 'options-open' );
 	});
 
+
+	// -> TODO: replace this monstrosity asap!
 	// Select Group in Add Snippet
 	groupSelect.on( 'click', function() {
 		$( this ).css( "border-radius",  "5px 5px 0 0" );
@@ -431,92 +434,20 @@ $( document ).ready( () => {
 		trigger.addEventListener( 'click', ( e ) => {
 			e.preventDefault();
 			const modal = document.getElementById( trigger.dataset.modal );
-			toggleBlur();
+			// toggleBlur();
+			blur.classList.toggle( 'open' );
 			modal.classList.add( 'open' );
 
 			const exits = modal.querySelectorAll( '.modal-exit' );
 			exits.forEach( ( exit ) => {
 				exit.addEventListener( 'click', ( e ) => {
 					e.preventDefault();
-					toggleBlur();
+					// toggleBlur();
+					blur.classList.toggle( 'open' );
 					modal.classList.remove( 'open' );
 				});
 			});
 		});
-	});
-
-	// #endregion
-
-	// #region - IMPORT OPTIONS ---------------------------------------- //
-
-	let check = 0;
-	window.tempSnippet = 0;
-	$( "#upload-import" ).on( 'click', () => {
-
-		console.info('starting filetransfer...' );
-		$( '#upload-form' ).ajaxForm({
-				url: 'import.php',
-				type: 'post',
-				beforeSubmit: showMessage,
-				success: receiveData
-			});
-
-		function showMessage() {
-			console.info('...validating new data...' );
-			$( "#upload-message" ).text( lang.importingCodeSnippets );
-		}
-
-		function receiveData( data ) {
-			console.info('...new data received.' );
-			$( "#upload-message" ).text( data );
-			if(data == 'ok' ) {
-				setTimeout( () => {
-					window.location.reload();
-				}, 2000);
-			}
-		}
-	});
-
-	$( "#upload-cancel" ).on( 'click', () => {
-		console.info('...upload aborted by user.' );
-		$( "#upload-form" ).fadeOut();
-		blur.classList.remove( 'open' );
-	});
-
-
-	// #endregion
-
-	// #region - EXPORT OPTIONS ---------------------------------------- //
-
-	$( "#import-label" ).on( 'click', () => {
-			console.info('preparing system for import of json-file...' );
-		$( "#upload-form" ).fadeIn( FADETIME );
-		toggleBlur();
-	});
-
-
-	// #endregion
-
-	// #region - SUBLIME SNIPPET ---------------------------------------- //
-
-	$( "#sublime-label" ).on( 'click', () => {
-		console.info('exporting snippet to sublime text...' );
-		$( "#sublime-code" ).val( $( ".raw-code" ).html());
-		$( "#sublime-title" ).val( $( "#detail-title" ).text());
-		$( "#sublime-snippet-input" ).val( "" );
-		$( ".sublime-snippet-window" ).fadeIn( FADETIME );
-		toggleBlur();
-	});
-
-	$( "#submit-sublime-snippet" ).on( 'click', () => {
-		$( ".sublime-snippet-window" ).fadeOut( FADETIME );
-		toggleBlur();
-	});
-
-	$( "#sublime-snippet-cancel" ).on( 'click', () => {
-		console.info('...exported aborted by user.' );
-		$( ".sublime-snippet-window" ).fadeOut( FADETIME );
-		toggleBlur();
 	});
 
 	// #endregion
@@ -582,21 +513,22 @@ $( document ).ready( () => {
 
 	// #endregion
 
-	// #region - 'ADD' Buttons on bottom ---------------------------------------- //
+	// #region - ADD SNIPPET ---------------------------------------- //
 
 	const id_name = $( "#name" );
 
-	$( ".bottom-add-snippet" ).on( 'click', ( event ) => {
+	$( ".bottom-add-snippet" ).on( 'click', ( e ) => {
+		e.preventDefault();
 		console.info('preparing system for new Snippet entry...' );
+		toggleBlur();
 		$( ".groupDropDown" ).hide();
-		groupSelect.css( "border-radius", "var(--raw-border-radius) var(--raw-border-radius) 0 0" );
+		// groupSelect.css( "border-radius", "var(--raw-border-radius) var(--raw-border-radius) 0 0" );
         $( "#save-snippet" ).html( lang.save );
 		$( ".check-label" ).data( "type", "save" );
 		id_name.val( "" );
 		$( "#description" ).val( "" );
 		$( "#snippetArea" ).val( "" );
 		$( "#myTags" ).tagit( "removeAll" );
-		toggleBlur();
 	});
 
 	$( "#snippet-cancel" ).on( 'click', () => {
@@ -612,6 +544,8 @@ $( document ).ready( () => {
 	// #region - SAVE SNIPPET ---------------------------------------- //
 
 	$( "#save-snippet" ).on( 'click', () => {
+		// $( "#save-snippet" ).attr('disabled');
+		/* TODO: add loader/spinner to show progress */
 		if( $( ".check-label" ).data( 'type' ) == 'save' ) {
 			$.post( "input-snippet.php", {
 				'name' : id_name.val(),
@@ -628,8 +562,7 @@ $( document ).ready( () => {
 						} );
 						setTimeout( function() {
 							window.location.reload();
-							return;
-						}, 3000 );
+						}, 2222 );
 					}
 					Toast.fire( {
 						icon: 'error',
@@ -657,8 +590,7 @@ $( document ).ready( () => {
 						} );
 						setTimeout( function() {
 							window.location.reload();
-							return;
-						}, 3000 );
+						}, 2222 );
 					}
 					Toast.fire( {
 						icon: 'error',
@@ -783,9 +715,92 @@ $( document ).ready( () => {
 
 	// #endregion
 
+	// #region --> IMPORT OPTIONS ---------------------------------------- //
+
+	let check = 0;
+	window.tempSnippet = 0;
+	$( "#upload-import" ).on( 'click', () => {
+
+		console.info('starting filetransfer...' );
+		$( '#upload-form' ).ajaxForm({
+				url: 'import.php',
+				type: 'post',
+				beforeSubmit: showMessage,
+				success: receiveData
+			});
+
+		function showMessage() {
+			console.info('...validating new data...' );
+			$( "#upload-message" ).text( lang.importingCodeSnippets );
+		}
+
+		function receiveData( data ) {
+			console.info('...new data received.' );
+			$( "#upload-message" ).text( data );
+			if(data == 'ok' ) {
+				setTimeout( () => {
+					window.location.reload();
+				}, 2000);
+			}
+		}
+	});
+
+	$( "#upload-cancel" ).on( 'click', () => {
+		console.info('...upload aborted by user.' );
+		$( "#upload-form" ).fadeOut();
+		blur.classList.remove( 'open' );
+	});
+
+
+	// #endregion
+
+	// #region --> EXPORT OPTIONS ---------------------------------------- //
+
+	$( "#import-label" ).on( 'click', () => {
+			console.info('preparing system for import of json-file...' );
+		$( "#upload-form" ).fadeIn( FADETIME );
+		toggleBlur();
+	});
+
+
+	// #endregion
+
+	// #region --> SUBLIME SNIPPET ---------------------------------------- //
+
+	$( "#sublime-label" ).on( 'click', () => {
+		console.info('exporting snippet to sublime text...' );
+		$( "#sublime-code" ).val( $( ".raw-code" ).html());
+		$( "#sublime-title" ).val( $( "#detail-title" ).text());
+		$( "#sublime-snippet-input" ).val( "" );
+		$( ".sublime-snippet-window" ).fadeIn( FADETIME );
+		toggleBlur();
+	});
+
+	$( "#submit-sublime-snippet" ).on( 'click', () => {
+		$( ".sublime-snippet-window" ).fadeOut( FADETIME );
+		toggleBlur();
+	});
+
+	$( "#sublime-snippet-cancel" ).on( 'click', () => {
+		console.info('...exported aborted by user.' );
+		$( ".sublime-snippet-window" ).fadeOut( FADETIME );
+		toggleBlur();
+	});
+
+	// #endregion
+
+
 }); // END --- doc.ready ------------- //
 
 
+// #region - MORE HELPER ---------- //
+
+function validateEmail(email) {
+	let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(String(email).toLowerCase());
+}
+
+// #endregion
 
 // --- SIDEBAR ---------------------------------------- //
 
@@ -881,9 +896,10 @@ function findSnippets( tag, u ) {
 // #region - GET SNIPPET ---------- //
 
 function getSnippet( id ) {
-	$( "#copy-label" ).text( lang.copy );
-	$( "#copy-label" ).css( "right", "65px" );
+	// $( "#copy-label" ).text( lang.copy );
+	// $( "#copy-label" ).css( "right", "65px" );
 	getDetails( id );
+
 	$( "#details-button" ).show();
 	$( ".details-window-top" ).show();
 
@@ -893,7 +909,7 @@ function getSnippet( id ) {
 
 		// $( '.prettyprinted' ).removeClass( 'prettyprinted' );
 		// prettyPrint();
-		Prism.highlightElement($('#code-block' )[0]);
+		Prism.highlightElement($('#code-block')[0]);
 
 		// const linenums = $( "pre[class*=line-number] > li" ).length / 100;
 		// const temp = 10 * parseInt( ( linenums - 2 ) ) + 30;
@@ -918,7 +934,7 @@ function getDetails( id ) {
 	const shareLink = $( "#share-link" );
 	let tempSnippet;
 
-	$( "#copy-label" ).text( lang.copy );
+	// $( "#copy-label" ).text( lang.copy );
 	$.post( "get-details.php", {'id' : id}, ( data ) => {
 		$( ".detail-title" ).html(data.title);
 		$( "#detail-desc" ).html(data.description);
@@ -958,8 +974,8 @@ function editSnippet( id ) {
 	$( "#snippet-error" ).hide();
 	$( "#snippet-error" ).html( "" );
 
-	$( "#copy-label" ).text( lang.copy );
-	$( "#copy-label" ).css( "right", "65px" );
+	// $( "#copy-label" ).text( lang.copy );
+	// $( "#copy-label" ).css( "right", "65px" );
 	$( "#name" ).val( "" );
 	$( "#description" ).val( "" );
 	$( "#snippetArea" ).val( "" );
@@ -993,7 +1009,7 @@ function editSnippet( id ) {
 		$( ".check-label" ).data( "type", "update" );
 
 		// $( ".full" ).fadeIn( FADETIME );
-		blur.classList.add( 'open' );
+		document.getElementById( 'blur' ).classList.toggle( 'open' );
 	}, "json" );
 
 }
