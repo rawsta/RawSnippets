@@ -49,7 +49,7 @@
 	if( $flag === 'false') {
 		$date = date("Y-m-d");
 		$stmt = $con->prepare("INSERT INTO snippets VALUES('',?, ?, ?, ?, ?, ?, '', ?)");
-		$stmt->bind_param("sssssss", $title, $desc, $syntax, $snippet, $user_id, $date, $group_id);
+		$stmt->bind_param("sssssss", $title, $syntax, $desc, $snippet, $user_id, $date, $group_id);
 		$stmt->execute();
 		$id = $con->insert_id;
 		$stmt->close();
