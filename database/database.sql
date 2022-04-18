@@ -8,8 +8,9 @@ CREATE TABLE `admin` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+-- change hardcoded admin username
 LOCK TABLES `admin` WRITE;
-INSERT INTO `admin` VALUES (1,'admin','26638dcdf94a6d493cbb090785319c0800feae51','example@example.com');
+INSERT INTO `admin` VALUES (1,'rawsta','26638dcdf94a6d493cbb090785319c0800feae51','rawsta@rawsta.de');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `groups`;
@@ -29,6 +30,7 @@ DROP TABLE IF EXISTS `snippets`;
 CREATE TABLE `snippets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) NOT NULL,
+  `syntax` varchar(45) NOT NULL,
   `description` text NOT NULL,
   `snippet` text NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -81,7 +83,7 @@ CREATE TABLE `users` (
   `active` tinyint(4) NOT NULL DEFAULT '0',
   `code` varchar(45) NOT NULL,
   `line_nums` tinyint(4) NOT NULL DEFAULT '1',
-  `font` varchar(45) NOT NULL DEFAULT 'Droid Sans',
+  `font` varchar(45) NOT NULL DEFAULT 'Fira Code',
   `size` varchar(45) NOT NULL DEFAULT '80',
   `joined` date NOT NULL,
   `banned` tinyint(4) NOT NULL DEFAULT '0',
