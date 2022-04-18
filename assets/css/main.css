@@ -818,7 +818,7 @@ aside {
 main.window {
     grid-area: code;
     display: grid;
-
+    align-content: start;
 }
 
 /* #endregion */

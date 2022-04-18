@@ -516,6 +516,7 @@ $( document ).ready( () => {
 	// #region - ADD SNIPPET ---------------------------------------- //
 
 	const id_name = $( "#name" );
+	const syntax_choice = document.getElementById('syntax-choice');
 
 	$( ".bottom-add-snippet" ).on( 'click', ( e ) => {
 		e.preventDefault();
@@ -549,6 +550,7 @@ $( document ).ready( () => {
 		if( $( ".check-label" ).data( 'type' ) == 'save' ) {
 			$.post( "input-snippet.php", {
 				'name' : id_name.val(),
+				'syntax' : syntax_choice.value,
 				'description' : $( "#description" ).val(),
 				'snippet' : $( "#snippetArea" ).val(),
 				'tags' : JSON.stringify( $( "#myTags" ).tagit( "assignedTags" )),
@@ -568,7 +570,7 @@ $( document ).ready( () => {
 						icon: 'error',
 						title: 'Sorry, da ist etwas schief gelaufen.'
 					} );
-					snippetError.html( "" );
+					// snippetError.html( "" );
 					snippetError.fadeIn( FADETIME );
 					snippetError.html( data );
 
@@ -596,7 +598,7 @@ $( document ).ready( () => {
 						icon: 'error',
 						title: 'Sorry, da ist etwas schief gelaufen.'
 					} );
-					snippetError.html( "" );
+					// snippetError.html( "" );
 					snippetError.fadeIn( FADETIME );
 					snippetError.html( data );
 				});
