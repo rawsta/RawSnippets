@@ -23,9 +23,8 @@
 	 * @return [type] $pass
 	 */
 	function encrypt( $pass ) {
+		/* TODO: add Salt to .env */
 		$salt = "jhkl2jh8f8s898we8ewiouq48484b";
-		// $password = sha1( $salt . $pass );
-		// return $password;
 		return sha1( $salt . $pass );
 	}
 
