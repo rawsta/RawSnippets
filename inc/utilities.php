@@ -67,35 +67,6 @@ class Helper {
         return pathinfo($filename, PATHINFO_EXTENSION);
     }
 
-    /**
-     * Get a Gravatar for email.
-     *
-     * @param string $email      The email address
-     * @param int    $size       Size in pixels, defaults to 80 (in px), available values from 1 to 2048
-     * @param string $default    Default imageset to use, available values: 404, mm, identicon, monsterid, wavatar
-     * @param string $rating     Maximum rating (inclusive), available values:  g, pg, r, x
-     * @param array  $attributes Optional, additional key/value attributes to include in the IMG tag
-     *
-     * @return string containing complete image tag
-     */
-    public static function getGravatar($email, $size = 80, $default = 'mm', $rating = 'g', $attributes = [])
-    {
-        $attr = trim(self::arrayToString($attributes));
-
-        $url = 'https://www.gravatar.com/';
-
-        return sprintf(
-            '<img src="%savatar.php?gravatar_id=%s&default=%s&size=%s&rating=%s" width="%spx" height="%spx" %s />',
-            $url,
-            md5(strtolower(trim($email))),
-            $default,
-            $size,
-            $rating,
-            $size,
-            $size,
-            $attr
-        );
-    }
 
     /**
      * Create HTML A Tag.
