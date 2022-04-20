@@ -1,10 +1,22 @@
-# RawSnippets [![Badge License]][License]
+<div align="center">
+  <a href="https://github.com/rawsta/RawSnippets">
+    <img src="images/logo.svg" alt="RawSnippets Logo" width="330" height="80">
+  </a>
 
-This is an old snippet tool that I've been using since about 2014.
-It has absolute basic functionality, terrible structure, terrible codebase and is probably broken, outdated, deprecated or otherwise wrong in every way.
+<h3 align="center">RawSnippets [![Badge License]][License]</h3>
 
+  <p align="center">
+    This is an old snippet tool that I've been using since about 2014.
+It has absolute basic functionality, terrible structure, terrible codebase and is probably broken, outdated, deprecated or otherwise wrong in every way. <br />
+    <br />
+    <a href="https://github.com/rawsta/RawSnippets/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/rawsta/RawSnippets/issues">Request Feature</a>
+  </p>
+</div>
 
 ## Why?
+
 Most tools today are written with various Frameworks, with various pre-/postprocessors and get optimized, concatenated, compressed and bundled.
 This tool was written without all that fancy stuff.
 Besides jQuery, Prettify and smaller plugins, it was and still is quite simple. At least compared to todays apps.
@@ -12,6 +24,7 @@ The whole tool had a strange and outdated structure that I hope to never really 
 But over the years, this old tool has served me well and did it's job.
 
 ## What?
+
 The Web was quite different in 2014 and the way this tool was build, was probably kind of reasonable.
 Reasonable developer would probably start from scratch or move to a newer and probably better tool, I chose to refactor the whole thing and try to replace everything with a solid foundation.
 But it's about time, to bring this trusty tool into the modern web.
@@ -32,6 +45,7 @@ Since this is full of bugs, broken stuff and other worst-practices, it's not har
 
 
 ## DISCLAIMER
+
 This should not be used by anybody and is definatly full of bugs and other *surprise features*.
 If you try to use it, I'm not reliable for anything happening with you, your server or your data.
 USE IT ON YOUR OWN RISK!
