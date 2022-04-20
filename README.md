@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/rawsta/RawSnippets">
-    <img src="../assets/img/logo.svg" alt="RawSnippets Logo" width="330" height="80">
+    <img src="../assets/svg/logo.svg" alt="RawSnippets Logo" width="330" height="80">
   </a>
 
 <h2 align="center">RawSnippets <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-yellow.svg?style=for-the-badge"></a></h2>
