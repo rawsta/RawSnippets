@@ -24,6 +24,9 @@ $( document ).ready( () => {
 	// 	console.clear();
 	// }, 6666);
 
+	var usrlang = navigator.language || navigator.userLanguage;
+    console.log( '%cLanguage is: ' + usrlang, logSecondaryBG);
+
 	// #endregion
 
 	// #region - CACHE THINGS ---------------------------------------- //

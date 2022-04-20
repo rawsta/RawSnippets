@@ -115,7 +115,8 @@
     <!-- HEADER BAR -->
     <header class="title-area">
         <a href="<?=$pageRoot?>" id="sitePath-holder" class="home-link">
-            <h1 class="appTitle"><i class="lar la-file-code"></i> <?=$lang['pageTitle']?></h1>
+        <img src="assets/svg/RawSnippets.svg" alt="<?=$lang['pageTitle']?>" class="logo">
+            <!-- <h1 class="appTitle"><i class="lar la-file-code"></i> < ?=$lang['pageTitle']?></h1> -->
         </a>
 
         <div class="header-options">

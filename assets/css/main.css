@@ -49,11 +49,13 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}h1{font-size:2em;margin:0.67
     --raw-color_black-medium : #130700;
     --raw-color_black : #060300;
     --raw-color_back: #292A44;
-    --raw-color_orange : #ff8300;
-    --raw-color_old-orange : #bc4200;
+    --raw-color_orange : #ff8300; /* hsl(31, 100%, 50%); */
+    --raw-color_old-orange : #bc4200; /*hsl(21, 100%, 37%);*/
     --raw-color_red : #be1a1a;
     --raw-color_red-dark : #830000;
     --raw-color_red-darker : #420000;
+    --raw-color_blue-medium : #0c476c;
+    --raw-color_blue-dark : #021f40;
     --raw-color_blue-darker : #00091b;
     --raw-color_green : #128843;
 
@@ -86,7 +88,6 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}h1{font-size:2em;margin:0.67
     color-scheme: dark;
     /* add accent-color */
     accent-color: var(--raw-color_accent);
-
 
 
     /* --- BUTTONS --- */
@@ -842,6 +843,19 @@ main.window {
 .title-area a:hover {
     text-decoration: none;
     outline-color: transparent;
+}
+
+header .logo {
+	width: 333px;
+	height: 88px;
+    transition: var(--raw-transition);
+}
+
+header .logo:hover {
+	/* width: 333px;
+	height: 88px; */
+	filter: drop-shadow(0 0 3px #fff);
+	transform: translate(4px, 3px) rotate(-3deg);
 }
 
 .appTitle {
