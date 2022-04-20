@@ -1,13 +1,13 @@
 <div align="center">
   <a href="https://github.com/rawsta/RawSnippets">
-    <img src="images/logo.svg" alt="RawSnippets Logo" width="330" height="80">
+    <img src="../assets/img/logo.svg" alt="RawSnippets Logo" width="330" height="80">
   </a>
 
-<h3 align="center">RawSnippets [![Badge License]][License]</h3>
+<h2 align="center">RawSnippets <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-yellow.svg?style=for-the-badge"></a></h2>
 
   <p align="center">
-    This is an old snippet tool that I've been using since about 2014.
-It has absolute basic functionality, terrible structure, terrible codebase and is probably broken, outdated, deprecated or otherwise wrong in every way. <br />
+    This is an old snippet tool that I've been using since about 2014.<br />
+It has absolute basic functionality, terrible structure, terrible codebase and is probably broken, outdated, deprecated or otherwise wrong in every way.
     <br />
     <a href="https://github.com/rawsta/RawSnippets/issues">Report Bug</a>
     ·
@@ -30,7 +30,7 @@ Reasonable developer would probably start from scratch or move to a newer and pr
 But it's about time, to bring this trusty tool into the modern web.
 
 
-[![Badge HTML5]] [![Badge CSS3]] [![Badge JavaScript]] [![Badge PHP]]
+[Badge HTML5] [Badge CSS3] [Badge JavaScript] [Badge PHP]
 
 ## Features
 
@@ -41,7 +41,7 @@ But it's about time, to bring this trusty tool into the modern web.
 
 Since this is full of bugs, broken stuff and other worst-practices, it's not hard to fiund things to improve, rewrite or otherwise do it in a better way. Feel free to open an Issue or leave a PR if you want. With a foundation like this, it's not easy to keep track of all the TODOs.
 
-[![Badge IssueOpen]] [![Badge IssueClosed]] [![Badge LastCommit]]
+[Badge IssueOpen] [Badge IssueClosed] [Badge LastCommit]
 
 
 ## DISCLAIMER
