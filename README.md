@@ -6,14 +6,16 @@
   <p align="center">
     This is an old snippet tool that I've been using since about 2014.<br />
 It has absolute basic functionality, terrible structure, terrible codebase and is probably broken,<br />
-outdated, deprecated or otherwise wrong in every way.
+outdated, deprecated or otherwise wrong in every way.  </p>
+
+![Badge HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![Badge CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) ![Badge PHP](https://img.shields.io/badge/PHP_%5E7.2-777BB4?style=for-the-badge&logo=php&logoColor=white) ![Badge JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
     <br />
     &#8277;
     <a href="https://github.com/rawsta/RawSnippets/issues">Report Bug</a>
     &#8273;
     <a href="https://github.com/rawsta/RawSnippets/issues">Request Feature</a>
     &#8277;
-  </p>
 </div>
 
 ## Why?
