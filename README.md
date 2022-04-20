@@ -1,17 +1,21 @@
 <div align="center">
   <a href="https://github.com/rawsta/RawSnippets">
-    <img src="../assets/svg/logo.svg" alt="RawSnippets Logo" width="330" height="80">
+    <img src="https://github.com/rawsta/RawSnippets/assets/svg/logo.svg" alt="RawSnippets Logo" width="330" height="80">
   </a>
 
-<h2 align="center">RawSnippets <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-yellow.svg?style=for-the-badge"></a></h2>
+<h2 align="center">RawSnippets</h2>
 
   <p align="center">
     This is an old snippet tool that I've been using since about 2014.<br />
-It has absolute basic functionality, terrible structure, terrible codebase and is probably broken, outdated, deprecated or otherwise wrong in every way.
+It has absolute basic functionality, terrible structure, terrible codebase and is probably broken,<br />
+outdated, deprecated or otherwise wrong in every way.
     <br />
+    <br />
+    &#8277;
     <a href="https://github.com/rawsta/RawSnippets/issues">Report Bug</a>
-    ·
+    &#8273;
     <a href="https://github.com/rawsta/RawSnippets/issues">Request Feature</a>
+    &#8277;
   </p>
 </div>
 
@@ -50,6 +54,7 @@ This should not be used by anybody and is definatly full of bugs and other *surp
 If you try to use it, I'm not reliable for anything happening with you, your server or your data.
 USE IT ON YOUR OWN RISK!
 
+[![Badge License]][License]
 
 <!----------------------------------------------------------------------------->
 
@@ -71,3 +76,5 @@ USE IT ON YOUR OWN RISK!
 [License]: LICENSE
 
 ![GitHub issues](https://img.shields.io/github/issues-raw/rawsta/RawSnippets?style=for-the-badge&logo=github) ![GitHub issues](https://img.shields.io/github/issues-closed-raw/rawsta/RawSnippets?style=for-the-badge&logo=github) ![GitHub last commit](https://img.shields.io/github/last-commit/rawsta/rawsnippets?style=for-the-badge&logo=github)
+
+ <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-yellow.svg?style=for-the-badge"></a>
