@@ -3,13 +3,10 @@
     <img src="https://github.com/rawsta/RawSnippets/blob/main/assets/svg/RawSnippets.svg" alt="RawSnippets Logo" width="330" height="80">
   </a>
 
-<h2 align="center">RawSnippets</h2>
-
   <p align="center">
     This is an old snippet tool that I've been using since about 2014.<br />
 It has absolute basic functionality, terrible structure, terrible codebase and is probably broken,<br />
 outdated, deprecated or otherwise wrong in every way.
-    <br />
     <br />
     &#8277;
     <a href="https://github.com/rawsta/RawSnippets/issues">Report Bug</a>
