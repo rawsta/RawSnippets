@@ -31,8 +31,6 @@ The Web was quite different in 2014 and the way this tool was build, was probabl
 Reasonable developer would probably start from scratch or move to a newer and probably better tool, I chose to refactor the whole thing and try to replace everything with a solid foundation.
 But it's about time, to bring this trusty tool into the modern web.
 
-![Badge HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![Badge CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) ![Badge PHP](https://img.shields.io/badge/PHP_%5E7.2-777BB4?style=for-the-badge&logo=php&logoColor=white) ![Badge JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-
 ## Features
 
  * listing snippets
