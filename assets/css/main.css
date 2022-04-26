@@ -887,7 +887,7 @@ header .logo:hover {
     margin-left: 170px;
     top: 75%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -100%);
     transition: var(--raw-transition);
 }
 
@@ -1638,7 +1638,7 @@ pre.pre-code {
     margin: auto;
     padding: var(--raw-space_1x);
     position: fixed;
-    z-index: 101;
+    z-index: 100;
     right: 0;
     top: 0;
     visibility: hidden;
@@ -1646,10 +1646,34 @@ pre.pre-code {
     display: none;
 }
 
+.form-wrapper {
+    margin: auto;
+    padding: 0;
+    position: relative;
+    z-index: 101;
+    /* right: 0;
+    top: 0; */
+}
+
 .add-snippet-window.open {
     display: block;
     opacity: 1;
     visibility: visible;
+}
+
+.add-snippet-window.open::before {
+    content: '';
+    position: absolute;
+    z-index: 99;
+    background-color: var(--raw-color_black_50);
+    filter: blur(4px);
+}
+
+.add-snippet-window form {
+    position: fixed;
+    z-index: 101;
+    right: 0;
+    top: 0;
 }
 
 .add-snippet-window textarea,
