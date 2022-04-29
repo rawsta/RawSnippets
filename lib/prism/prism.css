@@ -4,7 +4,7 @@ https://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+cli
 code[class*="language-"],
 pre[class*="language-"] {
 	color: #d8d4ca;
-	text-shadow: 0 0 2px #100c0f, 0 0 5px #dc078e33, 0 0 10px #fff3;
+	text-shadow: 0 0 2px #100c0c, 0 0 5px #dc7c0733, 0 0 10px #ffb70038;
 	background: none;
 	font-family: 'Fira Code VF', 'Fira Code', Consolas, 'Courier New', "Andale Mono", "Ubuntu Mono", Courier, monospace;
 	font-size: 1em;
@@ -27,7 +27,7 @@ pre[class*="language-"] {
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
 	background-color: transparent !important;
-	background-image: linear-gradient(to top, #000 75%, #130700);
+	background-image: linear-gradient(to top, #060300 75%, #130700);
 }
 
 :not(pre) > code[class*="language-"] {
@@ -67,6 +67,7 @@ pre[class*="language-"] {
 
 .token.function-name {
 	color: #6196cc;
+	text-shadow: 0 0 2px #09242a, 0 0 5px #07d1dc54, 0 0 10px #e5fdff4d;
 }
 
 .token.boolean,
@@ -74,7 +75,7 @@ pre[class*="language-"] {
 .token.function,
 .token.number {
 	color: #f08d49;
-	text-shadow: 0 0 2px #001716, 0 0 3px #03edf975, 0 0 5px #03edf975, 0 0 8px #03edf975;
+	text-shadow: 0 0 2px #171400, 0 0 3px #f9ed037f, 0 0 5px #f9a7034a, 0 0 8px #f9dc035d;
 }
 
 .token.class-name {
@@ -84,8 +85,8 @@ pre[class*="language-"] {
 
 .token.constant,
 .token.symbol {
-	color: #f92aad;
-	text-shadow: 0 0 2px #100c0f, 0 0 5px #dc078e33, 0 0 10px #fff3;
+	color: #f92a2a;
+	text-shadow: 0 0 2px #2a0923, 0 0 5px #dc070754, 0 0 10px #ffe5e54d;
 }
 
 .token.important,
@@ -94,8 +95,8 @@ pre[class*="language-"] {
 .token.builtin,
 .token.selector .token.class,
 .token.selector {
-	color: #cc99cd;
-	text-shadow: 0 0 2px #393a33, 0 0 8px #f39f0575, 0 0 2px #f39f0575;
+	color: #fc32ff;
+	text-shadow: 0 0 2px #6a006a, 0 0 8px #f610eeba, 0 0 2px #f30584;
 }
 
 .token.string,
@@ -103,13 +104,15 @@ pre[class*="language-"] {
 .token.attr-value,
 .token.regex,
 .token.variable {
-	color: #f87c32;
+	color: #f86e1e;
+	text-shadow: 0 0 2px #171400, 0 0 3px #f9ab035c, 0 0 5px #ffc25f5d, 0 0 8px #ffd9008e;
 }
 
 .token.operator,
 .token.entity,
 .token.url {
 	color: #67cdcc;
+	text-shadow: 0 0 3px #001517, 0 0 8px #07eeffc3;
 }
 
 
@@ -195,12 +198,12 @@ pre[id].linkable-line-numbers span.line-numbers-rows > span:before {
 	cursor: pointer;
 }
 pre[id].linkable-line-numbers span.line-numbers-rows > span:hover:before {
-	background-color: rgba(128, 128, 128, .2);
+	background-color: rgba(182, 70, 0, 0.23);
 }
 
 pre[class*="language-"].line-numbers {
 	position: relative;
-	padding-left: 3.3em;
+	padding-left: 3.5em;
 	counter-reset: linenumber;
 }
 
@@ -213,19 +216,17 @@ pre[class*="language-"].line-numbers > code {
 	position: absolute;
 	pointer-events: none;
 	top: 0;
-	/* font-size: 100%; */
-	/* left: -3em; */
-	/* width: 2em; */
-	/* letter-spacing: -0.03em; */
 	border-right: 2px solid #837469;
+	line-height: 1.5;
 	user-select: none;
 	left: -2.5em;
-	width: 2rem;
+	width: 3rem;
 }
 
 .line-numbers-rows > span {
 	display: block;
 	counter-increment: linenumber;
+	line-height: 1.5;
 }
 
 .line-numbers-rows > span:before {
@@ -245,8 +246,8 @@ div.code-toolbar {
 div.code-toolbar > .toolbar {
 	position: absolute;
 	z-index: 10;
-	top: 0.42em;
-	right: 0.333em;
+	top: .5em;
+	right: .4em;
 	transition: opacity 420ms ease-in-out;
 	opacity: 0;
 }
@@ -284,12 +285,17 @@ div.code-toolbar > .toolbar > .toolbar-item > button {
 div.code-toolbar > .toolbar > .toolbar-item > a,
 div.code-toolbar > .toolbar > .toolbar-item > button,
 div.code-toolbar > .toolbar > .toolbar-item > span {
-	color: #e8e4de;
-	font-size: 0.83em;
-	padding: 0.42em 1em;
-	background: rgba(102, 96, 96, .33);
-	box-shadow: 0 2px 0 3px rgba(231, 131, 131, .23);
-	border-radius: 3px;
+	color: #beb9b6;
+	font-size: 0.77em;
+	padding: 6px 12px;
+	background: rgba(83, 83, 83, .69);
+	box-shadow: 0 0 6px 2px rgba(232, 0, 0, .33);
+	border-radius: 4px;
+	cursor:pointer;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > button.copy-to-clipboard-button {
+	cursor:copy;
 }
 
 div.code-toolbar > .toolbar > .toolbar-item > a:focus,
@@ -299,6 +305,8 @@ div.code-toolbar > .toolbar > .toolbar-item > button:hover,
 div.code-toolbar > .toolbar > .toolbar-item > span:focus,
 div.code-toolbar > .toolbar > .toolbar-item > span:hover {
 	color: #fff;
+	background: rgba(83, 83, 83, .83);
+	box-shadow: 0 0 6px 2px rgba(252, 0, 0, .69);
 	text-decoration: none;
 }
 
