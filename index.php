@@ -140,7 +140,7 @@
 		</main>
 
 		<footer class="info">
-				<p class="copyright"><a href="//www.rawsta.de/" class="link-to-rawsta" >&copy;2022 | RawSnippets&trade;</a> ]|&brvbar;|[ <a href="https://github.com/rawsta/RawSnippets" class="link-to-github" >blame rawsta for this.</a></p>
+				<p class="copyright"><a href="https://github.com/rawsta/RawSnippets" class="link-to-rawsta" >&copy;2022 | RawSnippets&trade;</a> ]|&brvbar;|[ <a href="//www.rawsta.de/" class="link-to-github" >blame rawsta for this.</a></p>
 		</footer>
 
 	</div>
