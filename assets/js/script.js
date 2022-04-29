@@ -25,7 +25,7 @@ $( document ).ready( () => {
 	// }, 6666);
 
 	var usrlang = navigator.language || navigator.userLanguage;
-    console.log( '%cLanguage is: ' + usrlang, logSecondaryBG);
+    console.log( '%c Language is: ' + usrlang, logSecondaryBG);
 
 	// #endregion
 
@@ -44,7 +44,7 @@ $( document ).ready( () => {
 	const codeBlock = document.getElementById( 'code-block' );
 
 	const modals = document.querySelectorAll( '[data-modal]' );
-	const blur = document.getElementById( 'blur' );
+	const blur = document.querySelector( '.blur' );
 
 	const header = {
         appTitle     : document.querySelector( '.appTitle' ),
@@ -519,12 +519,12 @@ $( document ).ready( () => {
 	// #region - ADD SNIPPET ---------------------------------------- //
 
 	const id_name = $( "#name" );
-	const syntax_choice = document.getElementById('syntax-choice');
+	const syntax = document.getElementById('syntax');
 
 	$( ".bottom-add-snippet" ).on( 'click', ( e ) => {
 		e.preventDefault();
-		console.info('preparing system for new Snippet entry...' );
 		toggleBlur();
+		blur.classList.toggle( 'open' );
 		$( ".groupDropDown" ).hide();
 		// groupSelect.css( "border-radius", "var(--raw-border-radius) var(--raw-border-radius) 0 0" );
         $( "#save-snippet" ).html( lang.save );
@@ -553,21 +553,22 @@ $( document ).ready( () => {
 		if( $( ".check-label" ).data( 'type' ) == 'save' ) {
 			$.post( "input-snippet.php", {
 				'name' : id_name.val(),
-				'syntax' : syntax_choice.value,
 				'description' : $( "#description" ).val(),
+				'syntax' : syntax.value,
 				'snippet' : $( "#snippetArea" ).val(),
 				'tags' : JSON.stringify( $( "#myTags" ).tagit( "assignedTags" )),
 				'flag' : false,
 				"groups" : groupSelect.attr( "data-id" )
 			}, ( data ) => {
+				console.log(data);
 					if( data == 'ok' ) {
 						Toast.fire( {
 							icon: 'success',
 							title: 'Snippet gespeichert!'
 						} );
-						setTimeout( function() {
-							window.location.reload();
-						}, 2222 );
+						// setTimeout( function() {
+						// 	window.location.reload();
+						// }, 2222 );
 					}
 					Toast.fire( {
 						icon: 'error',
@@ -582,6 +583,7 @@ $( document ).ready( () => {
 			$.post( "input-snippet.php", {
 				'name' : id_name.val(),
 				'description' : $( "#description" ).val(),
+				'syntax' : syntax.value,
 				'snippet' : $( "#snippetArea" ).val(),
 				'tags' : JSON.stringify( $( "#myTags" ).tagit( "assignedTags" )),
 				'flag' : true,
@@ -610,7 +612,6 @@ $( document ).ready( () => {
 
 	// SIDEBAR selecting snippet
 	$( document ).on( "click", ".snippet", function() {
-			console.info('...selecting snippet...' );
 		$( ".snippet" ).removeClass( "active" );
 		$( this ).addClass( "active" );
 	});
@@ -901,33 +902,30 @@ function findSnippets( tag, u ) {
 // #region - GET SNIPPET ---------- //
 
 function getSnippet( id ) {
-	// $( "#copy-label" ).text( lang.copy );
-	// $( "#copy-label" ).css( "right", "65px" );
+
 	getDetails( id );
 
 	$( "#details-button" ).show();
 	$( ".details-window-top" ).show();
+	const codeBlock = $('#codeBlock');
+	const rawCode = $('.raw-code');
+	const snippetOptions = $('#snippetOptions');
 
-	$.post( "get-snippet.php", {'id' : id, 'flag' : true}, ( data ) => {
-		$( "#code-block" ).html( data );
-		$( ".raw-code" ).html( data );
+	$.post( "get-snippet.php", {
+		'id' : id,
+		'flag' : true
+	}, ( data ) => {
+		codeBlock.html( data );
+		rawCode.html( data );
 
-		// $( '.prettyprinted' ).removeClass( 'prettyprinted' );
-		// prettyPrint();
-		Prism.highlightElement($('#code-block')[0]);
+		Prism.highlightElement($('#codeBlock')[0]);
+		codeBlock.removeClass('language-none');
+		codeBlock.addClass('language-php');
+		snippetOptions.removeClass('invisible');
+		snippetOptions.addClass('visible');
 
-		// const linenums = $( "pre[class*=line-number] > li" ).length / 100;
-		// const temp = 10 * parseInt( ( linenums - 2 ) ) + 30;
-		// if( linenums > 2 ) {
-		// 	$( "#code-block ol > li" ).css( "left", `${temp}px` );
-			// $( ".prettyprint ol.linenums > li" ).css( "left", `${temp}px` );
-		// }
-
-		// $( ".code" ).css( "z-index", "0" );
-		// $( ".snippet-icons" ).css( "z-index", "1" );
 	});
 }
-
 
 // #endregion
 
@@ -937,7 +935,11 @@ function getDetails( id ) {
 	const shareOption = $( ".snippet-options" );
 	const shareLabel = $( "#share-label" );
 	const shareLink = $( "#share-link" );
+	const codeBlock = $('#codeBlock');
+	const codeBlockParent = $('#codeBlock').parent();
 	let tempSnippet;
+	let syntax;
+
 
 	// $( "#copy-label" ).text( lang.copy );
 	$.post( "get-details.php", {'id' : id}, ( data ) => {
@@ -947,6 +949,8 @@ function getDetails( id ) {
 		$( "#date-label" ).html(` <i class="las la-calendar-plus"></i>  ${lang.created} [ ${data.date} ] `);
 
 		tempSnippet = data.idSnippet;
+		syntax = (data.syntax == 'undefined' ) ? 'php' : data.syntax;
+		console.log('getDetails-data', data);
 
 		shareLink.val(`${$( "#sitePath-holder" ).text()}/public.php?id=${data.idSnippet}`);
 
@@ -959,6 +963,10 @@ function getDetails( id ) {
 			shareLink.prop( 'disabled', true);
 			shareLink.removeClass( "active-share" );
 			shareLink.addClass( "inactive-share" );
+			codeBlock.removeClass( "language-none" );
+			codeBlockParent.removeClass( "language-none" );
+			codeBlock.addClass( "language-" + syntax +"" );
+			codeBlockParent.addClass( "language-" + syntax +"" );
 		} else if( data.public == 1 ) {
 			shareOption.prop( "title", lang.no );
 			shareOption.css( "color", "var(--raw-color_error)" );
@@ -967,6 +975,10 @@ function getDetails( id ) {
 			shareLink.prop( 'disabled', false);
 			shareLink.addClass( "active-share" );
 			shareLink.removeClass( "inactive-share" );
+			codeBlock.removeClass( "language-none" );
+			codeBlockParent.removeClass( "language-none" );
+			codeBlock.addClass( "language-" + syntax +"" );
+			codeBlockParent.addClass( "language-" + syntax +"" );
 		}
 	}, "json" );
 }
@@ -989,6 +1001,7 @@ function editSnippet( id ) {
 	$.post( "get-snippet.php", {'id':id, 'flag':false}, ( data ) => {
 		$( "#name" ).val( data.title );
 		$( "#description" ).val( data.description );
+		$( "#syntax-choice" ).val( data.syntax );
 		$( "#snippetArea" ).val( data.snippet );
 	}, "json" );
 
