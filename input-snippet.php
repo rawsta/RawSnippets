@@ -9,8 +9,8 @@
 
 	$title = $_POST['name'];
 	$desc = $_POST['description'];
-	$snippet = $_POST['snippet'];
 	$syntax = $_POST['syntax'];
+	$snippet = $_POST['snippet'];
 	$tagsArray = $_POST['tags'];
 	$tagsArray = json_decode($tagsArray);
 	$flag = $_POST['flag'];
@@ -49,7 +49,7 @@
 	if( $flag === 'false') {
 		$date = date("Y-m-d");
 		$stmt = $con->prepare("INSERT INTO snippets VALUES('',?, ?, ?, ?, ?, ?, '', ?)");
-		$stmt->bind_param("sssssss", $title, $syntax, $desc, $snippet, $user_id, $date, $group_id);
+		$stmt->bind_param("sssssss", $title, $desc, $syntax, $snippet, $user_id, $date, $group_id);
 		$stmt->execute();
 		$id = $con->insert_id;
 		$stmt->close();
@@ -63,8 +63,8 @@
 		echo 'ok';
 	} else if( $flag === 'true' ) {
 
-		$stmt = $con->prepare("UPDATE snippets SET title = ?, description = ?, snippet = ?, group_id = ? WHERE id = ?");
-		$stmt->bind_param("sssss", $title, $desc, $snippet, $group_id, $snippetId);
+		$stmt = $con->prepare("UPDATE snippets SET title = ?, description = ?, syntax = ?, snippet = ?, group_id = ? WHERE id = ?");
+		$stmt->bind_param("sssss", $title, $desc, $syntax, $snippet, $group_id, $snippetId);
 		$stmt->execute();
 		$stmt->close();
 

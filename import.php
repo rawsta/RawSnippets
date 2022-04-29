@@ -23,8 +23,8 @@
 
 		$json = json_decode( file_get_contents( $uploadfile), true );
 
-		if( $json && $json['id'] && $json['title'] && $json['syntax'] && $json['description'] && $json['snippet'] && $json['date'] && $json["group_id"] && $json["tags"] && $json["groupId"] && $json["groupName"] && $json["groupUserId"] ) {
-			$query = $con->prepare( "INSERT INTO snippets (title, syntax, description, snippet, user_id, date, group_id) VALUES (?, ?, ?, ?, ?, ?, ?)" );
+		if( $json && $json['id'] && $json['title'] && $json['description'] && $json['syntax'] && $json['snippet'] && $json['date'] && $json["group_id"] && $json["tags"] && $json["groupId"] && $json["groupName"] && $json["groupUserId"] ) {
+			$query = $con->prepare( "INSERT INTO snippets (title, description, syntax, snippet, user_id, date, group_id) VALUES (?, ?, ?, ?, ?, ?, ?)" );
 			$query2 = $con->prepare( "INSERT INTO tags_snippets VALUES ('', ?, ?, ?)" );
 			$q3 = $con->prepare( "INSERT INTO groups VALUES (?, ?, ?)" );
 
@@ -35,7 +35,7 @@
 			$q3->close();
 
 			for( $i = 0; $i < count( $json['id'] ); $i++ ){
-				$query->bind_param( "ssssss", $json['title'][$i], $json['description'][$i], $json['snippet'][$i], $user_id,$json['date'][$i], $json["groupId"][$i] );
+				$query->bind_param( "ssssss", $json['title'][$i], $json['description'][$i], $json['syntax'][$i], $json['snippet'][$i], $user_id,$json['date'][$i], $json["groupId"][$i] );
 				$query->execute();
 				$id = $con->insert_id;
 				$tagsList = explode( ", ", $json['tags'][$i] );

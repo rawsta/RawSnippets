@@ -16,15 +16,15 @@
 
 	$data = array();
 
-	$query = $con->prepare("SELECT id, title, syntax, description, date, snippet, group_id FROM snippets WHERE user_id = ?");
+	$query = $con->prepare("SELECT id, title, description, syntax, date, snippet, group_id FROM snippets WHERE user_id = ?");
 	$query->bind_param("s", $user_id);
 	$query->execute();
-	$query->bind_result($id, $title, $syntax, $description, $date, $snippet, $group_id);
+	$query->bind_result($id, $title, $description, $syntax, $date, $snippet, $group_id);
 	while($query->fetch()){
 		$data['id'][] = $id;
 		$data['title'][] = $title;
-		$data['syntax'][] = $syntax;
 		$data['description'][] = $description;
+		$data['syntax'][] = $syntax;
 		$data['date'][] = $date;
 		$data['snippet'][] = $snippet;
 		$data['group_id'][] = $group_id;
