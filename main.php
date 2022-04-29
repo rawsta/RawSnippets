@@ -246,7 +246,7 @@
 
         <!-- Code/Snippets -->
         <?php $linenumbers = 'update-when-loaded'; if( $value === 1 ) { $linenumbers = 'line-numbers'; } else { $linenumbers = 'no-line-numbers'; }?>
-        <pre class="pre-code <?=$linenumbers?> language-none rainbow-braces" style="font-family: <?=$font?>; font-size: 0.<?=$size?>em;"><code id="codeBlock" class="language-none"></code></pre>
+        <pre class="pre-code <?=$linenumbers?> rainbow-braces" style="font-family: <?=$font?>; font-size: 0.<?=$size?>em;"><code id="codeBlock" class="l"></code></pre>
         <pre hidden class="raw-code"></pre>
 
 
@@ -263,7 +263,7 @@
                         <div class="balken"></div>
                     </div>
                     <ul class="snippet-option-wrap">
-                        <li style="--animation-order: 4;" class="option-item" id="share-label" title="<?=$lang['snippetPrivate'] ?>"><span><?=$lang['private']; ?></span> <i class="las la-share-square la-lg la-fw"></i></li>
+                        <li style="--animation-order: 4;" class="option-item" id="share-label" data-modal="sharing" title="<?=$lang['snippetPrivate'] ?>"><span><?=$lang['private']; ?></span> <i class="las la-share-square la-lg la-fw"></i></li>
                         <li style="--animation-order: 3;" class="option-item" id="sublime-label" title="<?=$lang['exportAsSublime'] ?>"><span>Sublime Text</span> <i class="las la-file-code la-lg la-fw"></i></li>
                         <li style="--animation-order: 2;" class="option-item" id="code-label" title="<?=$lang['rawCode']; ?>"><span>&lt;/<?=$lang['code']; ?>&gt;</span> <i class="las la-file-alt la-lg la-fw"></i></li>
                         <li style="--animation-order: 1;" class="option-item" id="copy-label" data-clipboard-target=".raw-code" title="<?=$lang['copyClipboard']; ?>"><span><?=$lang['copy']; ?></span> <i class="las la-copy la-lg la-fw"></i></li>
@@ -458,7 +458,7 @@
     </form>
 
 <!-- SHARE WINDOW -->
-    <div class="share-window" style="display:none;">
+    <div id="sharing" class="share-window" style="display:none;">
         <p><?=$lang['wantShareSnippet'] ?> <span id="share-option" style="background-color: #27AE60"><?=$lang['yes']; ?></span></p>
         <label id="share-close">X</label>
         <input type="text" id="share-link">

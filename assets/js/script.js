@@ -445,7 +445,7 @@ $( document ).ready( () => {
 			exits.forEach( ( exit ) => {
 				exit.addEventListener( 'click', ( e ) => {
 					e.preventDefault();
-					// toggleBlur();
+					toggleBlur();
 					blur.classList.toggle( 'open' );
 					modal.classList.remove( 'open' );
 				});
@@ -574,7 +574,7 @@ $( document ).ready( () => {
 						icon: 'error',
 						title: 'Sorry, da ist etwas schief gelaufen.'
 					} );
-					// snippetError.html( "" );
+					snippetError.html( "" );
 					snippetError.fadeIn( FADETIME );
 					snippetError.html( data );
 
@@ -595,9 +595,9 @@ $( document ).ready( () => {
 							icon: 'success',
 							title: 'Snippet aktualisiert!'
 						} );
-						setTimeout( function() {
-							window.location.reload();
-						}, 2222 );
+						// setTimeout( function() {
+						// 	window.location.reload();
+						// }, 2222 );
 					}
 					Toast.fire( {
 						icon: 'error',
@@ -647,17 +647,15 @@ $( document ).ready( () => {
 
 	// #region - SHARING ---------------------------------------- //
 
-	shareLabel.on( 'click', () => {
-		$( ".share-window" ).fadeIn( FADETIME );
-		// blur.classList.add( 'open' );
-		toggleBlur();
-	});
+	// shareLabel.on( 'click', () => {
+	// 	$( ".share-window" ).fadeIn( FADETIME );
+	// 	toggleBlur();
+	// });
 
-	$( "#share-close" ).on( 'click', () => {
-		$( ".share-window" ).fadeOut( FADETIME );
-		// blur.classList.remove( 'open' );
-		toggleBlur();
-	});
+	// $( "#share-close" ).on( 'click', () => {
+	// 	$( ".share-window" ).fadeOut( FADETIME );
+	// 	toggleBlur();
+	// });
 
 	$( "#share-option" ).on( 'click', function() {
 		if( $( this ).text() == lang.yes ) {
@@ -919,8 +917,8 @@ function getSnippet( id ) {
 		rawCode.html( data );
 
 		Prism.highlightElement($('#codeBlock')[0]);
-		codeBlock.removeClass('language-none');
-		codeBlock.addClass('language-php');
+		// codeBlock.removeClass('language-none');
+		// codeBlock.addClass('language-php');
 		snippetOptions.removeClass('invisible');
 		snippetOptions.addClass('visible');
 
@@ -949,36 +947,32 @@ function getDetails( id ) {
 		$( "#date-label" ).html(` <i class="las la-calendar-plus"></i>  ${lang.created} [ ${data.date} ] `);
 
 		tempSnippet = data.idSnippet;
-		syntax = (data.syntax == 'undefined' ) ? 'php' : data.syntax;
-		console.log('getDetails-data', data);
+		syntax = (data.syntax == 'undefined' ) ? 'language-none' : 'language-' + data.syntax + '';
+		console.log('syntax: ', data.syntax);
 
 		shareLink.val(`${$( "#sitePath-holder" ).text()}/public.php?id=${data.idSnippet}`);
 
 		// set sharing dynamically / if not public -disable
 		if( data.public == 0 ) { /// TODO: fix and set right order and values
 			shareOption.prop( "title", lang.yes );
-			shareOption.css( "color", "var(--raw-color_success )" );
+			shareOption.css( "color", "#128843" );
 			shareLabel.textContent = lang.private;
 			shareLabel.prop( 'title', lang.snippetPrivate );
 			shareLink.prop( 'disabled', true);
 			shareLink.removeClass( "active-share" );
 			shareLink.addClass( "inactive-share" );
-			codeBlock.removeClass( "language-none" );
-			codeBlockParent.removeClass( "language-none" );
-			codeBlock.addClass( "language-" + syntax +"" );
-			codeBlockParent.addClass( "language-" + syntax +"" );
+			codeBlock.removeClass( "language-none" ).addClass( syntax );
+			codeBlockParent.removeClass( "language-none" ).addClass( syntax );
 		} else if( data.public == 1 ) {
 			shareOption.prop( "title", lang.no );
-			shareOption.css( "color", "var(--raw-color_error)" );
+			shareOption.css( "color", "#be1a1a" );
 			shareLabel.textContent = lang.public;
 			shareLabel.prop( 'title', lang.snippetPublic);
 			shareLink.prop( 'disabled', false);
 			shareLink.addClass( "active-share" );
 			shareLink.removeClass( "inactive-share" );
-			codeBlock.removeClass( "language-none" );
-			codeBlockParent.removeClass( "language-none" );
-			codeBlock.addClass( "language-" + syntax +"" );
-			codeBlockParent.addClass( "language-" + syntax +"" );
+			codeBlock.removeClass( "language-none" ).addClass( syntax );
+			codeBlockParent.removeClass( "language-none" ).addClass( syntax );
 		}
 	}, "json" );
 }
@@ -1001,7 +995,7 @@ function editSnippet( id ) {
 	$.post( "get-snippet.php", {'id':id, 'flag':false}, ( data ) => {
 		$( "#name" ).val( data.title );
 		$( "#description" ).val( data.description );
-		$( "#syntax-choice" ).val( data.syntax );
+		$( "#syntax" ).val( data.syntax );
 		$( "#snippetArea" ).val( data.snippet );
 	}, "json" );
 

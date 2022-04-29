@@ -40,21 +40,21 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}h1{font-size:2em;margin:0.67
 
     --raw-color_grey-lightest : #e8e4de;
     --raw-color_grey-light : #d8d4ca;
-    --raw-color_grey-medium0 : #beb9b6;
-    --raw-color_grey-medium1 : #837469;
+    --raw-color_grey-medium0 : #beb9b6; /*rgb(190, 185, 182); */
+    --raw-color_grey-medium1 : #837469; /* rgb(131, 116, 105); */
     --raw-color_grey-medium2 : #666060; /* rgb(102, 96, 96); */
     --raw-color_grey-dark : #524e4e;
     --raw-color_grey-darker : #474342; /* rgb(71, 67, 66); */
-    --raw-color_grey-darkest : #322a2a;
+    --raw-color_grey-darkest : #322a2a; /* rgb(50, 42, 42);*/
 
     --raw-color_black-light : #232323;
-    --raw-color_black-medium : #130700;
+    --raw-color_black-medium : #130700; /* rgb(19, 7, 0); */
     --raw-color_black : #060300;
 
     --raw-color_test: #292A44;
 
-    --raw-color_orange : #ff8300; /* hsl(31, 100%, 50%); */
-    --raw-color_old-orange : #bc4200; /*hsl(21, 100%, 37%);*/
+    --raw-color_orange : #ff8300; /*  rgb(255, 131, 0); */
+    --raw-color_old-orange : #bc4200; /* rgb(188, 66, 0); */
     --raw-color_red : #be1a1a;
     --raw-color_red-dark : #830000;
     --raw-color_red-darker : #420000;
@@ -68,7 +68,7 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}h1{font-size:2em;margin:0.67
     --raw-color_white_25: rgba(255, 235, 235, .25);
     --raw-color_white_50: rgba(255, 235, 235, .5);
     --raw-color_white_75: rgba(255, 235, 235, .75);
-    --raw-color_grey-medium_25: rgba(112, 109, 109, .25);
+    --raw-color_grey-medium_25: rgba(102, 96, 96, .25);
     --raw-color_grey-medium_66: rgba(102, 96, 96, .666);
     --raw-color_black_25: rgba(23, 10, 00, .25);
     --raw-color_black_50: rgba(23, 10, 00, .5);
@@ -685,9 +685,9 @@ input:required:invalid:not(:focus):not(:placeholder-shown) {
 .badge {
     color: var(--raw-color_white-dark);
     font-size: var(--raw-font_size-s);
-    padding: 0.3em 1em;
+    padding: 4px 8px;
     background: var(--raw-color_grey-medium_25);
-    border-radius: 3px;
+    border-radius: 4px;
 }
 
     .badge.success {
@@ -946,11 +946,12 @@ header .logo:hover {
 }
 
 .search-bar:hover {
-    color: var(--raw-color_grey-darkest);
+    color: var(--raw-color_black-light);
 }
 
 .search-bar::placeholder {
     color: transparent;
+    text-shadow: 0 0 0 transparent;
 }
 .search-bar.square::placeholder {
     color: var(--raw-color_grey-light);
@@ -1664,20 +1665,6 @@ pre.pre-code {
 /* #region - ADD SNIPPET ---------------------------------------- */
 
 .add-snippet-window {
-    /* background-color: var(--raw-color_grey-darkest); */
-    /* background-color: var(--raw-color_grey-medium_66); */
-    /* animation: fadein 777ms; */
-    /* border: var(--raw-border);
-    border-radius: var(--raw-border-radius);
-    bottom: 0;
-    box-shadow: 0 0 3px var(--raw-color_grey-darkest); */
-    /* height: 60vh;
-    width: 40vw;
-    left: 0;
-    margin: auto;
-    padding: var(--raw-space_1x);
-    position: fixed;
-    z-index: 100; */
     right: 0;
     top: 0;
     visibility: hidden;
@@ -1695,26 +1682,12 @@ pre.pre-code {
 }
 
 .form-wrapper {
-/* .add-snippet-window form { */
-    /* margin: auto;
-    padding: 0;
-    position: relative; */
     z-index: 101;
-    /* right: 0;*/
-    /* top: 0; */
     background-color: var(--raw-color_grey-darkest);
-    /* animation: fadein 777ms;
-    animation-delay: var(--raw-transition_time); */
     border: var(--raw-border);
     border-radius: var(--raw-border-radius);
-    /* bottom: 0; */
     box-shadow: 0 0 3px var(--raw-color_grey-darkest);
-    /* height: 65vh; */
-    /* max-width: 45vw; */
-    /* left: auto; */
-    /* margin: auto; */
     padding: var(--raw-space_1x);
-    /* position: absolute; */
 }
 
 .add-snippet-window.open {
@@ -1736,22 +1709,13 @@ pre.pre-code {
     width: 100vw;
 }
 
-/* .add-snippet-window form {
-    position: fixed;
-    z-index: 101;
-    right: 0;
-    top: 0;
-} */
-
 .add-snippet-window textarea,
 .add-snippet-window input[type="text"] {
     font-family: var(--raw-font_mono);
-    /* font-size: var(--raw-font_size-m); */
     margin: 0 auto;
     width: 100%
 }
 
-/* .add-snippet-window form:focus-within { */
 .add-snippet-window .form-wrapper:focus-within {
     border-color: var(--raw-color_grey-darker);
     box-shadow: 0 0 10px var(--raw-color_grey-darkest);
@@ -1770,7 +1734,6 @@ pre.pre-code {
 
 .addsnipform ul.tagit + label {
     text-align: right;
-    /* margin-inline: auto 0; */
     transition: var(--raw-transition);
     opacity: 0;
 }
@@ -1781,15 +1744,6 @@ pre.pre-code {
     opacity: 1;
     color: var(--raw-color_white-dark);
 }
-
-/* .add-snippet-window textarea { */
-    /* padding: 10px;
-    font-family: var(--raw-font_mono);
-    font-size: var(--raw-font_size-m); */
-    /* width: 100%; */
-    /* margin: 10px auto; */
-    /* resize: none; */
-/* } */
 
 /* Dim and disable the button while the form is invalid */
 form:invalid button.accept {
