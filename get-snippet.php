@@ -26,16 +26,17 @@
 
 		echo htmlspecialchars($code, ENT_QUOTES, "UTF-8");
 	} else {
-		$query = $con->prepare("SELECT title, description, snippet FROM snippets WHERE id = ? AND user_id = ?");
+		$query = $con->prepare("SELECT title, description, syntax, snippet FROM snippets WHERE id = ? AND user_id = ?");
 		$query->bind_param("ss", $id, $user_id);
 		$query->execute();
-		$query->bind_result($title, $description, $snippet);
+		$query->bind_result($title, $description, $syntax, $snippet);
 		$query->fetch();
 		$query->close();
 
 		$array = array();
 		$array['title'] = $title;
 		$array['description'] = $description;
+		$array['syntax'] = $syntax;
 		$array['snippet'] = $snippet;
 		echo json_encode($array, JSON_HEX_QUOT | JSON_HEX_TAG);
 	}
