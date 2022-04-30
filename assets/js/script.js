@@ -947,7 +947,7 @@ function getDetails( id ) {
 		$( "#date-label" ).html(` <i class="las la-calendar-plus"></i>  ${lang.created} [ ${data.date} ] `);
 
 		tempSnippet = data.idSnippet;
-		syntax = (data.syntax == 'undefined' ) ? 'language-none' : 'language-' + data.syntax + '';
+		syntax = (data.syntax !== 'undefined' || data.syntax !== null ) ? 'language-' + data.syntax + '' : 'language-none';
 		console.log('syntax: ', data.syntax);
 
 		shareLink.val(`${$( "#sitePath-holder" ).text()}/public.php?id=${data.idSnippet}`);
