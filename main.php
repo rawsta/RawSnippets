@@ -475,10 +475,10 @@
 <!-- ADD NEW GROUP -->
     <div id="addgroup" class="add-group">
         <form id="addGroupForm" action="add-group.php" method="post">
-            <label for="group-name"></label>
-            <input type="text" id="group-name" name="name" placeholder="<?=$lang['groupName']; ?>">
-            <input id="addGroupSubmit" type="submit" value="<?=$lang['save']; ?>">
-            <span id="addGroupCancel">X</span>
+            <label for="group-name"><?=$lang['addGroup']?></label>
+            <input type="text" id="group-name" name="name" placeholder="<?=$lang['groupName']?>">
+            <input id="addGroupSubmit" type="submit" value="<?=$lang['save']?>">
+            <button id="addGroupCancel"><?=$lang['cancel']?></button>
         </form>
         <span id="addGroupError"></span>
     </div>

@@ -127,7 +127,7 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}h1{font-size:2em;margin:0.67
 
     /* ->!-> TODO: NEW STUFF <-!<- */
     --unit: 0.65rem;
-    --spaceIncrement: 1.65;
+    --spaceIncrement: 1.618;
 
     --space-s: var(--unit);
     --space-m: calc(var(--space-s) * var(--spaceIncrement));
@@ -595,8 +595,12 @@ input[type="range"] {
     outline-color: var(----raw-color_accent);
 }
 
+input:not(:focus):not(:placeholder-shown):invalid,
 input:required:invalid:not(:focus):not(:placeholder-shown) {
     border-color: var(--raw-color_error);
+}
+input:not(:focus):not(:placeholder-shown):valid {
+    border-color: var(--raw-color_white-dark);
 }
 
 .input-group-wrap {
@@ -1249,10 +1253,11 @@ ul.user-nav {
 /* #endregion /actions */
 /* #endregion /header */
 
-/* #region -> SIDEBAR TOP ---------------------------------------- */
+/* #region -> SIDEBAR - TOP ---------------------------------------- */
 
 aside.sidebar {
     height: 100%;
+    max-height: calc(100vh - var(--raw-head_space));
     display: flex;
     flex-flow: column nowrap;
 }
@@ -1297,30 +1302,44 @@ aside.sidebar {
 
 /* #endregion */
 
-/* #region -> SIDEBAR CENTER --------------------------------------- */
+/* #region --> BACK BUTTON --------------------------------------- */
 
 .back {
     color: var(--raw-color_grey-medium1);
     text-align: center;
-    font-family: var(--raw-font_main);
     font-size: var(--raw-font_size-l);
     font-weight: 900;
     left: 0;
     margin: 0;
     width: calc( var(--raw-sidebar_width) - 32px );
-    padding: 15px 20px;
-    position: relative;
+    padding: 5px;
+    position: sticky;
     opacity: var(--raw-opacity_hover);
     transition: var(--raw-transition);
     z-index: 5;
+}
+
+.back i {
+    opacity: 0;
+    transition: var(--raw-transition);
+    transform: translateX(20px);
 }
 
 .back:hover {
     cursor: pointer;
     color: var(--raw-color_black-light);
     opacity: 1;
-    transform: translateX(-10px);
+    transform: translateX(-5px);
 }
+
+.back:hover i {
+    opacity: 1;
+    transform: translateX(-5px);
+}
+
+/* #endregion */
+
+/* #region -> SIDEBAR CENTER --------------------------------------- */
 
 .groups,
 .tag-list,
@@ -2186,48 +2205,49 @@ p.detail-desc {
 /* #region - ADD GROUP ---------------------------------------- */
 
 .add-group {
-    background-color: var(--raw-color_white);
+    background-color: var(--raw-color_black-medium);
     border: var(--raw-border);
     border-radius: var(--raw-border-radius);
-    bottom: 35px;
-    box-shadow: 0 0 5px #808080;
+    bottom: 65px;
+    /* box-shadow: 0 0 5px #808080; */
     display: none;
-    height: 40px;
+    /* height: 40px; */
     left: 100px;
-    margin: auto;
-    overflow: hidden;
-    padding: 10px;
+    /* margin: auto;
+    overflow: hidden; */
+    padding: 10px 15px;
     position: absolute;
-    vertical-align: middle;
-    width: 460px;
+    /* vertical-align: middle; */
+    /* width: 460px; */
     z-index: 1000;
 }
 
 .add-group input[type="text"] {
-    border: var(--raw-border);
-    border-radius: var(--raw-border-radius);
-    font-family: var(--raw-font_main);
-    font-size: var(--raw-font_size-m);
-    padding: 10px;
-    width: 280px;
+    /* border: var(--raw-border); */
+    /* border-radius: var(--raw-border-radius); */
+    /* font-family: var(--raw-font_main); */
+    /* font-size: var(--raw-font_size-m); */
+    /* padding: 10px; */
+    /* width: 280px; */
     vertical-align: middle;
 }
 
 #addGroupSubmit {
-    background-color: var(--raw-color_primary);
-    border: 1px solid var(--raw-color_primary);
-    border-radius: var(--raw-border-radius);
-    color: var(--raw-color_white);
-    font-family: var(--raw-font_main);
-    font-size: var(--raw-font_size-m);
-    font-weight: 600;
-    padding: 5px 0;
-    width: 115px;
-    vertical-align: middle;
+    /* background-color: var(--raw-color_primary); */
+    border-color: var(--raw-color_primary);
+    /* border: 1px solid var(--raw-color_primary); */
+    /* border-radius: var(--raw-border-radius); */
+    /* color: var(--raw-color_white); */
+    /* font-family: var(--raw-font_main); */
+    /* font-size: var(--raw-font_size-m); */
+    /* font-weight: 600; */
+    /* padding: 5px 0; */
+    /* width: 115px; */
+    /* vertical-align: middle; */
 }
 
 #addGroupCancel {
-    background-color: var(--raw-color_primary);
+    /* background-color: var(--raw-color_primary);
     border: 1px solid var(--raw-color_primary);
     border-radius: var(--raw-border-radius);
     color: var(--raw-color_white);
@@ -2236,7 +2256,7 @@ p.detail-desc {
     font-size: var(--raw-font_size-m);
     left: 10px;
     padding: 3px 10px;
-    vertical-align: middle;
+    vertical-align: middle; */
     cursor: pointer;
 }
 
@@ -2244,7 +2264,7 @@ p.detail-desc {
     background-color: var(--raw-color_primary);
     border-radius: var(--raw-border-radius);
     bottom: 110px;
-    color: var(--raw-color_white);
+    color: var(--raw-color_error);
     display: none;
     font-family: var(--raw-font_main);
     font-size: var(--raw-font_size-m);
