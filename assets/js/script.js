@@ -561,6 +561,7 @@ $( document ).ready( () => {
 				'flag' : false,
 				'groups' : groupSelect.attr( "data-id" ),
 			}, ( data ) => {
+				console.log(data);
 					if( data == 'ok' ) {
 						Toast.fire( {
 							icon: 'success',
