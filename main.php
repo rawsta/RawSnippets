@@ -116,13 +116,8 @@
     <div id="blur" class="blur full modal-exit"></div>
     <!-- HEADER BAR -->
     <header class="title-area">
-<<<<<<< HEAD
         <a href="<?=$pageRoot?>" class="home-link">
             <img src="assets/svg/RawSnippets.svg" alt="<?=$lang['pageTitle']?>" class="logo">
-=======
-        <a href="<?=$pageRoot?>" id="sitePath-holder" class="home-link">
-        <img src="assets/svg/RawSnippets.svg" alt="<?=$lang['pageTitle']?>" class="logo">
->>>>>>> 64b2923f7c4176a96d4aaaaf6c19860b8459dd10
             <!-- <h1 class="appTitle"><i class="lar la-file-code"></i> < ?=$lang['pageTitle']?></h1> -->
         </a>
 
