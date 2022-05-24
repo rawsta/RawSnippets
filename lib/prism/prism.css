@@ -3,35 +3,41 @@ https://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+cli
 
 code[class*="language-"],
 pre[class*="language-"] {
-    color: #d8d4ca;
-    background: 0 0;
-    font-family: 'Fira Code VF', 'Fira Code', Consolas, 'Courier New', "Andale Mono", "Ubuntu Mono", Courier, monospace;
-    font-size: 1em;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    line-height: 1.5;
-    tab-size: 4;
-    hyphens: none;
+	color: #d8d4ca;
+	text-shadow: 0 0 2px #100c0c, 0 0 5px #dc7c0733, 0 0 10px #ffb70038;
+	background: none;
+	font-family: 'Fira Code VF', 'Fira Code', Consolas, 'Courier New', "Andale Mono", "Ubuntu Mono", Courier, monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+	tab-size: 4;
+	hyphens: none;
 }
 
 pre[class*="language-"] {
-    padding: .5em 1em;
-    margin: .5em 0;
-    overflow: auto;
+	padding: .5em 1em;
+	margin: .5em 0;
+	overflow: auto;
 }
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-    background: #130700;
+	background-color: transparent !important;
+	background-image: linear-gradient(to top, #060300 75%, #130700);
 }
 
 :not(pre) > code[class*="language-"] {
-    padding: .1em;
-    border-radius: .3em;
-    white-space: normal;
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token a {
+	color: inherit;
 }
 
 .token.block-comment,
@@ -39,164 +45,257 @@ pre[class*="language-"] {
 .token.comment,
 .token.doctype,
 .token.prolog {
-    color: #837469;
+	color: #837469;
 }
 
 .token.punctuation {
-    color: #d8d4ca;
+	color: #d8d4ca;
 }
 
 .token.attr-name,
 .token.deleted,
 .token.namespace,
 .token.tag {
-    color: #e2777a;
+	color: #e2777a;
+}
+
+.token.property,
+.token.selector {
+	color: #72f1b8;
+	text-shadow: 0 0 2px #100c0f, 0 0 10px #257c5575, 0 0 35px #21272475;
 }
 
 .token.function-name {
-    color: #6196cc;
+	color: #6196cc;
+	text-shadow: 0 0 2px #09242a, 0 0 5px #07d1dc54, 0 0 10px #e5fdff4d;
 }
 
 .token.boolean,
+.token.selector .token.id,
 .token.function,
 .token.number {
-    color: #f08d49;
+	color: #f08d49;
+	text-shadow: 0 0 2px #171400, 0 0 3px #f9ed037f, 0 0 5px #f9a7034a, 0 0 8px #f9dc035d;
 }
 
-.token.class-name,
+.token.class-name {
+	color: #fff5f6;
+	text-shadow: 0 0 2px #000, 0 0 10px #fc1f2c75, 0 0 5px #fc1f2c75, 0 0 25px #fc1f2c75;
+}
+
 .token.constant,
-.token.property,
 .token.symbol {
-    color: #f8c555;
+	color: #f92a2a;
+	text-shadow: 0 0 2px #2a0923, 0 0 5px #dc070754, 0 0 10px #ffe5e54d;
 }
 
-.token.atrule,
-.token.builtin,
 .token.important,
+.token.atrule,
 .token.keyword,
+.token.builtin,
+.token.selector .token.class,
 .token.selector {
-    color: #cc99cd;
+	color: #fc32ff;
+	text-shadow: 0 0 2px #6a006a, 0 0 8px #f610eeba, 0 0 2px #f30584;
 }
 
-.token.attr-value,
-.token.char,
-.token.regex,
 .token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
 .token.variable {
-    color: #7ec699;
+	color: #f86e1e;
+	text-shadow: 0 0 2px #171400, 0 0 3px #f9ab035c, 0 0 5px #ffc25f5d, 0 0 8px #ffd9008e;
 }
 
-.token.entity,
 .token.operator,
+.token.entity,
 .token.url {
-    color: #67cdcc;
+	color: #67cdcc;
+	text-shadow: 0 0 3px #001517, 0 0 8px #07eeffc3;
 }
+
 
 .token.bold,
 .token.important {
-    font-weight: 700;
+	font-weight: 700;
 }
 
 .token.italic {
-    font-style: italic;
+	font-style: italic;
 }
 
 .token.entity {
-    cursor: help;
+	cursor: help;
 }
 
 .token.inserted {
-    color: #128843;
+	color: #128843;
+}
+
+pre[data-line] {
+	position: relative;
+	padding: 1em 0 1em 3em;
+}
+
+.line-highlight {
+	position: absolute;
+	left: 0;
+	right: 0;
+	padding: 0;
+	margin-top: 1em; /* Same as .prism's padding-top */
+	background: hsla(24, 20%, 50%,.08);
+	background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+	pointer-events: none;
+	line-height: inherit;
+	white-space: pre;
+}
+
+@media print {
+	.line-highlight {
+		/*
+		 * This will prevent browsers from replacing the background color with white.
+		 * It's necessary because the element is layered on top of the displayed code.
+		 */
+		-webkit-print-color-adjust: exact;
+		color-adjust: exact;
+	}
+}
+
+.line-highlight:before,
+.line-highlight[data-end]:after {
+	content: attr(data-start);
+	position: absolute;
+	top: .4em;
+	left: .6em;
+	min-width: 1em;
+	padding: 0 .5em;
+	background-color: hsla(24, 20%, 50%,.4);
+	color: hsl(24, 20%, 95%);
+	font: bold 65%/1.5 sans-serif;
+	text-align: center;
+	vertical-align: .3em;
+	border-radius: 999px;
+	text-shadow: none;
+	box-shadow: 0 1px white;
+}
+
+.line-highlight[data-end]:after {
+	content: attr(data-end);
+	top: auto;
+	bottom: .4em;
+}
+
+.line-numbers .line-highlight:before,
+.line-numbers .line-highlight:after {
+	content: none;
+}
+
+pre[id].linkable-line-numbers span.line-numbers-rows {
+	pointer-events: all;
+}
+pre[id].linkable-line-numbers span.line-numbers-rows > span:before {
+	cursor: pointer;
+}
+pre[id].linkable-line-numbers span.line-numbers-rows > span:hover:before {
+	background-color: rgba(182, 70, 0, 0.23);
 }
 
 pre[class*="language-"].line-numbers {
-    position: relative;
-    padding-left: 3em;
-    counter-reset: linenumber;
+	position: relative;
+	padding-left: 3.5em;
+	counter-reset: linenumber;
 }
 
 pre[class*="language-"].line-numbers > code {
-    position: relative;
-    white-space: inherit;
+	position: relative;
+	white-space: inherit;
 }
 
 .line-numbers .line-numbers-rows {
-    position: absolute;
-    pointer-events: none;
-    top: 0;
-    font-size: 100%;
-    left: -3em;
-    width: 2em;
-    /* letter-spacing: -0.03em; */
-    border-right: 2px dashed #837469;
-    user-select: none;
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	border-right: 2px solid #837469;
+	line-height: 1.5;
+	user-select: none;
+	left: -2.5em;
+	width: 3rem;
 }
 
 .line-numbers-rows > span {
-    display: block;
-    counter-increment: linenumber;
+	display: block;
+	counter-increment: linenumber;
+	line-height: 1.5;
 }
 
 .line-numbers-rows > span:before {
-    color: #837469;
-    content: counter(linenumber, ".", decimal-leading-zero);
-    font-feature-settings: "tnum";/* mmonospace variant */
-    font-variant-numeric: tabular-nums;/* mmonospace variant */
-    display: block;
-    padding-right: .8em;
-    text-align: right;
+	color: #837469;
+	content: counters(linenumber, ".", decimal-leading-zero);
+	font-feature-settings: "tnum";
+	font-variant-numeric: tabular-nums;
+	display: block;
+	padding-right: .5em;
+	text-align: right;
 }
 
 div.code-toolbar {
-    position: relative;
+	position: relative;
 }
 
 div.code-toolbar > .toolbar {
-    position: absolute;
-    z-index: 10;
-    top: 0.42em;
-    right: 0.333em;
-    transition: opacity 420ms ease-in-out;
-    opacity: 0;
+	position: absolute;
+	z-index: 10;
+	top: .5em;
+	right: .4em;
+	transition: opacity 420ms ease-in-out;
+	opacity: 0;
 }
 
 div.code-toolbar:hover > .toolbar {
-    opacity: 1;
+	opacity: 1;
 }
 
+/* Separate line b/c rules are thrown out if selector is invalid.
+   IE11 and old Edge versions don't support :focus-within. */
 div.code-toolbar:focus-within > .toolbar {
-    opacity: 1;
+	opacity: 1;
 }
 
 div.code-toolbar > .toolbar > .toolbar-item {
-    display: inline-block;
-    margin-inline-start: 10px;
+	display: inline-block;
+	margin-inline-start: 10px;
 }
 
 div.code-toolbar > .toolbar > .toolbar-item > a {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 div.code-toolbar > .toolbar > .toolbar-item > button {
-    background: 0 0;
-    border: 0;
-    color: inherit;
-    font: inherit;
-    line-height: normal;
-    overflow: visible;
-    padding: 0;
-    user-select: none;
+	background: 0 0;
+	border: 0;
+	color: inherit;
+	font: inherit;
+	line-height: normal;
+	overflow: visible;
+	padding: 0;
+	user-select: none;
 }
 
 div.code-toolbar > .toolbar > .toolbar-item > a,
 div.code-toolbar > .toolbar > .toolbar-item > button,
 div.code-toolbar > .toolbar > .toolbar-item > span {
-    color: #e8e4de;
-    font-size: 0.77em;
-    padding: 0.42em 1em;
-    background: rgba(102, 96, 96, .33);
-    box-shadow: 0 2px 0 3px rgba(231, 131, 131, .23);
-    border-radius: 3px;
+	color: #beb9b6;
+	font-size: 0.77em;
+	padding: 6px 12px;
+	background: rgba(83, 83, 83, .69);
+	box-shadow: 0 0 6px 2px rgba(232, 0, 0, .33);
+	border-radius: 4px;
+	cursor:pointer;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > button.copy-to-clipboard-button {
+	cursor:copy;
 }
 
 div.code-toolbar > .toolbar > .toolbar-item > a:focus,
@@ -205,59 +304,72 @@ div.code-toolbar > .toolbar > .toolbar-item > button:focus,
 div.code-toolbar > .toolbar > .toolbar-item > button:hover,
 div.code-toolbar > .toolbar > .toolbar-item > span:focus,
 div.code-toolbar > .toolbar > .toolbar-item > span:hover {
-    color: #fff;
-    text-decoration: none;
+	color: #fff;
+	background: rgba(83, 83, 83, .83);
+	box-shadow: 0 0 6px 2px rgba(252, 0, 0, .69);
+	text-decoration: none;
 }
 
 span.inline-color-wrapper {
-    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxwYXRoIGZpbGw9ImdyYXkiIGQ9Ik0wIDBoMnYySDB6Ii8+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0wIDBoMXYxSDB6TTEgMWgxdjFIMXoiLz48L3N2Zz4=);
-    background-position: center;
-    background-size: 110%;
-    display: inline-block;
-    height: 1.333ch;
-    width: 1.333ch;
-    margin: 0 0.333ch;
-    box-sizing: border-box;
-    border: 1px solid #666060;
-    outline: 1px dotted rgba(0, 0, 0, 0.5);
-    overflow: hidden;
+	/*
+	 * The background image is the following SVG inline in base 64:
+	 *
+	 * <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2">
+	 *     <path fill="gray" d="M0 0h2v2H0z"/>
+	 *     <path fill="white" d="M0 0h1v1H0zM1 1h1v1H1z"/>
+	 * </svg>
+	 *
+	 * SVG-inlining explained:
+	 * https://stackoverflow.com/a/21626701/7595472
+	 */
+	background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxwYXRoIGZpbGw9ImdyYXkiIGQ9Ik0wIDBoMnYySDB6Ii8+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0wIDBoMXYxSDB6TTEgMWgxdjFIMXoiLz48L3N2Zz4=);
+	background-position: center;
+	background-size: 110%;
+	display: inline-block;
+	height: 1.333ch;
+	width: 1.333ch;
+	margin: 0 0.333ch;
+	box-sizing: border-box;
+	border: 1px solid #666060;
+	outline: 1px dotted rgba(0, 0, 0, 0.5);
+	overflow: hidden;
 }
 
 span.inline-color {
-    display: block;
-    height: 120%;
-    width: 120%;
+	display: block;
+	height: 120%;
+	width: 120%;
 }
 
 .token.punctuation.brace-hover,
 .token.punctuation.brace-selected {
-    outline: solid 1px;
+	outline: solid 1px;
 }
 
 .rainbow-braces .token.punctuation.brace-level-1,
 .rainbow-braces .token.punctuation.brace-level-5,
 .rainbow-braces .token.punctuation.brace-level-9 {
-    color: #e50;
-    opacity: 1;
+	color: #e50;
+	opacity: 1;
 }
 
 .rainbow-braces .token.punctuation.brace-level-10,
 .rainbow-braces .token.punctuation.brace-level-2,
 .rainbow-braces .token.punctuation.brace-level-6 {
-    color: #0b3;
-    opacity: 1;
+	color: #0b3;
+	opacity: 1;
 }
 
 .rainbow-braces .token.punctuation.brace-level-11,
 .rainbow-braces .token.punctuation.brace-level-3,
 .rainbow-braces .token.punctuation.brace-level-7 {
-    color: #26f;
-    opacity: 1;
+	color: #26f;
+	opacity: 1;
 }
 
 .rainbow-braces .token.punctuation.brace-level-12,
 .rainbow-braces .token.punctuation.brace-level-4,
 .rainbow-braces .token.punctuation.brace-level-8 {
-    color: #e0e;
-    opacity: 1;
+	color: #e0e;
+	opacity: 1;
 }

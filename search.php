@@ -25,7 +25,7 @@
 	$query->bind_result($snippetId, $title);
 	while($query->fetch()){
 		if(!empty($t))
-			echo "<div data-snippetId=$snippetId onclick='if (event.target === this) getSnippet($snippetId);' class='snippet'><p onclick='if (event.target === this) getSnippet($snippetId);'>@ $title</p><label onclick='editSnippet($snippetId);'><i class='las la-pencil-square-o'></i></label></div>";
+			echo "<div data-snippetId=$snippetId onclick='if (event.target === this) getSnippet($snippetId);' class='snippet'><p onclick='if (event.target === this) getSnippet($snippetId);'>@ $title</p><span onclick='editSnippet($snippetId);'><i class='las la-pencil-square-o'></i></span></div>";
 		else
 			echo "";
 	}

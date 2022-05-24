@@ -8,8 +8,8 @@
 	protectAdmin();
 
 	$title = $_POST['name'];
-	$syntax = $_POST['syntax'];
 	$desc = $_POST['description'];
+	$syntax = $_POST['syntax'];
 	$snippet = $_POST['snippet'];
 	$tagsArray = $_POST['tags'];
 	$tagsArray = json_decode($tagsArray);
@@ -27,9 +27,12 @@
 		echo $lang['emptyTag'];
 		exit();
 	}
+	if( empty($syntax) ) {
+		$syntax = 'none';
+	}
 
-	$stmt = $con->prepare("UPDATE snippets SET title = ?, syntax = ?, description = ?, snippet = ? WHERE id = ?");
-	$stmt->bind_param("ssss", $title, $syntax, $desc, $snippet, $snippetId);
+	$stmt = $con->prepare("UPDATE snippets SET title = ?, description = ?, syntax = ?, snippet = ? WHERE id = ?");
+	$stmt->bind_param("ssss", $title, $desc, $syntax, $snippet, $snippetId);
 	$stmt->execute();
 	$stmt->close();
 

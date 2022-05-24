@@ -30,8 +30,8 @@ DROP TABLE IF EXISTS `snippets`;
 CREATE TABLE `snippets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) NOT NULL,
-  `syntax` varchar(45) NOT NULL,
   `description` text NOT NULL,
+  `syntax` varchar(45) NOT NULL,
   `snippet` text NOT NULL,
   `user_id` int(11) NOT NULL,
   `date` date NOT NULL,

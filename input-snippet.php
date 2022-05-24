@@ -1,5 +1,8 @@
 <?php
-	session_start();
+
+	if(!isset($_SESSION)) {
+		session_start();
+	}
 
 	include 'database/connect.php';
 	include 'functions.php';
@@ -7,14 +10,17 @@
 
 	protect();
 
+	//mysqli_report(MYSQLI_REPORT_OFF); //Turn off irritating default messages
+	mysqli_report(MYSQLI_REPORT_ALL); //Turn on irritating default messages
+
 	$title = $_POST['name'];
 	$desc = $_POST['description'];
-	$snippet = $_POST['snippet'];
 	$syntax = $_POST['syntax'];
+	$snippet = $_POST['snippet'];
 	$tagsArray = $_POST['tags'];
 	$tagsArray = json_decode($tagsArray);
-	$flag = $_POST['flag'];
-	$snippetId = $_POST['id'];
+	$flag = $_POST['flag']; // true => Update / false => insert
+	$snippetId = $_POST['id']; // maybe empty
 	$group_id = $_POST['groups'];
 
 	if( empty($title) ) {
@@ -29,12 +35,10 @@
 		echo $lang['emptyTag'];
 		exit();
 	}
-
 	if( empty($group_id) ) {
 		echo $lang['emptyGroup'];
 		exit();
 	}
-
 	if( empty($syntax) ) {
 		$syntax = 'none';
 	}
@@ -47,9 +51,11 @@
 	$query->close();
 
 	if( $flag === 'false') {
+
 		$date = date("Y-m-d");
-		$stmt = $con->prepare("INSERT INTO snippets VALUES('',?, ?, ?, ?, ?, ?, '', ?)");
-		$stmt->bind_param("sssssss", $title, $syntax, $desc, $snippet, $user_id, $date, $group_id);
+		$public = 0;
+		$stmt = $con->prepare("INSERT INTO snippets VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bind_param("ssssssis", $title, $desc, $syntax, $snippet, $user_id, $date, $public, $group_id);
 		$stmt->execute();
 		$id = $con->insert_id;
 		$stmt->close();
@@ -60,11 +66,13 @@
 			$q->execute();
 		}
 		$q->close();
+
 		echo 'ok';
+
 	} else if( $flag === 'true' ) {
 
-		$stmt = $con->prepare("UPDATE snippets SET title = ?, description = ?, snippet = ?, group_id = ? WHERE id = ?");
-		$stmt->bind_param("sssss", $title, $desc, $snippet, $group_id, $snippetId);
+		$stmt = $con->prepare("UPDATE snippets SET title = ?, description = ?, syntax = ?, snippet = ?, group_id = ? WHERE id = ?");
+		$stmt->bind_param("sssss", $title, $desc, $syntax, $snippet, $group_id, $snippetId);
 		$stmt->execute();
 		$stmt->close();
 

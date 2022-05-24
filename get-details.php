@@ -18,16 +18,17 @@
 	$data = array();
 	$temp = array();
 
-	$query = $con->prepare("SELECT id, title, description, date, public FROM snippets WHERE id = ? AND user_id = ?");
+	$query = $con->prepare("SELECT id, title, description, syntax, date, public FROM snippets WHERE id = ? AND user_id = ?");
 	$query->bind_param("ss", $id, $user_id);
 	$query->execute();
-	$query->bind_result($snippetId, $title, $description, $date, $public);
+	$query->bind_result($snippetId, $title, $description, $syntax, $date, $public);
 	$query->fetch();
 	$query->close();
 
 	$data['idSnippet'][] = $snippetId;
 	$data['title'][] = $title;
 	$data['description'][] = $description;
+	$data['syntax'][] = $syntax;
 	$data['date'][] = $date;
 	$data['public'][] = $public;
 

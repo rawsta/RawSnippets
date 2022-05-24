@@ -3,6 +3,7 @@
 	$errors = array();
 
 	function protect() {
+		// if no Session and Cookie is found - redirect to login
 		if( !isset( $_SESSION['user'] ) && !isset( $_COOKIE['user'] ) ) {
 			header( "Location: index.php" );
 			exit();
@@ -10,6 +11,7 @@
 	}
 
 	function protectAdmin() {
+		// if no Session and Cookie is found - redirect to login
 		if( !isset( $_SESSION['admin'] ) && !isset( $_COOKIE['admin'] ) ) {
 			header( "Location: admin-login.php" );
 			exit();
@@ -17,13 +19,13 @@
 	}
 
 	/**
-	 * encrypt passwords.
+	 * "encrypt" passwords.
 	 *
 	 * @param  [type] $pass
 	 * @return [type] $pass
 	 */
 	function encrypt( $pass ) {
-		/* TODO: add Salt to .env */
+		/* TODO: add Salt to .env && maybe add hash*/
 		$salt = "jhkl2jh8f8s898we8ewiouq48484b";
 		return sha1( $salt . $pass );
 	}
@@ -37,28 +39,32 @@
 	function user_counter() {
 		include 'database/connect.php';
 
-		session_start();
+		// session_start();
+
 		$session = session_id();
 		$time = time();
 		$time_check = $time-600;
 
-		$query = $con->prepare("SELECT * FROM user_online WHERE session = ?");
-		$query->bind_param("s", $session);
-		$query->execute();
-		$query->store_result();
-		$nm = $query->num_rows;
-		$query->close();
+		if( session_id() !== '' && $session !== '' ) {
 
-		if( $nm == '0' ) {
-			$query = $con->prepare("INSERT INTO user_online (session, time) VALUES(?, ?)");
-			$query->bind_param("ss", $session, $time);
+			$query = $con->prepare("SELECT * FROM user_online WHERE session = ?");
+			$query->bind_param("s", $session);
 			$query->execute();
+			$query->store_result();
+			$nm = $query->num_rows;
 			$query->close();
-		} else {
-			$query = $con->prepare("UPDATE user_online SET time = ? WHERE session = ?");
-			$query->bind_param("ss", $time, $session);
-			$query->execute();
-			$query->close();
+
+			if( $nm == '0' ) {
+				$query = $con->prepare("INSERT INTO user_online (session, time) VALUES(?, ?)");
+				$query->bind_param("ss", $session, $time);
+				$query->execute();
+				$query->close();
+			} else {
+				$query = $con->prepare("UPDATE user_online SET time = ? WHERE session = ?");
+				$query->bind_param("ss", $time, $session);
+				$query->execute();
+				$query->close();
+			}
 		}
 
 		$query = $con->prepare("DELETE FROM user_online WHERE time < ?");

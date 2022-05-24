@@ -16,10 +16,10 @@
 
 	$data = array();
 
-	$query = $con->prepare("SELECT id, title, syntax, description, date, snippet FROM snippets WHERE user_id = ?");
+	$query = $con->prepare("SELECT id, title, description, syntax, date, snippet FROM snippets WHERE user_id = ?");
 	$query->bind_param("s", $user_id);
 	$query->execute();
-	$query->bind_result($id, $title, $syntax, $description, $date, $snippet);
+	$query->bind_result($id, $title, $description, $syntax, $date, $snippet);
 	while($query->fetch()){
 		$data['id'][] = $id;
 		$data['title'][] = $title;
@@ -49,13 +49,12 @@
 	$query->close();
 
 	for($i = 0; $i < count($data['id']); $i++){
-		$title = $data['title'];
 		$date = $data['date'];
-		$syntax = $data['syntax'];
+		$title = $data['title'];
 		$description = $data['description'];
+		$syntax = $data['syntax'];
 		$snippet = $data['snippet'];
 		$tags = $data['tags'];
-
 		$createdT = $lang['created'];
 		$descriptionT = $lang['description'];
 		$snippetT = $lang['snippet'];

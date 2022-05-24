@@ -1,25 +1,27 @@
 <?php
 
-    session_start();
+    if( !isset( $_SESSION ) ) {
+		session_start();
+	}
 
-    include 'functions.php';
     include 'database/connect.php';
+    include 'functions.php';
     include 'langCheck.php';
 
     protect();
     user_counter();
 
     // get user
-    $query = $con->prepare("SELECT user_id FROM users WHERE username = ?");
-    $query->bind_param("s", $_SESSION['user']);
+    $query = $con->prepare( "SELECT user_id FROM users WHERE username = ?" );
+    $query->bind_param( "s", $_SESSION['user'] );
     $query->execute();
     $query->bind_result($user_id);
     $query->fetch();
     $query->close();
 
     // get user settings
-    $query = $con->prepare("SELECT line_nums, font, size FROM users WHERE user_id = ?");
-    $query->bind_param("s", $user_id);
+    $query = $con->prepare( "SELECT line_nums, font, size FROM users WHERE user_id = ?" );
+    $query->bind_param( "s", $user_id);
     $query->execute();
     $query->bind_result($value, $font, $size);
     $query->fetch();
@@ -27,8 +29,8 @@
 
     // Get current tags
     $availableTags = array();
-    $query = $con->prepare("SELECT DISTINCT tags FROM tags_snippets WHERE user_id = ?");
-    $query->bind_param("s", $user_id);
+    $query = $con->prepare( "SELECT DISTINCT tags FROM tags_snippets WHERE user_id = ?" );
+    $query->bind_param( "s", $user_id);
     $query->execute();
     $query->bind_result($tags);
     while($query->fetch()){
@@ -39,8 +41,8 @@
     // get Groups
     $gNames = array();
     $gIds = array();
-    $query = $con->prepare("SELECT id, name FROM groups WHERE user_id = ?");
-    $query->bind_param("s", $user_id);
+    $query = $con->prepare( "SELECT id, name FROM groups WHERE user_id = ?" );
+    $query->bind_param( "s", $user_id);
     $query->execute();
     $query->bind_result($i, $n);
     while($query->fetch()){
@@ -99,7 +101,7 @@
 	<script>
         $(function(){
             $('#myTags').tagit({
-                availableTags: [<?php echo implode(", ", $availableTags); ?>],
+                availableTags: [<?php echo implode( ", ", $availableTags); ?>],
                 placeholderText : "<?=$lang['snippetTags']?>"
             });
         });
@@ -114,8 +116,9 @@
     <div id="blur" class="blur full modal-exit"></div>
     <!-- HEADER BAR -->
     <header class="title-area">
-        <a href="<?=$pageRoot?>" id="sitePath-holder" class="home-link">
-            <h1 class="appTitle"><i class="lar la-file-code"></i> <?=$lang['pageTitle']?></h1>
+        <a href="<?=$pageRoot?>" class="home-link">
+            <img src="assets/svg/RawSnippets.svg" alt="<?=$lang['pageTitle']?>" class="logo">
+            <!-- <h1 class="appTitle"><i class="lar la-file-code"></i> < ?=$lang['pageTitle']?></h1> -->
         </a>
 
         <div class="header-options">
@@ -154,7 +157,7 @@
         <div class="tag-list" style="display:none;">
             <?php
                 $tagsArray = array();
-                $query = $con->prepare("SELECT DISTINCT tags FROM tags_snippets WHERE user_id = '$user_id' ORDER BY tags");
+                $query = $con->prepare( "SELECT DISTINCT tags FROM tags_snippets WHERE user_id = '$user_id' ORDER BY tags" );
 
                 $query->execute();
                 $query->bind_result($tag);
@@ -165,9 +168,9 @@
                 $query->close();
 
                 $countArray = array();
-                $countSnippet = $con->prepare("SELECT COUNT(*) FROM tags_snippets WHERE tags = ? AND user_id = ?");
+                $countSnippet = $con->prepare( "SELECT COUNT(*) FROM tags_snippets WHERE tags = ? AND user_id = ?" );
                 foreach($tagsArray as $tag1){
-                    $countSnippet->bind_param("ss", $tag1, $user_id);
+                    $countSnippet->bind_param( "ss", $tag1, $user_id);
                     $countSnippet->execute();
                     $countSnippet->bind_result($count);
                     $countSnippet->fetch();
@@ -189,8 +192,8 @@
             <?php
                     $groupsArray = array();
                     $groupIds = array();
-                    $query = $con->prepare("SELECT id, name FROM groups WHERE user_id = ?");
-                    $query->bind_param("s", $user_id);
+                    $query = $con->prepare( "SELECT id, name FROM groups WHERE user_id = ?" );
+                    $query->bind_param( "s", $user_id);
                     $query->execute();
                     $query->bind_result($ids, $groupNames);
                     while( $query->fetch() ){
@@ -200,9 +203,9 @@
                     $query->close();
 
                     $countGroups = array();
-                    $query = $con->prepare("SELECT * FROM snippets WHERE group_id in (SELECT id FROM groups WHERE name = ?)");
+                    $query = $con->prepare( "SELECT * FROM snippets WHERE group_id in (SELECT id FROM groups WHERE name = ?)" );
                     for( $i = 0; $i < sizeof($groupsArray); $i++ ) {
-                        $query->bind_param("s", $groupsArray[$i]);
+                        $query->bind_param( "s", $groupsArray[$i]);
                         $query->execute();
                         $query->store_result();
                         $n = $query->num_rows;
@@ -245,18 +248,16 @@
 
         <!-- Code/Snippets -->
         <?php $linenumbers = 'update-when-loaded'; if( $value === 1 ) { $linenumbers = 'line-numbers'; } else { $linenumbers = 'no-line-numbers'; }?>
-        <pre class="pre-code <?=$linenumbers?> language-none rainbow-braces" style="font-family: <?=$font?>; font-size: 0.<?=$size?>em;">
-            <code id="code-block" class="language-none"></code>
-        </pre>
+        <pre class="pre-code <?=$linenumbers?> rainbow-braces" style="font-family: <?=$font?>; font-size: 0.<?=$size?>em;"><code id="codeBlock" class="l"></code></pre>
         <pre hidden class="raw-code"></pre>
 
 
         <!-- FOOTER -->
         <footer class="code-footer">
             <div class="footer-options">
-                <span class="copyright"><a href="//www.rawsta.de/" class="link-to-rawsta" >&copy;2022 | RawSnippets&trade;</a></span>
+                <span class="copyright"><a href="https://github.com/rawsta/RawSnippets" class="link-to-rawsta" >&copy;2022 | RawSnippets&trade;</a></span>
                 <!-- SNIPPET OPTIONS lower right on snippet view -->
-                <nav class="snippet-options" aria-label="Options">
+                <nav id="snippetOptions" class="snippet-options invisible" aria-label="Options">
                     <!-- TODO: change to svg  -->
                     <div class="fancy" tabindex="-1">
                         <div class="balken"></div>
@@ -264,7 +265,7 @@
                         <div class="balken"></div>
                     </div>
                     <ul class="snippet-option-wrap">
-                        <li style="--animation-order: 4;" class="option-item" id="share-label" title="<?=$lang['snippetPrivate'] ?>"><span><?=$lang['private']; ?></span> <i class="las la-share-square la-lg la-fw"></i></li>
+                        <li style="--animation-order: 4;" class="option-item" id="share-label" data-modal="sharing" title="<?=$lang['snippetPrivate'] ?>"><span><?=$lang['private']; ?></span> <i class="las la-share-square la-lg la-fw"></i></li>
                         <li style="--animation-order: 3;" class="option-item" id="sublime-label" title="<?=$lang['exportAsSublime'] ?>"><span>Sublime Text</span> <i class="las la-file-code la-lg la-fw"></i></li>
                         <li style="--animation-order: 2;" class="option-item" id="code-label" title="<?=$lang['rawCode']; ?>"><span>&lt;/<?=$lang['code']; ?>&gt;</span> <i class="las la-file-alt la-lg la-fw"></i></li>
                         <li style="--animation-order: 1;" class="option-item" id="copy-label" data-clipboard-target=".raw-code" title="<?=$lang['copyClipboard']; ?>"><span><?=$lang['copy']; ?></span> <i class="las la-copy la-lg la-fw"></i></li>
@@ -278,171 +279,174 @@
 
 <!-- ADD NEW SNIPPET -->
     <section id="addsnip" class="add-snippet-window">
-        <form action="#" class="addsnipform" autocomplete="off">
-            <!-- TODO: Strings in lang.php auslagern! -->
-            <h3 class="modal-title"><?=$lang['addNewSnippet']?></h3>
+        <div class="form-wrapper">
 
-            <div class="input-group-wrap">
-                <div class="wrap-half">
-                    <label for="name">Titel des neuen Snippets <abbr title="required" aria-label="required">*</abbr></label>
-                    <input type="text" placeholder="<?=$lang['name']?>" name="name" id="name" required>
+            <form action="#" class="addsnipform" autocomplete="off">
+                <!-- TODO: Strings in lang.php auslagern! -->
+                <h3 class="modal-title"><?=$lang['addNewSnippet']?></h3>
+
+                <div class="input-group-wrap">
+                    <div class="wrap-half">
+                        <label for="name">Titel des neuen Snippets <abbr title="required" aria-label="required">*</abbr></label>
+                        <input type="text" placeholder="<?=$lang['name']?>" name="name" id="name" required>
+                    </div>
+                    <div class="wrap-half">
+                        <!-- TODO: Fix this dropdown -->
+                        <label data-id="" id="groupSelect"><?=$lang['selectGroup']?></label>
+                        <ul class="groupDropDown">
+                            <?php for( $i=0; $i<sizeof( $gNames ); $i++ ) { ?>
+                            <li id="<?=$gIds[$i]?>"><?=$gNames[$i]?></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
                 </div>
-                <div class="wrap-half">
-                    <!-- TODO: Fix this dropdown -->
-                    <label data-id="" id="groupSelect"><?=$lang['selectGroup']?></label>
-                    <ul class="groupDropDown">
-                        <?php for( $i=0; $i<sizeof( $gNames ); $i++ ) { ?>
-                        <li id="<?=$gIds[$i]?>"><?=$gNames[$i]?></li>
-                        <?php } ?>
-                    </ul>
+
+                <div class="input-group-wrap">
+                    <div class="wrap-half">
+                        <label for="syntax">Syntax:</label>
+                        <input list="available-syntax" id="syntax" name="syntax" type="text" placeholder="Snippet language"/>
+                        <!-- DataList for kind of autocomplete for input -->
+                        <datalist id="available-syntax">
+                            <option value = "none">
+                            <option value = "plain">
+                            <option value = "plaintext">
+                            <option value = "text">
+                            <option value = "html">
+                            <option value = "xml">
+                            <option value = "svg">
+                            <option value = "txt">
+                            <option value = "js">
+                            <option value = "g4">
+                            <option value = "ino">
+                            <option value = "arm-asm">
+                            <option value = "art">
+                            <option value = "avs">
+                            <option value = "avdl">
+                            <option value = "gawk">
+                            <option value = "shell">
+                            <option value = "shortcode">
+                            <option value = "rbnf">
+                            <option value = "oscript">
+                            <option value = "clike">
+                            <option value = "css">
+                            <option value = "cpp">
+                            <option value = "csp">
+                            <option value = "csv">
+                            <option value = "coffee">
+                            <option value = "csharp">
+                            <option value = "dotnet">
+                            <option value = "django">
+                            <option value = "javascript">
+                            <option value = "jinja2">
+                            <option value = "dns-zone">
+                            <option value = "dockerfile">
+                            <option value = "less">
+                            <option value = "xlsx">
+                            <option value = "xls">
+                            <option value = "php">
+                            <option value = "po">
+                            <option value = "graphql">
+                            <option value = "latex">
+                            <option value = "go">
+                            <option value = "gcode">
+                            <option value = "hbs">
+                            <option value = "mustache">
+                            <option value = "hs">
+                            <option value = "idr">
+                            <option value = "gitignore">
+                            <option value = "lolcode">
+                            <option value = "npmignore">
+                            <option value = "webmanifest">
+                            <option value = "kt">
+                            <option value = "kts">
+                            <option value = "markdown">
+                            <option value = "md">
+                            <option value = "tex">
+                            <option value = "scala">
+                            <option value = "emacs">
+                            <option value = "elisp">
+                            <option value = "markup">
+                            <option value = "vim">
+                            <option value = "twig">
+                            <option value = "dotnet">
+                            <option value = "log">
+                            <option value = "objc">
+                            <option value = "qasm">
+                            <option value = "objectpascal">
+                            <option value = "px">
+                            <option value = "pcode">
+                            <option value = "json">
+                            <option value = "pq">
+                            <option value = "gettext">
+                            <option value = "powershell">
+                            <option value = "java">
+                            <option value = "python">
+                            <option value = "py">
+                            <option value = "smarty">
+                            <option value = "http">
+                            <option value = "mongodb">
+                            <option value = "rpy">
+                            <option value = "res">
+                            <option value = "po">
+                            <option value = "rb">
+                            <option value = "ruby">
+                            <option value = "sql">
+                            <option value = "nginx">
+                            <option value = "yaml">
+                            <option value = "sass">
+                            <option value = "scss">
+                            <option value = "qml">
+                            <option value = "t4">
+                            <option value = "jsx">
+                            <option value = "trig">
+                            <option value = "ts">
+                            <option value = "tsx">
+                            <option value = "tsconfig">
+                            <option value = "typescript">
+                            <option value = "uscript">
+                            <option value = "uc">
+                            <option value = "url">
+                            <option value = "vb">
+                            <option value = "vba">
+                            <option value = "wiki">
+                            <option value = "matlab">
+                            <option value = "pug">
+                            <option value = "wl">
+                            <option value = "apacheconf">
+                            <option value = "yml">
+                        </datalist>
+                    </div>
+                    <div class="wrap-half">
+                        <span class="info-text">Ohne angabe der Syntax wird das Snippet als einfacher Text angezeigt.</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="input-group-wrap">
-                <div class="wrap-half">
-                    <p class="info-text">Wenn keine Syntax angegeben wird, wir das Snippet als einfacher Text angezeigt.</p>
+                <!-- TODO: Links erkennen und verlinken -->
+                <div class="input-wrap">
+                    <label for="description">Kurze Beschreibung des Snippets <small>(Optional)</small></label>
+                    <textarea placeholder="<?=$lang['description']?>" name="description" id="description" spellcheck="false"></textarea>
                 </div>
-                <div class="wrap-half">
-                    <label for="syntax-choice">Syntax:</label>
-                    <input list="available-syntax" id="syntax-choice" name="syntax" type="text" placeholder="Snippet language"/>
-                    <!-- DataList for kind of autocomplete for input -->
-                    <datalist id="available-syntax">
-                        <option value = "none">
-                        <option value = "plain">
-                        <option value = "plaintext">
-                        <option value = "text">
-                        <option value = "html">
-                        <option value = "xml">
-                        <option value = "svg">
-                        <option value = "txt">
-                        <option value = "js">
-                        <option value = "g4">
-                        <option value = "ino">
-                        <option value = "arm-asm">
-                        <option value = "art">
-                        <option value = "avs">
-                        <option value = "avdl">
-                        <option value = "gawk">
-                        <option value = "shell">
-                        <option value = "shortcode">
-                        <option value = "rbnf">
-                        <option value = "oscript">
-                        <option value = "clike">
-                        <option value = "css">
-                        <option value = "cpp">
-                        <option value = "csp">
-                        <option value = "csv">
-                        <option value = "coffee">
-                        <option value = "csharp">
-                        <option value = "dotnet">
-                        <option value = "django">
-                        <option value = "javascript">
-                        <option value = "jinja2">
-                        <option value = "dns-zone">
-                        <option value = "dockerfile">
-                        <option value = "less">
-                        <option value = "xlsx">
-                        <option value = "xls">
-                        <option value = "php">
-                        <option value = "po">
-                        <option value = "graphql">
-                        <option value = "latex">
-                        <option value = "go">
-                        <option value = "gcode">
-                        <option value = "hbs">
-                        <option value = "mustache">
-                        <option value = "hs">
-                        <option value = "idr">
-                        <option value = "gitignore">
-                        <option value = "lolcode">
-                        <option value = "npmignore">
-                        <option value = "webmanifest">
-                        <option value = "kt">
-                        <option value = "kts">
-                        <option value = "markdown">
-                        <option value = "md">
-                        <option value = "tex">
-                        <option value = "scala">
-                        <option value = "emacs">
-                        <option value = "elisp">
-                        <option value = "markup">
-                        <option value = "vim">
-                        <option value = "twig">
-                        <option value = "dotnet">
-                        <option value = "log">
-                        <option value = "objc">
-                        <option value = "qasm">
-                        <option value = "objectpascal">
-                        <option value = "px">
-                        <option value = "pcode">
-                        <option value = "json">
-                        <option value = "pq">
-                        <option value = "gettext">
-                        <option value = "powershell">
-                        <option value = "java">
-                        <option value = "python">
-                        <option value = "py">
-                        <option value = "smarty">
-                        <option value = "http">
-                        <option value = "mongodb">
-                        <option value = "rpy">
-                        <option value = "res">
-                        <option value = "po">
-                        <option value = "rb">
-                        <option value = "ruby">
-                        <option value = "sql">
-                        <option value = "nginx">
-                        <option value = "yaml">
-                        <option value = "sass">
-                        <option value = "scss">
-                        <option value = "qml">
-                        <option value = "t4">
-                        <option value = "jsx">
-                        <option value = "trig">
-                        <option value = "ts">
-                        <option value = "tsx">
-                        <option value = "tsconfig">
-                        <option value = "typescript">
-                        <option value = "uscript">
-                        <option value = "uc">
-                        <option value = "url">
-                        <option value = "vb">
-                        <option value = "vba">
-                        <option value = "wiki">
-                        <option value = "matlab">
-                        <option value = "pug">
-                        <option value = "wl">
-                        <option value = "apacheconf">
-                        <option value = "yml">
-                    </datalist>
+
+                <div class="input-wrap">
+                    <label for="snippetArea">Snippet einf&uuml;gen <abbr title="required" aria-label="required">*</abbr></label>
+                    <textarea placeholder="<?=$lang['snippet']?>" name="snippet" id="snippetArea" spellcheck="false" rows="10" required></textarea>
                 </div>
-            </div>
 
-            <!-- TODO: Links erkennen und verlinken -->
-            <div class="input-wrap">
-                <label for="description">Kurze Beschreibung des Snippets <small>(Optional)</small></label>
-                <textarea placeholder="<?=$lang['description']?>" name="description" id="description" spellcheck="false"></textarea>
-            </div>
+                <div class="input-wrap">
+                    <label for="myTags">Tags <abbr title="mindestens 1 Tag angeben" aria-label="required">*</abbr> <small>(mit autocomplete)</small></label>
+                    <input type="text" name="tags" id="myTags">
+                    <label for="myTags"><small>(erleichtern die Suche und helfen bei der &Uuml;bersicht)</small></label>
+                </div>
 
-            <div class="input-wrap">
-                <label for="snippetArea">Snippet einf&uuml;gen <abbr title="required" aria-label="required">*</abbr></label>
-                <textarea placeholder="<?=$lang['snippet']?>" name="snippet" id="snippetArea" spellcheck="false" rows="13" required></textarea>
-            </div>
-
-            <div class="input-wrap">
-                <label for="myTags">Tags <abbr title="mindestens 1 Tag angeben" aria-label="required">*</abbr><small>(mit autocomplete)</small></label>
-                <input type="text" name="tags" id="myTags">
-                <label for="myTags"><small>(erleichtern die Suche und helfen bei der &Uuml;bersicht)</small></label>
-            </div>
-
-            <div class="button-wrap">
-                <button class="accept" id="save-snippet"><?=$lang['save']?></button>
-                <button class="cancel" id="snippet-cancel"><?=$lang['cancel']?></button>
-            </div>
-                <span hidden data-type="save" class="check-label"></span>
-                <span hidden class="id-holder"></span>
-                <span id="snippet-error"></span>
-        </form>
+                <div class="button-wrap">
+                    <button class="accept" id="save-snippet"><?=$lang['save']?></button>
+                    <button class="cancel" id="snippet-cancel"><?=$lang['cancel']?></button>
+                </div>
+                    <span hidden data-type="save" class="check-label"></span>
+                    <span hidden class="id-holder"></span>
+                    <span id="snippet-error"></span>
+            </form>
+        </div>
     </section>
 
 <!-- SUBLIME SNIPPET EXPORT -->
@@ -456,7 +460,7 @@
     </form>
 
 <!-- SHARE WINDOW -->
-    <div class="share-window" style="display:none;">
+    <div id="sharing" class="share-window" style="display:none;">
         <p><?=$lang['wantShareSnippet'] ?> <span id="share-option" style="background-color: #27AE60"><?=$lang['yes']; ?></span></p>
         <label id="share-close">X</label>
         <input type="text" id="share-link">
@@ -473,10 +477,10 @@
 <!-- ADD NEW GROUP -->
     <div id="addgroup" class="add-group">
         <form id="addGroupForm" action="add-group.php" method="post">
-            <label for="group-name"></label>
-            <input type="text" id="group-name" name="name" placeholder="<?=$lang['groupName']; ?>">
-            <input id="addGroupSubmit" type="submit" value="<?=$lang['save']; ?>">
-            <span id="addGroupCancel">X</span>
+            <label for="group-name"><?=$lang['addGroup']?></label>
+            <input type="text" id="group-name" name="name" placeholder="<?=$lang['groupName']?>">
+            <input id="addGroupSubmit" type="submit" value="<?=$lang['save']?>">
+            <button id="addGroupCancel"><?=$lang['cancel']?></button>
         </form>
         <span id="addGroupError"></span>
     </div>

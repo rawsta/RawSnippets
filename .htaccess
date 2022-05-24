@@ -1,0 +1,40 @@
+# This is experimental
+# not sure if it works on my server
+
+# Extra Security Headers
+# <IfModule mod_headers.c>
+    # Header always append X-Frame-Options SAMEORIGIN # replace with CSP
+
+    # Header set X-XSS-Protection "1; mode=block"
+    # Header set X-Content-Type-Options nosniff
+    # Header set Content-Security-Policy "upgrade-insecure-requests;"
+
+    # x-powered-by is useless and can expose vulnerabilities
+    #Header unset X-Powered-By
+    #Header always unset X-Powered-By
+
+    # <FilesMatch "\.(?i:gif|jpe?g|png|js|css|ico|woff|woff2|svg)$">
+        # 86400 = 1day | 604800 = 604800 | 31536000 = 1 year
+        # Header set Cache-Control "max-age=31536000, public"
+    # </FilesMatch>
+
+    # allow CORS for fonts from Google, etc
+    # <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
+         # Header set Access-Control-Allow-Origin "*"
+    # </FilesMatch>
+# </IfModule>
+
+
+# Expires Headers
+#<IfModule mod_expires.c>
+    # static files
+    #<FilesMatch "\.(?i:gif|jpe?g|png|js|css|ico|woff|woff2|svg)$">
+        #ExpiresActive on
+        #ExpiresDefault "access plus 365 days"
+    #</Filesmatch>
+
+    # /favicon.ico (cannot be renamed!)
+#     <Files "favicon.ico">
+#         ExpiresByType image/x-icon "access plus 1 hour"
+#     </Files>
+# </IfModule>

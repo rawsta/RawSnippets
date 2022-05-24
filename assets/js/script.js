@@ -2,7 +2,7 @@ window.lang = document.documentElement.lang;
 window.tagTemp = "";
 window.positionCheck = "groups";
 
-const FADETIME = 420;
+const FADETIME = 333;
 
 $( document ).ready( () => {
 
@@ -24,6 +24,9 @@ $( document ).ready( () => {
 	// 	console.clear();
 	// }, 6666);
 
+	var usrlang = navigator.language || navigator.userLanguage;
+    console.log( '%c Language is: ' + usrlang, logSecondaryBG);
+
 	// #endregion
 
 	// #region - CACHE THINGS ---------------------------------------- //
@@ -41,7 +44,7 @@ $( document ).ready( () => {
 	const codeBlock = document.getElementById( 'code-block' );
 
 	const modals = document.querySelectorAll( '[data-modal]' );
-	const blur = document.getElementById( 'blur' );
+	const blur = document.querySelector( '.blur' );
 
 	const header = {
         appTitle     : document.querySelector( '.appTitle' ),
@@ -99,8 +102,6 @@ $( document ).ready( () => {
 		}
 	});
 
-
-
 	// Hide modal on click outside.
 		// document.addEventListener( 'click', function( event ) {
 		// 	var modal = document.getElementsByClassName( 'modal' )[0];
@@ -126,7 +127,7 @@ $( document ).ready( () => {
 		});
 	});
 	$.post(`lang/${language}.php`, {"lang" : "true"}, ( data ) => {
-		lang = data;
+		window.lang = data;
 	}, "json" );
 
 
@@ -435,15 +436,15 @@ $( document ).ready( () => {
 			e.preventDefault();
 			const modal = document.getElementById( trigger.dataset.modal );
 			// toggleBlur();
-			blur.classList.toggle( 'open' );
+			blur.classList.add( 'open' );
 			modal.classList.add( 'open' );
 
 			const exits = modal.querySelectorAll( '.modal-exit' );
 			exits.forEach( ( exit ) => {
-				exit.addEventListener( 'click', ( e ) => {
-					e.preventDefault();
+				exit.addEventListener( 'click', ( ev ) => {
+					ev.preventDefault();
 					// toggleBlur();
-					blur.classList.toggle( 'open' );
+					blur.classList.remove( 'open' );
 					modal.classList.remove( 'open' );
 				});
 			});
@@ -516,12 +517,12 @@ $( document ).ready( () => {
 	// #region - ADD SNIPPET ---------------------------------------- //
 
 	const id_name = $( "#name" );
-	const syntax_choice = document.getElementById('syntax-choice');
+	const syntax = document.getElementById('syntax');
 
 	$( ".bottom-add-snippet" ).on( 'click', ( e ) => {
 		e.preventDefault();
-		console.info('preparing system for new Snippet entry...' );
 		toggleBlur();
+		blur.classList.toggle( 'open' );
 		$( ".groupDropDown" ).hide();
 		// groupSelect.css( "border-radius", "var(--raw-border-radius) var(--raw-border-radius) 0 0" );
         $( "#save-snippet" ).html( lang.save );
@@ -544,18 +545,21 @@ $( document ).ready( () => {
 
 	// #region - SAVE SNIPPET ---------------------------------------- //
 
-	$( "#save-snippet" ).on( 'click', () => {
-		// $( "#save-snippet" ).attr('disabled');
+	$( "#save-snippet" ).on( 'click', ( e ) => {
+
+		// disable to prevent multiple submissions
+		$( "#save-snippet" ).attr('disabled');
+		e.preventDefault();
 		/* TODO: add loader/spinner to show progress */
 		if( $( ".check-label" ).data( 'type' ) == 'save' ) {
 			$.post( "input-snippet.php", {
 				'name' : id_name.val(),
-				'syntax' : syntax_choice.value,
 				'description' : $( "#description" ).val(),
+				'syntax' : syntax.value,
 				'snippet' : $( "#snippetArea" ).val(),
 				'tags' : JSON.stringify( $( "#myTags" ).tagit( "assignedTags" )),
 				'flag' : false,
-				"groups" : groupSelect.attr( "data-id" )
+				'groups' : groupSelect.attr( "data-id" ),
 			}, ( data ) => {
 					if( data == 'ok' ) {
 						Toast.fire( {
@@ -564,13 +568,13 @@ $( document ).ready( () => {
 						} );
 						setTimeout( function() {
 							window.location.reload();
-						}, 2222 );
+						}, 4444 );
 					}
 					Toast.fire( {
 						icon: 'error',
 						title: 'Sorry, da ist etwas schief gelaufen.'
 					} );
-					// snippetError.html( "" );
+					snippetError.html( "" );
 					snippetError.fadeIn( FADETIME );
 					snippetError.html( data );
 
@@ -579,6 +583,7 @@ $( document ).ready( () => {
 			$.post( "input-snippet.php", {
 				'name' : id_name.val(),
 				'description' : $( "#description" ).val(),
+				'syntax' : syntax.value,
 				'snippet' : $( "#snippetArea" ).val(),
 				'tags' : JSON.stringify( $( "#myTags" ).tagit( "assignedTags" )),
 				'flag' : true,
@@ -590,9 +595,9 @@ $( document ).ready( () => {
 							icon: 'success',
 							title: 'Snippet aktualisiert!'
 						} );
-						setTimeout( function() {
-							window.location.reload();
-						}, 2222 );
+						// setTimeout( function() {
+						// 	window.location.reload();
+						// }, 2222 );
 					}
 					Toast.fire( {
 						icon: 'error',
@@ -607,7 +612,6 @@ $( document ).ready( () => {
 
 	// SIDEBAR selecting snippet
 	$( document ).on( "click", ".snippet", function() {
-			console.info('...selecting snippet...' );
 		$( ".snippet" ).removeClass( "active" );
 		$( this ).addClass( "active" );
 	});
@@ -643,17 +647,15 @@ $( document ).ready( () => {
 
 	// #region - SHARING ---------------------------------------- //
 
-	shareLabel.on( 'click', () => {
-		$( ".share-window" ).fadeIn( FADETIME );
-		// blur.classList.add( 'open' );
-		toggleBlur();
-	});
+	// shareLabel.on( 'click', () => {
+	// 	$( ".share-window" ).fadeIn( FADETIME );
+	// 	toggleBlur();
+	// });
 
-	$( "#share-close" ).on( 'click', () => {
-		$( ".share-window" ).fadeOut( FADETIME );
-		// blur.classList.remove( 'open' );
-		toggleBlur();
-	});
+	// $( "#share-close" ).on( 'click', () => {
+	// 	$( ".share-window" ).fadeOut( FADETIME );
+	// 	toggleBlur();
+	// });
 
 	$( "#share-option" ).on( 'click', function() {
 		if( $( this ).text() == lang.yes ) {
@@ -798,7 +800,7 @@ $( document ).ready( () => {
 // #region - MORE HELPER ---------- //
 
 function validateEmail(email) {
-	let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return re.test(String(email).toLowerCase());
 }
 
@@ -809,6 +811,7 @@ function validateEmail(email) {
 // #region - UPPER OPTIONS ---------- //
 
 function showTags() {
+	let positionCheck;
 	$( "#groupsTrigger" ).removeClass( "upperOptionsActive" );
 	$( "#tagsTrigger" ).addClass( "upperOptionsActive" );
 
@@ -820,6 +823,7 @@ function showTags() {
 }
 
 function showGroups() {
+	let positionCheck;
 	$( "#groupsTrigger" ).addClass( "upperOptionsActive" );
 	$( "#tagsTrigger" ).removeClass( "upperOptionsActive" );
 
@@ -874,15 +878,16 @@ function findSnippetsFromGroups( id, u ) {
 // #region - FIND SNIPPETS ---------- //
 
 function findSnippets( tag, u ) {
-	$( "#copy-label" ).text( lang.copy );
+	let tagTemp;
+	// $( "#copy-label" ).text( lang.copy );
 	$.post( "find-snippets.php", {'tag' : tag}, ( data ) => {
 
 		$( ".tag-list" ).hide( "slide", { direction: "right" }, 300 );
 		$( ".snippets" ).show( "slide", { direction: "left" }, 300 );
 		$( ".snippets" ).html( "" );
-		$( ".snippets" ).append(`<div onclick='goBack();' class='back'><i class='las la-caret-left la-lg la-fw'></i>  ${lang.back}</div>`);
+		$( ".snippets" ).append(`<div onclick='goBack();' class='back'><i class='las la-caret-left la-lg la-fw'></i> ${lang.back}</div>`);
 
-		for( const i in data.title ) { //TODO: Fix these label
+		for( const i in data.title ) {
 			$( ".snippets" ).append(`<div onclick='if (event.target === this ) getSnippet( ${data.snippetId[i]});' data-snippetId=${data.snippetId[i]} class='snippet'><p onclick='if (event.target === this ) getSnippet( ${data.snippetId[i]});'>${data.title[i]}</p><span onclick='removeSnippet( ${data.snippetId[i]});'><i class="lar la-trash-alt la-lg la-fw"></i></span><span onclick='editSnippet( ${data.snippetId[i]});'><i class="las la-pencil-alt la-lg la-fw"></i></span></div>`);
 		}
 		if( u ) {
@@ -898,33 +903,30 @@ function findSnippets( tag, u ) {
 // #region - GET SNIPPET ---------- //
 
 function getSnippet( id ) {
-	// $( "#copy-label" ).text( lang.copy );
-	// $( "#copy-label" ).css( "right", "65px" );
+
 	getDetails( id );
 
 	$( "#details-button" ).show();
 	$( ".details-window-top" ).show();
+	const codeBlock = $('#codeBlock');
+	const rawCode = $('.raw-code');
+	const snippetOptions = $('#snippetOptions');
 
-	$.post( "get-snippet.php", {'id' : id, 'flag' : true}, ( data ) => {
-		$( "#code-block" ).html( data );
-		$( ".raw-code" ).html( data );
+	$.post( "get-snippet.php", {
+		'id' : id,
+		'flag' : true
+	}, ( data ) => {
+		codeBlock.html( data );
+		rawCode.html( data );
 
-		// $( '.prettyprinted' ).removeClass( 'prettyprinted' );
-		// prettyPrint();
-		Prism.highlightElement($('#code-block')[0]);
+		Prism.highlightElement($('#codeBlock')[0]);
+		// codeBlock.removeClass('language-none');
+		// codeBlock.addClass('language-php');
+		snippetOptions.removeClass('invisible');
+		snippetOptions.addClass('visible');
 
-		// const linenums = $( "pre[class*=line-number] > li" ).length / 100;
-		// const temp = 10 * parseInt( ( linenums - 2 ) ) + 30;
-		// if( linenums > 2 ) {
-		// 	$( "#code-block ol > li" ).css( "left", `${temp}px` );
-			// $( ".prettyprint ol.linenums > li" ).css( "left", `${temp}px` );
-		// }
-
-		// $( ".code" ).css( "z-index", "0" );
-		// $( ".snippet-icons" ).css( "z-index", "1" );
 	});
 }
-
 
 // #endregion
 
@@ -934,7 +936,11 @@ function getDetails( id ) {
 	const shareOption = $( ".snippet-options" );
 	const shareLabel = $( "#share-label" );
 	const shareLink = $( "#share-link" );
+	const codeBlock = $('#codeBlock');
+	const codeBlockParent = $('#codeBlock').parent();
 	let tempSnippet;
+	let syntax;
+
 
 	// $( "#copy-label" ).text( lang.copy );
 	$.post( "get-details.php", {'id' : id}, ( data ) => {
@@ -944,26 +950,32 @@ function getDetails( id ) {
 		$( "#date-label" ).html(` <i class="las la-calendar-plus"></i>  ${lang.created} [ ${data.date} ] `);
 
 		tempSnippet = data.idSnippet;
+		syntax = (data.syntax !== 'undefined' || data.syntax !== null ) ? 'language-' + data.syntax + '' : 'language-none';
+		console.log('syntax: ', data.syntax);
 
 		shareLink.val(`${$( "#sitePath-holder" ).text()}/public.php?id=${data.idSnippet}`);
 
 		// set sharing dynamically / if not public -disable
 		if( data.public == 0 ) { /// TODO: fix and set right order and values
 			shareOption.prop( "title", lang.yes );
-			shareOption.css( "color", "var(--raw-color_success )" );
+			shareOption.css( "color", "#128843" );
 			shareLabel.textContent = lang.private;
 			shareLabel.prop( 'title', lang.snippetPrivate );
 			shareLink.prop( 'disabled', true);
 			shareLink.removeClass( "active-share" );
 			shareLink.addClass( "inactive-share" );
+			codeBlock.removeClass( "language-none" ).addClass( syntax );
+			codeBlockParent.removeClass( "language-none" ).addClass( syntax );
 		} else if( data.public == 1 ) {
 			shareOption.prop( "title", lang.no );
-			shareOption.css( "color", "var(--raw-color_error)" );
+			shareOption.css( "color", "#be1a1a" );
 			shareLabel.textContent = lang.public;
 			shareLabel.prop( 'title', lang.snippetPublic);
 			shareLink.prop( 'disabled', false);
 			shareLink.addClass( "active-share" );
 			shareLink.removeClass( "inactive-share" );
+			codeBlock.removeClass( "language-none" ).addClass( syntax );
+			codeBlockParent.removeClass( "language-none" ).addClass( syntax );
 		}
 	}, "json" );
 }
@@ -980,12 +992,14 @@ function editSnippet( id ) {
 	// $( "#copy-label" ).css( "right", "65px" );
 	$( "#name" ).val( "" );
 	$( "#description" ).val( "" );
+	$( "#syntax" ).val( "" );
 	$( "#snippetArea" ).val( "" );
 	$( "#myTags" ).tagit( "removeAll" );
 
 	$.post( "get-snippet.php", {'id':id, 'flag':false}, ( data ) => {
 		$( "#name" ).val( data.title );
 		$( "#description" ).val( data.description );
+		$( "#syntax" ).val( data.syntax );
 		$( "#snippetArea" ).val( data.snippet );
 	}, "json" );
 
@@ -1011,7 +1025,8 @@ function editSnippet( id ) {
 		$( ".check-label" ).data( "type", "update" );
 
 		// $( ".full" ).fadeIn( FADETIME );
-		document.getElementById( 'blur' ).classList.toggle( 'open' );
+		// document.getElementById( 'blur' ).classList.toggle( 'open' );
+
 	}, "json" );
 
 }
